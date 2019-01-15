@@ -8,21 +8,26 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.subsystems.Superstructure;
 
 
 public class Robot extends TimedRobot {
 
+    private static Superstructure superStructure;
 
     @Override
     public void robotInit() {
+        superStructure.robotInit();
     }
 
     @Override
     public void autonomousInit() {
+        superStructure.zeroAllSensors();
     }
 
     @Override
     public void autonomousPeriodic() {
+        superStructure.subsystemLooper();
     }
 
     @Override
@@ -31,6 +36,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        superStructure.subsystemLooper();
+    }
+
+    @Override
+    public void disabledInit() {
+        superStructure.stop();
+
     }
 
     @Override
