@@ -23,10 +23,10 @@ public class Superstructure {
 
     public void robotInit() {
         comp.start();
+        comp = new Compressor(ActuatorMap.PCMPort);
     }
 
     public void subsystemLooper() {
-        comp = new Compressor(ActuatorMap.PCMPort);
         handleSubsystems();
     }
 

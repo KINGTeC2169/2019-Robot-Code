@@ -13,21 +13,22 @@ import frc.robot.subsystems.Superstructure;
 
 public class Robot extends TimedRobot {
 
-    private static Superstructure superStructure;
+    private static Superstructure superstructure;
 
     @Override
     public void robotInit() {
-        superStructure.robotInit();
+        superstructure = new Superstructure();
+        superstructure.robotInit();
     }
 
     @Override
     public void autonomousInit() {
-        superStructure.zeroAllSensors();
+        superstructure.zeroAllSensors();
     }
 
     @Override
     public void autonomousPeriodic() {
-        superStructure.subsystemLooper();
+        superstructure.subsystemLooper();
     }
 
     @Override
@@ -36,12 +37,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        superStructure.subsystemLooper();
+        superstructure.subsystemLooper();
     }
 
     @Override
     public void disabledInit() {
-        superStructure.stop();
+        superstructure.stop();
 
     }
 
