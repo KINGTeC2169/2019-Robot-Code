@@ -1,4 +1,8 @@
 package frc.robot.util;
 
 public class Constants {
+
+    //Constans for intake
+    public static final double exhaustTreshold = 0.5;
+    public static final double intakeDeadband = 0.05;
 }
