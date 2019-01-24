@@ -6,9 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.Controls;
 import frc.robot.subsystems.DriveTrain;
@@ -25,7 +22,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         superstructure = new Superstructure();
         superstructure.robotInit();
-        driveTrain = new DriveTrain(controls);
+        driveTrain = new DriveTrain();
         controls = new Controls();
     }
 
@@ -46,7 +43,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         superstructure.subsystemLooper();
-        driveTrain.drive();
+        driveTrain.drive(controls.getLeftjoyAxis(), controls.getRightjoyAxis());
+        driveTrain.shift(controls.getLowGearButton(), controls.getHighGearButton());
     }
 
     @Override

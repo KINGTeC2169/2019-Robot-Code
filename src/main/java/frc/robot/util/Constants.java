@@ -7,5 +7,5 @@ public class Constants {
     public static final double intakeDeadband = 0.05;
 
     // Drive Train Constants
-    public static final double driveTrainDeadpan = 0.1;
+    public static final double driveTrainDeadband = 0.1;
 }

@@ -4,43 +4,37 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
 
 public class DriveTrain {
-    Controls controls;
-    DoubleSolenoid solenoid;
-    TalonSRX left;
-    TalonSRX leftTop;
-    TalonSRX leftBottom;
-    TalonSRX right;
-    TalonSRX rightTop;
-    TalonSRX rightBottom;
-    private double deadpan;
+    private DoubleSolenoid solenoid;
+    private TalonSRX left;
+    private TalonSRX right;
+    private double deadband;
 
-    public DriveTrain(Controls controls){
-        this.controls = controls;
+    public DriveTrain(){
         solenoid = new DoubleSolenoid(0, 0, 0);
-        deadpan = Constants.driveTrainDeadpan;
+        deadband = Constants.driveTrainDeadband;
 
-        left = new TalonSRX(0);
-        leftTop = new TalonSRX(0);
-        leftBottom = new TalonSRX(0);
-        leftTop.set(ControlMode.Follower, 0);
-        leftBottom.set(ControlMode.Follower, 0);
-        right = new TalonSRX(0);
-        rightTop = new TalonSRX(0);
-        rightBottom = new TalonSRX(0);
-        rightTop.set(ControlMode.Follower, 0);
-        rightBottom.set(ControlMode.Follower, 0);
+        left = new TalonSRX(ActuatorMap.driveTrainLeft);
+        TalonSRX leftTop = new TalonSRX(ActuatorMap.driveTrainLeftTop);
+        TalonSRX leftBottom = new TalonSRX(ActuatorMap.driveTrainLeftBottom);
+        leftTop.set(ControlMode.Follower, ActuatorMap.driveTrainLeft);
+        leftBottom.set(ControlMode.Follower, ActuatorMap.driveTrainLeft);
+
+        right = new TalonSRX(ActuatorMap.driveTrainRight);
+        TalonSRX rightTop = new TalonSRX(ActuatorMap.driveTrainRightTop);
+        TalonSRX rightBottom = new TalonSRX(ActuatorMap.driveTrainRightBottom);
+        rightTop.set(ControlMode.Follower, ActuatorMap.driveTrainRight);
+        rightBottom.set(ControlMode.Follower, ActuatorMap.driveTrainRight);
     }
 
-    public void drive() {
-        double powerLeft = controls.leftjoy.getRawAxis(1);
-        double powerRight = controls.rightjoy.getRawAxis(1);
-        if(Math.abs(powerLeft) >= deadpan) {
+    public void drive(double powerLeft, double powerRight) {
+        if(Math.abs(powerLeft) >= deadband) {
             left.set(ControlMode.PercentOutput, powerLeft);
         }
-        if(Math.abs(powerRight) >= deadpan) {
+        if(Math.abs(powerRight) >= deadband) {
             right.set(ControlMode.PercentOutput, powerRight);
         }
     }
