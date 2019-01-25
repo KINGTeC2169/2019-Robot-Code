@@ -8,21 +8,21 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.Controls;
-import frc.robot.subsystems.DriveTrain;
+//import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Superstructure;
 
 
 public class Robot extends TimedRobot {
 
     Superstructure superstructure;
-    DriveTrain driveTrain;
+    //DriveTrain driveTrain;
     Controls controls;
 
     @Override
     public void robotInit() {
         superstructure = new Superstructure();
         superstructure.robotInit();
-        driveTrain = new DriveTrain();
+//        driveTrain = new DriveTrain();
         controls = new Controls();
     }
 
@@ -43,8 +43,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         superstructure.subsystemLooper();
-        driveTrain.drive(controls.getLeftjoyAxis(), controls.getRightjoyAxis());
-        driveTrain.shift(controls.getLowGearButton(), controls.getHighGearButton());
+//        driveTrain.drive(controls.getLeftjoyAxis(), controls.getRightjoyAxis());
+//        driveTrain.shift(controls.getLowGearButton(), controls.getHighGearButton());
     }
 
     @Override

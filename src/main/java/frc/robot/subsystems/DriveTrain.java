@@ -8,6 +8,7 @@ import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
 
 public class DriveTrain {
+
     private DoubleSolenoid solenoid;
     private TalonSRX left;
     private TalonSRX right;

@@ -1,8 +1,0 @@
-\.gradle/
-\.idea/
-\.vscode/
-\build/
-\out/
-*.dll
-
-build/classes/java/main/frc/managers/camera/
