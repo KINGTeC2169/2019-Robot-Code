@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.operationCommands.IntakeCommand;
 import frc.robot.util.Constants;
-import frc.robot.util.ControlMap;
 
 public class Intake extends Subsystem {
 
@@ -28,18 +28,17 @@ public class Intake extends Subsystem {
         DriverStation.reportWarning("Intake motor power: " + motorPower + " Jaws Open: " + jawsOpen + " Punch Out: " + punchOut, false);
     }
 
-    @Override
-    public void handle() {
+    public void handle(IntakeCommand command) {
 
         //Handles deadband and control for intake
-        if (Math.abs(ControlMap.getOperatorStickY()) >= Constants.intakeDeadband) {
-            runIntake(ControlMap.getOperatorStickY());
+        if (Math.abs(command.getStickY()) >= Constants.intakeDeadband) {
+            runIntake(command.getStickY());
         } else {
             runIntake(0);
         }
 
         //Handles the punch piston and the threshold latch for the jaws
-        if (ControlMap.getOperatorStickY() >= Constants.exhaustTreshold) {
+        if (command.getStickY() >= Constants.exhaustThreshold) {
             if (!thresholdLatch) {
                 jawsOpen = true;
             }
@@ -51,7 +50,7 @@ public class Intake extends Subsystem {
         }
 
         //Handles the trigger latch for the jaws
-        if (ControlMap.getOperatorTrigger()) {
+        if (command.getTrigger()) {
             if (!triggerLatch) {
                 jawsOpen = !jawsOpen;
             }

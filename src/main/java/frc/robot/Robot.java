@@ -7,7 +7,7 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.subsystems.Controls;
+import frc.robot.util.Controls;
 //import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Superstructure;
 

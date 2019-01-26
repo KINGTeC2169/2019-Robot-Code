@@ -9,4 +9,7 @@ public class ActuatorMap {
     public static final int driveTrainRight = 3;
     public static final int driveTrainRightTop = 4;
     public static final int driveTrainRightBottom = 5;
+    public static final int wristPort = 6;
+    public static final int armMaster = 7;
+    public static final int armSlave = 8;
 }
