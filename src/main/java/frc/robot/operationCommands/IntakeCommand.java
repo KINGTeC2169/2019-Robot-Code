@@ -2,24 +2,21 @@ package frc.robot.operationCommands;
 
 public class IntakeCommand {
 
-    public double stickY;
-    public boolean trigger;
+    private double stickY;
+    private boolean trigger;
+
+    IntakeCommand(double stickY, boolean trigger){
+        this.stickY = stickY;
+        this.trigger = trigger;
+    }
 
 
     public double getStickY() {
         return stickY;
     }
 
-    public void setStickY(double stickY) {
-        this.stickY = stickY;
-    }
-
     public boolean getTrigger() {
         return trigger;
-    }
-
-    public void setTrigger(boolean trigger) {
-        this.trigger = trigger;
     }
 
 }

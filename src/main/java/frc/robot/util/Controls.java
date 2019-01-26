@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Controls {
 
-    private int leftjoyPort = 0;
-    private int rightjoyPort = 1;
-    private int operatorJoyPort = 2;
+    private final int leftjoyPort = 0;
+    private final int rightjoyPort = 1;
+    private final int operatorJoyPort = 2;
 
     private Joystick leftjoy;
     private Joystick rightjoy;
@@ -33,7 +33,6 @@ public class Controls {
     public boolean getHighGearButton() {
         return rightjoy.getRawButtonPressed(3) || rightjoy.getRawButtonPressed(3);
     }
-
 
     public double getOperatorStickY(){
         return operator.getRawAxis(1);

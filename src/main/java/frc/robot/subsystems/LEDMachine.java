@@ -6,7 +6,7 @@ public class LEDMachine extends Subsystem {
         RED, GREEN, BLUE, ORANGE, YELLOW, WHITE, PURPLE
     }
 
-    LEDColor colorState;
+    LEDColor colorState = LEDColor.WHITE;
 
     void setColorState(LEDColor colorState){
         this.colorState = colorState;
