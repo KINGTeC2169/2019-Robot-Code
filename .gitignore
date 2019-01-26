@@ -3,3 +3,9 @@
 
 
 \.idea/
+
+build/libs/
+
+build/classes/java/main/frc/robot/subsystems/
+
+build/classes/java/main/frc/robot/util/

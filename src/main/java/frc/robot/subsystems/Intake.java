@@ -19,8 +19,8 @@ public class Intake extends Subsystem {
 
     Intake() {
 
-        jaws = new DoubleSolenoid(0,0,0);
-        punch = new DoubleSolenoid(0,0,0);
+        jaws = new DoubleSolenoid(0,1,0);
+        punch = new DoubleSolenoid(0,2,3);
 
     }
 

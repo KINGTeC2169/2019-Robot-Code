@@ -12,19 +12,18 @@ public class Superstructure {
     private LEDMachine led;
     private Wrist wrist;
 
-    private Compressor comp;
-
     public Superstructure() {
         // Initialize Subsystems
         arm = new Arm();
         intake = new Intake();
         led = new LEDMachine();
         wrist = new Wrist();
+
     }
 
     public void robotInit() {
+        Compressor comp = new Compressor(ActuatorMap.PCMPort);
         comp.start();
-        comp = new Compressor(ActuatorMap.PCMPort);
     }
 
     public void subsystemLooper() {
