@@ -8,25 +8,16 @@ import frc.robot.util.ControlMap;
 
 public class Intake extends Subsystem {
 
-    DoubleSolenoid jaws;
-    DoubleSolenoid punch;
+    private DoubleSolenoid jaws;
+    private DoubleSolenoid punch;
 
-    boolean jawsOpen = true;
-    boolean punchOut = false;
+    private boolean jawsOpen = true;
+    private boolean punchOut = false;
 
-    boolean triggerLatch = false;
-    boolean thresholdLatch = false;
+    private boolean triggerLatch = false;
+    private boolean thresholdLatch = false;
 
-    double threshold;
-    double intakeDeadband;
-
-    ControlMap cm = new ControlMap();
-    Constants c = new Constants();
-
-    public Intake() {
-
-        intakeDeadband = c.intakeDeadband;
-        threshold = c.exhaustTreshold;
+    Intake() {
 
         jaws = new DoubleSolenoid(0,0,0);
         punch = new DoubleSolenoid(0,0,0);
@@ -41,14 +32,14 @@ public class Intake extends Subsystem {
     public void handle() {
 
         //Handles deadband and control for intake
-        if (Math.abs(cm.getOperatorStickY()) >= intakeDeadband) {
-            runIntake(cm.getOperatorStickY());
+        if (Math.abs(ControlMap.getOperatorStickY()) >= Constants.intakeDeadband) {
+            runIntake(ControlMap.getOperatorStickY());
         } else {
             runIntake(0);
         }
 
         //Handles the punch piston and the threshold latch for the jaws
-        if (cm.getOperatorStickY() >= threshold) {
+        if (ControlMap.getOperatorStickY() >= Constants.exhaustTreshold) {
             if (!thresholdLatch) {
                 jawsOpen = true;
             }
@@ -60,7 +51,7 @@ public class Intake extends Subsystem {
         }
 
         //Handles the trigger latch for the jaws
-        if (cm.getOperatorTrigger()) {
+        if (ControlMap.getOperatorTrigger()) {
             if (!triggerLatch) {
                 jawsOpen = !jawsOpen;
             }

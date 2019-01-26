@@ -12,11 +12,8 @@ public class DriveTrain {
     private DoubleSolenoid solenoid;
     private TalonSRX left;
     private TalonSRX right;
-    private double deadband;
-
     public DriveTrain(){
         solenoid = new DoubleSolenoid(0, 0, 0);
-        deadband = Constants.driveTrainDeadband;
 
         left = new TalonSRX(ActuatorMap.driveTrainLeft);
         TalonSRX leftTop = new TalonSRX(ActuatorMap.driveTrainLeftTop);
@@ -32,10 +29,10 @@ public class DriveTrain {
     }
 
     public void drive(double powerLeft, double powerRight) {
-        if(Math.abs(powerLeft) >= deadband) {
+        if(Math.abs(powerLeft) >= Constants.driveTrainDeadband) {
             left.set(ControlMode.PercentOutput, powerLeft);
         }
-        if(Math.abs(powerRight) >= deadband) {
+        if(Math.abs(powerRight) >= Constants.driveTrainDeadband) {
             right.set(ControlMode.PercentOutput, powerRight);
         }
     }
