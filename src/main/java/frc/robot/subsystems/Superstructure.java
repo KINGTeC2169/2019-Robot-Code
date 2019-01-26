@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.operationCommands.IntakeCommand;
+import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 
 public class Superstructure {
@@ -26,14 +27,10 @@ public class Superstructure {
         comp.start();
     }
 
-    public void subsystemLooper() {
-        handleSubsystems();
-    }
-
-    private void handleSubsystems() {
+    public void handleSubsystems(SuperstructureCommand command) {
         arm.handle();
         //TODO Actual Command Structure
-        intake.handle(new IntakeCommand());
+        intake.handle(command.getIntakeCommand());
         led.handle();
         wrist.handle();
     }

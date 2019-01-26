@@ -11,7 +11,7 @@ public class Wrist extends Subsystem {
         SNAP_TO_ARM, STOW_HIGH, STOW_LOW, PARALLEL_TO_GROUND
     }
 
-    private WristState wristState;
+    private WristState wristState = WristState.SNAP_TO_ARM;
 
     public void setWristState(WristState wristState){
         this.wristState = wristState;
