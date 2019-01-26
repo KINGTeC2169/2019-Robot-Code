@@ -6,16 +6,36 @@ public class LEDMachine extends Subsystem {
         RED, GREEN, BLUE, ORANGE, YELLOW, WHITE, PURPLE
     }
 
-    public LEDMachine(){
+    LEDColor colorState;
 
+    void setColorState(LEDColor colorState){
+        this.colorState = colorState;
     }
 
-    public void setLEDState(){
+    public LEDMachine(){
 
     }
 
     @Override
     public void handle() {
+
+        switch(colorState){
+
+            case RED:
+                break;
+            case GREEN:
+                break;
+            case BLUE:
+                break;
+            case ORANGE:
+                break;
+            case YELLOW:
+                break;
+            case WHITE:
+                break;
+            case PURPLE:
+                break;
+        }
 
     }
 
