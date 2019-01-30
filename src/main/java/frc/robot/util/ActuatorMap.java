@@ -1,8 +1,13 @@
 package frc.robot.util;
 
 public class ActuatorMap {
-    public static final int PCMPort = 0;
 
+    //Airports
+    public static final int pcmPort = 12;
+    public static final int driveShiftForward = 0;
+    public static final int driveShiftReverse = 0;
+
+    //Motor Controller CAN IDs
     public static final int driveTrainLeft = 0;
     public static final int driveTrainLeftTop = 1;
     public static final int driveTrainLeftBottom = 2;

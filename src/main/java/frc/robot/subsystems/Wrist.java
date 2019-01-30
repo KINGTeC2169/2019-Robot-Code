@@ -1,13 +1,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 
 public class Wrist extends Subsystem {
 
     TalonSRX wristMotor;
 
-    enum WristState{
+    public enum WristState{
         SNAP_TO_ARM, STOW_HIGH, STOW_LOW, PARALLEL_TO_GROUND
     }
 
@@ -23,7 +24,7 @@ public class Wrist extends Subsystem {
 
     }
 
-    public void handle() {
+    public void handle(SuperstructureCommand sCommand) {
 
         switch(wristState){
 
