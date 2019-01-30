@@ -4,7 +4,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.operationCommands.IntakeCommand;
+import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
 
@@ -21,10 +23,18 @@ public class Intake extends Subsystem {
     private boolean triggerLatch = false;
     private boolean thresholdLatch = false;
 
+    private boolean hasBall = false;
+
+    Ultrasonic proxSensor;
+
     Intake() {
+
+        proxSensor = new Ultrasonic(ActuatorMap.intakeProxPing, ActuatorMap.intakeProxEcho);
+        proxSensor.setDistanceUnits(Ultrasonic.Unit.kInches);
 
         jaws = new DoubleSolenoid(0,1,0);
         punch = new DoubleSolenoid(0,2,3);
+
         left = new VictorSPX(ActuatorMap.intakeLeft);
         right = new VictorSPX(ActuatorMap.intakeRight);
 
@@ -37,7 +47,10 @@ public class Intake extends Subsystem {
 
     }
 
-    void handle(IntakeCommand command) {
+    void handle(SuperstructureCommand sCommand) {
+
+        //Grab intake specific command from Superstructure
+        IntakeCommand command = sCommand.getIntakeCommand();
 
         //Handles deadband and control for intake
         if (Math.abs(command.getStickY()) >= Constants.intakeDeadband) {
@@ -93,6 +106,14 @@ public class Intake extends Subsystem {
             }
             punch.set(Value.kReverse);
         }
+    }
+
+    private boolean getHasBall(){
+        if(proxSensor.isRangeValid()){
+            return proxSensor.getRangeInches() < Constants.intakeProxUpperBound &&
+                    proxSensor.getRangeInches() > Constants.intakeProxLowerBound;
+        }
+        return false;
     }
 
     @Override
