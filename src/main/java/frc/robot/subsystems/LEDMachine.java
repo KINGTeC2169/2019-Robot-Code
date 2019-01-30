@@ -1,24 +1,24 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Spark;
+import frc.robot.operationCommands.SuperstructureCommand;
+import frc.robot.util.ActuatorMap;
+
 public class LEDMachine extends Subsystem {
 
     public enum LEDState {
         RED, GREEN, BLUE, ORANGE, YELLOW, WHITE, PURPLE
     }
 
-    LEDState colorState = LEDState.WHITE;
+    Spark ledSpark;
 
-    void setColorState(LEDState colorState){
-        this.colorState = colorState;
+    LEDMachine(){
+        ledSpark = new Spark(ActuatorMap.ledSparkPWMPort);
     }
 
-    public LEDMachine(){
+    void handle(SuperstructureCommand sCommand) {
 
-    }
-
-    public void handle() {
-
-        switch(colorState){
+        switch(sCommand.getLedState()){
 
             case RED:
                 break;
