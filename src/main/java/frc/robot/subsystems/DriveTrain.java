@@ -2,50 +2,70 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import frc.robot.operationCommands.DriveCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
 
 public class DriveTrain {
 
-    private DoubleSolenoid solenoid;
+    private DoubleSolenoid dogShift;
     private TalonSRX left;
     private TalonSRX right;
 
     public DriveTrain(){
-        solenoid = new DoubleSolenoid(0, 0, 0);
+
+        dogShift = new DoubleSolenoid(ActuatorMap.pcmPort, ActuatorMap.driveShiftForward, ActuatorMap.driveShiftReverse);
 
         left = new TalonSRX(ActuatorMap.driveTrainLeft);
-        TalonSRX leftTop = new TalonSRX(ActuatorMap.driveTrainLeftTop);
-        TalonSRX leftBottom = new TalonSRX(ActuatorMap.driveTrainLeftBottom);
+        VictorSPX leftTop = new VictorSPX(ActuatorMap.driveTrainLeftTop);
+        VictorSPX leftBottom = new VictorSPX(ActuatorMap.driveTrainLeftBottom);
         leftTop.set(ControlMode.Follower, ActuatorMap.driveTrainLeft);
         leftBottom.set(ControlMode.Follower, ActuatorMap.driveTrainLeft);
 
         right = new TalonSRX(ActuatorMap.driveTrainRight);
-        TalonSRX rightTop = new TalonSRX(ActuatorMap.driveTrainRightTop);
-        TalonSRX rightBottom = new TalonSRX(ActuatorMap.driveTrainRightBottom);
+        VictorSPX rightTop = new VictorSPX(ActuatorMap.driveTrainRightTop);
+        VictorSPX rightBottom = new VictorSPX(ActuatorMap.driveTrainRightBottom);
         rightTop.set(ControlMode.Follower, ActuatorMap.driveTrainRight);
         rightBottom.set(ControlMode.Follower, ActuatorMap.driveTrainRight);
     }
 
-    public void drive(double powerLeft, double powerRight) {
-        if(Math.abs(powerLeft) >= Constants.driveTrainDeadband) {
-            left.set(ControlMode.PercentOutput, powerLeft);
+    public void handle(DriveCommand dCommand) {
+        if(dCommand.isVisionDriving()){
+            visionDriving(dCommand);
         }
-        if(Math.abs(powerRight) >= Constants.driveTrainDeadband) {
-            right.set(ControlMode.PercentOutput, powerRight);
+        else{
+            drive(dCommand);
+        }
+
+        shift(dCommand);
+
+    }
+
+    private void shift(DriveCommand dCommand){
+        dogShift.set(Value.kForward);
+        if (dCommand.isShiftUp()){
+            dogShift.set(Value.kReverse);
+        }
+        if(dCommand.isShiftDown()){
+            dogShift.set(Value.kForward);
         }
     }
 
-    public void shift(boolean low, boolean high){
-        solenoid.set(Value.kForward);
-        if (high){
-            solenoid.set(Value.kReverse);
+    private void drive(DriveCommand dCommand){
+        if(Math.abs(dCommand.getLeftDrive()) >= Constants.driveTrainDeadband) {
+            left.set(ControlMode.PercentOutput, dCommand.getLeftDrive());
         }
-        if(low){
-            solenoid.set(Value.kForward);
+        if(Math.abs(dCommand.getRightDrive()) >= Constants.driveTrainDeadband) {
+            right.set(ControlMode.PercentOutput, dCommand.getRightDrive());
         }
+    }
+
+    private void visionDriving(DriveCommand dCommand){
+        dCommand.getVisionYaw();
+        //Vision Driving Code
     }
 
 }
