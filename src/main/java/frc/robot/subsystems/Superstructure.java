@@ -23,15 +23,15 @@ public class Superstructure {
     }
 
     public void robotInit() {
-        Compressor comp = new Compressor(ActuatorMap.PCMPort);
+        Compressor comp = new Compressor(ActuatorMap.pcmPort);
         comp.start();
     }
 
     public void handleSubsystems(SuperstructureCommand command) {
         arm.handle(command);
         //TODO Actual Command Structure
-        intake.handle(command.getIntakeCommand());
-        led.handle();
+        intake.handle(command);
+        led.handle(command);
         wrist.handle(command);
     }
 

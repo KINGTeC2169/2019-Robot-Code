@@ -6,7 +6,7 @@ import frc.robot.util.ActuatorMap;
 
 public class Wrist extends Subsystem {
 
-    TalonSRX wristMotor;
+    private TalonSRX wristMotor;
 
     public enum WristState{
         SNAP_TO_ARM, STOW_HIGH, STOW_LOW, PARALLEL_TO_GROUND
@@ -14,19 +14,15 @@ public class Wrist extends Subsystem {
 
     private WristState wristState = WristState.SNAP_TO_ARM;
 
-    public void setWristState(WristState wristState){
-        this.wristState = wristState;
-    }
-
-    public Wrist() {
+    Wrist() {
 
         wristMotor = new TalonSRX(ActuatorMap.wristPort);
 
     }
 
-    public void handle(SuperstructureCommand sCommand) {
+    void handle(SuperstructureCommand sCommand) {
 
-        switch(wristState){
+        switch(sCommand.getWristState()){
 
             case SNAP_TO_ARM:
                 break;
@@ -37,6 +33,8 @@ public class Wrist extends Subsystem {
             case PARALLEL_TO_GROUND:
                 break;
         }
+
+        wristState = sCommand.getWristState();
 
     }
 

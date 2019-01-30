@@ -42,6 +42,10 @@ public class DriveTrain {
 
         shift(dCommand);
 
+        if(Constants.debugMode){
+            printData();
+        }
+
     }
 
     private void shift(DriveCommand dCommand){
@@ -66,6 +70,14 @@ public class DriveTrain {
     private void visionDriving(DriveCommand dCommand){
         dCommand.getVisionYaw();
         //Vision Driving Code
+    }
+
+    private void printData(){
+        System.out.println("------------------");
+        System.out.println("Drive Train Data:");
+        System.out.println("Left Motor Position: " + left.getSelectedSensorPosition());
+        System.out.println("Right Motor Position: " + right.getSelectedSensorPosition());
+        System.out.println("------------------");
     }
 
 }

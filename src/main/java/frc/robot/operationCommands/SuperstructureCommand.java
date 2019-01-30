@@ -15,6 +15,18 @@ public class SuperstructureCommand {
         this.intakeCommand = intakeCommand;
     }
 
+    public Wrist.WristState getWristState() {
+        return wristState;
+    }
+
+    public ScoreState getScoreState() {
+        return scoreState;
+    }
+
+    public LEDMachine.LEDState getLedState(){
+        return ledState;
+    }
+
     public IntakeCommand getIntakeCommand(){
         return intakeCommand;
     }
