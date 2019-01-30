@@ -12,6 +12,7 @@ public class DriveTrain {
     private DoubleSolenoid solenoid;
     private TalonSRX left;
     private TalonSRX right;
+
     public DriveTrain(){
         solenoid = new DoubleSolenoid(0, 0, 0);
 

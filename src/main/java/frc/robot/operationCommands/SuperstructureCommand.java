@@ -1,12 +1,14 @@
 package frc.robot.operationCommands;
 
+import frc.robot.subsystems.LEDMachine;
+
 public class SuperstructureCommand {
 
     private IntakeCommand intakeCommand;
-    LEDCommand ledCommand;
     ScoreState scoreState;
     double currentArmPos;
     double currentWristPos;
+    LEDMachine.LEDState ledState;
 
 
     SuperstructureCommand(IntakeCommand intakeCommand){

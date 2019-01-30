@@ -2,13 +2,13 @@ package frc.robot.subsystems;
 
 public class LEDMachine extends Subsystem {
 
-    public enum LEDColor{
+    public enum LEDState {
         RED, GREEN, BLUE, ORANGE, YELLOW, WHITE, PURPLE
     }
 
-    LEDColor colorState = LEDColor.WHITE;
+    LEDState colorState = LEDState.WHITE;
 
-    void setColorState(LEDColor colorState){
+    void setColorState(LEDState colorState){
         this.colorState = colorState;
     }
 
