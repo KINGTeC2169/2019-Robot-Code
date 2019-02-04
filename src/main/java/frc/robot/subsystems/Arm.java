@@ -20,7 +20,7 @@ public class Arm extends Subsystem{
         armSlave.set(ControlMode.Follower, ActuatorMap.armMaster);
 
         /* Factory default hardware to prevent unexpected behavior */
-        this.arm.configFactoryDefault();
+        arm.configFactoryDefault();
 
         /* Configure Sensor Source for Pirmary PID */
         arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
@@ -57,7 +57,7 @@ public class Arm extends Subsystem{
     }
 
     public void handle(SuperstructureCommand sCommand) {
-
+        arm.set(ControlMode.MotionMagic, )
     }
 
     @Override
