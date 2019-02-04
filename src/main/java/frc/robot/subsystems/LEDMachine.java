@@ -1,38 +1,40 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.AnalogOutput;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 
 public class LEDMachine extends Subsystem {
 
     public enum LEDState {
-        RED, GREEN, BLUE, ORANGE, YELLOW, WHITE, PURPLE
+        SOLID_BLUE,BLINKING_BLUE,SOLID_GREEN,BLINKING_GREEN,SOLID_PINK,BLINKING_PINK,NORMAL
     }
 
-    Spark ledSpark;
+    private AnalogOutput ledOut;
 
     LEDMachine(){
-        ledSpark = new Spark(ActuatorMap.ledSparkPWMPort);
+
+        ledOut = new AnalogOutput(ActuatorMap.ledAnalogOutChannel);
+
     }
 
     void handle(SuperstructureCommand sCommand) {
 
         switch(sCommand.getLedState()){
 
-            case RED:
+            case SOLID_BLUE:
                 break;
-            case GREEN:
+            case BLINKING_BLUE:
                 break;
-            case BLUE:
+            case SOLID_GREEN:
                 break;
-            case ORANGE:
+            case BLINKING_GREEN:
                 break;
-            case YELLOW:
+            case SOLID_PINK:
                 break;
-            case WHITE:
+            case BLINKING_PINK:
                 break;
-            case PURPLE:
+            case NORMAL:
                 break;
         }
 

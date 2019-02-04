@@ -21,7 +21,7 @@ public class ActuatorMap {
     public static final int intakeRight = 10;
 
     //PWM Ports
-    public static final int ledSparkPWMPort = 0;
+    public static final int ledAnalogOutChannel = 0;
     public static final int intakeProxPing = 1;
     public static final int intakeProxEcho = 2;
 
