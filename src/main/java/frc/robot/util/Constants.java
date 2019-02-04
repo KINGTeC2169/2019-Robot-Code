@@ -27,7 +27,7 @@ public class Constants {
 
 
     public static int degreesToTicks(double deg){
-        return (int) ((1024.0/360.0) * deg);
+        return (int) (deg * 1024.0/360.0);
     }
 
     public static class ArmPositions {
