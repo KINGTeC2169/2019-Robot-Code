@@ -25,6 +25,17 @@ public class Constants {
     public static final int armMaxVel = 0;
     public static final int armMaxAccel = 0;
 
+    public static final int wristSlotIdx = 0;
+    public static final int wristPIDLoopIdx = 0;
+    public static final int wristTimeoutMs = 10;
+    public static final double wristP = 0;
+    public static final double wristI = 0;
+    public static final double wristD = 0;
+    public static final double wristF = 0;
+    public static final int wristMaxVel = 0;
+    public static final int wristMaxAccel = 0;
+
+
 
     public static int degreesToTicks(double deg){
         return (int) (deg * 1024.0/360.0);

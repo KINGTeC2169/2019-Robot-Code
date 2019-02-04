@@ -57,7 +57,7 @@ public class Arm extends Subsystem{
     }
 
     public void handle(SuperstructureCommand sCommand) {
-        arm.set(ControlMode.MotionMagic, )
+        arm.set(ControlMode.MotionMagic, );
     }
 
     @Override
