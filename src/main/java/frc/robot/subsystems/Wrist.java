@@ -78,7 +78,7 @@ public class Wrist extends Subsystem {
 
     @Override
     public void zeroSensors() {
-
+        wristMotor.setSelectedSensorPosition(Constants.wristZeroPos, Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
     }
 
     @Override

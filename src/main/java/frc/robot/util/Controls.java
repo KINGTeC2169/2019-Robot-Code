@@ -2,6 +2,7 @@ package frc.robot.util;
 
 import edu.wpi.first.wpilibj.Joystick;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class Controls {
 
     private final int leftjoyPort = 0;
@@ -10,12 +11,13 @@ public class Controls {
 
     private Joystick leftjoy;
     private Joystick rightjoy;
-    private Joystick operator;
+    private Joystick operatorStick;
+    private Joystick operatorPanel;
 
     public Controls() {
         leftjoy = new Joystick(leftjoyPort);
         rightjoy = new Joystick(rightjoyPort);
-        operator = new Joystick(operatorJoyPort);
+        operatorStick = new Joystick(operatorJoyPort);
     }
 
     public double getLeftjoyAxis(){
@@ -31,15 +33,19 @@ public class Controls {
     }
 
     public boolean getHighGearButton() {
-        return rightjoy.getRawButtonPressed(3) || rightjoy.getRawButtonPressed(3);
+        return leftjoy.getRawButtonPressed(3) || rightjoy.getRawButtonPressed(3);
     }
 
     public double getOperatorStickY(){
-        return operator.getRawAxis(1);
+        return operatorStick.getRawAxis(1);
     }
 
     public boolean getOperatorTrigger() {
-        return operator.getTrigger();
+        return operatorStick.getTrigger();
+    }
+
+    public double getOperatorPanelState(){
+        return operatorPanel.getRawAxis(0);
     }
 
 }

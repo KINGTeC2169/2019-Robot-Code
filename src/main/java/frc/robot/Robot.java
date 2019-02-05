@@ -8,16 +8,19 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.operationCommands.CommandMachine;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Superstructure;
 
 
 public class Robot extends TimedRobot {
 
     private Superstructure superstructure;
+    private DriveTrain driveTrain;
     private CommandMachine commandMachine;
 
     @Override
     public void robotInit() {
+        driveTrain = new DriveTrain();
         superstructure = new Superstructure();
         superstructure.robotInit();
 //        driveTrain = new DriveTrain();
@@ -32,6 +35,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         superstructure.handleSubsystems(commandMachine.generateSuperstructureCommand());
+        driveTrain.handle(commandMachine.generateDriveCommand());
     }
 
     @Override

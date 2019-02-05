@@ -15,6 +15,7 @@ public class Constants {
     // Drivetrain Constants
     public static final double driveTrainDeadband = 0.1;
 
+    //Arm Constants
     public static final int armSlotIdx = 0;
     public static final int armPIDLoopIdx = 0;
     public static final int armTimeoutMs = 10;
@@ -24,7 +25,9 @@ public class Constants {
     public static final double armF = 0;
     public static final int armMaxVel = 0;
     public static final int armMaxAccel = 0;
+    public static final int armZeroPos = 0;
 
+    //Wrist Constants
     public static final int wristSlotIdx = 0;
     public static final int wristPIDLoopIdx = 0;
     public static final int wristTimeoutMs = 10;
@@ -34,7 +37,7 @@ public class Constants {
     public static final double wristF = 0;
     public static final int wristMaxVel = 0;
     public static final int wristMaxAccel = 0;
-
+    public static final int wristZeroPos = 0;
 
 
     public static int degreesToTicks(double deg){

@@ -6,12 +6,12 @@ import frc.robot.subsystems.Wrist;
 public class SuperstructureCommand {
 
     private IntakeCommand intakeCommand;
-    ScoreState scoreState;
-    Wrist.WristState wristState;
-    LEDMachine.LEDState ledState;
+    private ScoreState scoreState;
+    private Wrist.WristState wristState;
+    private LEDMachine.LEDState ledState;
 
 
-    SuperstructureCommand(IntakeCommand intakeCommand){
+    SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState){
         this.intakeCommand = intakeCommand;
     }
 

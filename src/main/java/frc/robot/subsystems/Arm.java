@@ -11,9 +11,9 @@ import frc.robot.util.Constants;
 
 public class Arm extends Subsystem{
 
-    TalonSRX arm;
+    private TalonSRX arm;
 
-    public Arm() {
+    Arm() {
 
         arm = new TalonSRX(ActuatorMap.armMaster);
         VictorSPX armSlave = new VictorSPX(ActuatorMap.armSlave);
@@ -56,13 +56,13 @@ public class Arm extends Subsystem{
 
     }
 
-    public void handle(SuperstructureCommand sCommand) {
-        arm.set(ControlMode.MotionMagic, );
+    void handle(SuperstructureCommand sCommand) {
+        arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmAngle());
     }
 
     @Override
     public void zeroSensors() {
-        arm.setSelectedSensorPosition(0,0,10);
+        arm.setSelectedSensorPosition(Constants.armZeroPos,Constants.armPIDLoopIdx,Constants.armTimeoutMs);
     }
 
     @Override
