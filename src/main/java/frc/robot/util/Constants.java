@@ -45,24 +45,24 @@ public class Constants {
     }
 
     public static class ArmPositions {
-        public static double frontCargoStowed = 0;
-        public static double frontHatchStowed = 0;
+        public static double frontCargoStowed = 90;
+        public static double frontHatchStowed = 90;
         public static double frontCargoIntake = 0;
-        public static double frontHatchIntake = 0;
+        public static double frontHatchIntake = -120;
         public static double backCargoIntake = 0;
-        public static double backHatchIntake = 0;
-        public static double frontCargoLow = 0;
-        public static double frontCargoMid = 0;
-        public static double frontCargoHi = 0;
-        public static double backCargoLow = 0;
-        public static double backCargoMid = 0;
-        public static double backCargoHi = 0;
-        public static double frontHatchLow = 0;
-        public static double frontHatchMid = 0;
-        public static double frontHatchHi = 0;
-        public static double backHatchLow = 0;
-        public static double backHatchMid = 0;
-        public static double backHatchHi = 0;
+        public static double backHatchIntake = -120;
+        public static double frontCargoLow = -147;
+        public static double frontCargoMid = 160;
+        public static double frontCargoHi = 120;
+        public static double backCargoLow = -147;
+        public static double backCargoMid = 160;
+        public static double backCargoHi = 120;
+        public static double frontHatchLow = -120;
+        public static double frontHatchMid = 175;
+        public static double frontHatchHi = 100;
+        public static double backHatchLow = -120;
+        public static double backHatchMid = 175;
+        public static double backHatchHi = 100;
     }
 
 }

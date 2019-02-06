@@ -23,7 +23,6 @@ public class Robot extends TimedRobot {
         driveTrain = new DriveTrain();
         superstructure = new Superstructure();
         superstructure.robotInit();
-//        driveTrain = new DriveTrain();
         commandMachine = new CommandMachine();
     }
 
