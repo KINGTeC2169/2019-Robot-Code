@@ -8,12 +8,19 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.networking.VisionServer;
+
+import java.io.IOException;
 
 public final class Main {
+
     private Main() {
     }
 
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException {
+        VisionServer server = new VisionServer();
+        Thread vThread= new Thread(server::spawnVisionThread);
+        vThread.start();
         RobotBase.startRobot(Robot::new);
     }
 }
