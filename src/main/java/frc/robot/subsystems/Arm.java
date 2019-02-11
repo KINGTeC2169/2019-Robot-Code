@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
@@ -59,9 +60,11 @@ public class Arm extends Subsystem{
     void handle(SuperstructureCommand sCommand) {
         if(sCommand.getOperatorOverride().getOverrideActive()){
             arm.set(ControlMode.PercentOutput, sCommand.getOperatorOverride().getLeftVal());
+            SmartDashboard.putNumber("Arm Position", -1);
         }
         else{
             arm.set(ControlMode.MotionMagic, Constants.degreesToTicks(sCommand.getScoreState().getArmAngle()));
+            SmartDashboard.putNumber("Arm Position", sCommand.getScoreState().getArmAngle());
         }
     }
 

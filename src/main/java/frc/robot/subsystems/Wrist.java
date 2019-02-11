@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
@@ -64,6 +65,7 @@ public class Wrist extends Subsystem {
 
         if(sCommand.getOperatorOverride().getOverrideActive()){
             wristMotor.set(ControlMode.PercentOutput, sCommand.getOperatorOverride().getRightVal());
+            SmartDashboard.putNumber("Wrist Angle", -1);
         }
 
         else {
@@ -94,6 +96,8 @@ public class Wrist extends Subsystem {
                     break;
 
             }
+
+            SmartDashboard.putNumber("Wrist Angle", wristAngle);
 
             wristMotor.set(ControlMode.MotionMagic, Constants.degreesToTicks(wristAngle));
         }
