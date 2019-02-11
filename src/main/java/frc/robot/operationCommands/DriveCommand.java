@@ -8,12 +8,14 @@ public class DriveCommand {
     private boolean shiftUp;
     private boolean shiftDown;
     private boolean visionDriving;
+    private boolean rightTrigger;
 
-    DriveCommand(double leftDrive, double rightDrive, boolean shiftUp, boolean shiftDown){
+    DriveCommand(double leftDrive, double rightDrive, boolean shiftUp, boolean shiftDown, boolean rightTrigger){
         this.leftDrive = leftDrive;
         this.rightDrive = rightDrive;
         this.shiftUp = shiftUp;
         this.shiftDown = shiftDown;
+        this.rightTrigger = rightTrigger;
     }
 
     public void setVisionData(double visionYaw, double isVisionDriving){
@@ -45,7 +47,7 @@ public class DriveCommand {
     }
 
     public boolean isVisionDriving() {
-        return visionDriving;
+        return rightTrigger;
     }
 
 

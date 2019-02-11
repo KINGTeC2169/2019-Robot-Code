@@ -4,8 +4,10 @@ import frc.robot.util.Constants;
 
 public class ScoreState {
 
-    ScoreState(double operatorPanelState){
-
+    public ScoreState(RobotSide robotSide, GameElement gameElement, Position position){
+        this.robotSide = robotSide;
+        this.gameElement = gameElement;
+        this.position = position;
     }
 
     public enum RobotSide {
@@ -98,4 +100,19 @@ public class ScoreState {
         return 0;
 
     }
+
+
+    public RobotSide getRobotSide() {
+        return robotSide;
+    }
+
+    public GameElement getGameElement() {
+        return gameElement;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+
 }

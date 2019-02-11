@@ -26,6 +26,7 @@ public class Constants {
     public static final int armMaxVel = 0;
     public static final int armMaxAccel = 0;
     public static final int armZeroPos = 0;
+    public static int armAllowedError = 3;
 
     //Wrist Constants
     public static final int wristSlotIdx = 0;
@@ -38,6 +39,7 @@ public class Constants {
     public static final int wristMaxVel = 0;
     public static final int wristMaxAccel = 0;
     public static final int wristZeroPos = 0;
+    public static int wristAllowedError = 3;
 
 
     public static int degreesToTicks(double deg){
@@ -63,6 +65,17 @@ public class Constants {
         public static double backHatchLow = -120;
         public static double backHatchMid = 175;
         public static double backHatchHi = 100;
+    }
+
+    public static class WristPositions {
+        public static double frontTopCargo = 0;
+        public static double backTopCargo = 0;
+        public static double frontIntake = 0;
+        public static double backIntake = 0;
+        public static double snap = 0;
+        public static double backToFront = 0;
+        public static double frontToBack = 0;
+
     }
 
 }

@@ -57,12 +57,16 @@ public class Arm extends Subsystem{
     }
 
     void handle(SuperstructureCommand sCommand) {
-        arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmAngle());
+        arm.set(ControlMode.MotionMagic, Constants.degreesToTicks(sCommand.getScoreState().getArmAngle()));
+    }
+
+    boolean isInPosition(){
+        return arm.getClosedLoopError() < Constants.armAllowedError;
     }
 
     @Override
     public void zeroSensors() {
-        arm.setSelectedSensorPosition(Constants.armZeroPos,Constants.armPIDLoopIdx,Constants.armTimeoutMs);
+        arm.setSelectedSensorPosition(Constants.degreesToTicks(Constants.armZeroPos),Constants.armPIDLoopIdx,Constants.armTimeoutMs);
     }
 
     @Override

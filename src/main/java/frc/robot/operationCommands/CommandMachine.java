@@ -17,7 +17,8 @@ public class CommandMachine {
     }
 
     public DriveCommand generateDriveCommand(){
-        return new DriveCommand(controls.getLeftjoyAxis(), controls.getRightjoyAxis(), controls.getLowGearButton(), controls.getHighGearButton());
+        return new DriveCommand(controls.getLeftjoyAxis(), controls.getRightjoyAxis(), controls.getLowGearButton(),
+                controls.getHighGearButton(), controls.getRightTrigger());
     }
 
     private IntakeCommand generateIntakeCommand(){
@@ -25,7 +26,7 @@ public class CommandMachine {
     }
 
     private ScoreState generateScoreState(){
-        return new ScoreState(controls.getOperatorPanelState());
+        return controls.getOperatorPanelState();
     }
 
 

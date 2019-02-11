@@ -33,8 +33,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousPeriodic() {
-        superstructure.handleSubsystems(commandMachine.generateSuperstructureCommand());
-        driveTrain.handle(commandMachine.generateDriveCommand());
     }
 
     @Override
@@ -44,12 +42,13 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         superstructure.handleSubsystems(commandMachine.generateSuperstructureCommand());
+        driveTrain.handle(commandMachine.generateDriveCommand());
     }
 
     @Override
     public void disabledInit() {
         superstructure.stop();
-
+        driveTrain.stop();
     }
 
     @Override

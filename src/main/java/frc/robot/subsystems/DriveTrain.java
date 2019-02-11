@@ -48,6 +48,17 @@ public class DriveTrain {
 
     }
 
+    private void turnInPlace(double turn){
+        left.set(ControlMode.PercentOutput, -turn);
+        right.set(ControlMode.PercentOutput, turn);
+    }
+
+
+    private void visionArcadeDrive(double throttle, double visionYaw){
+        left.set(ControlMode.PercentOutput, throttle - visionYaw);
+        left.set(ControlMode.PercentOutput, throttle + visionYaw);
+    }
+
     private void shift(DriveCommand dCommand){
         dogShift.set(Value.kForward);
         if (dCommand.isShiftUp()){
@@ -68,8 +79,13 @@ public class DriveTrain {
     }
 
     private void visionDriving(DriveCommand dCommand){
-        dCommand.getVisionYaw();
         //Vision Driving Code
+        if(Math.abs(dCommand.getLeftDrive()) > .1){
+            visionArcadeDrive(dCommand.getLeftDrive(), dCommand.getVisionYaw());
+        }
+        else{
+            turnInPlace(dCommand.getVisionYaw());
+        }
     }
 
     private void printData(){
@@ -78,6 +94,11 @@ public class DriveTrain {
         System.out.println("Left Motor Position: " + left.getSelectedSensorPosition());
         System.out.println("Right Motor Position: " + right.getSelectedSensorPosition());
         System.out.println("------------------");
+    }
+
+    public void stop(){
+        left.set(ControlMode.Disabled, 1);
+        right.set(ControlMode.Disabled, 1);
     }
 
 }

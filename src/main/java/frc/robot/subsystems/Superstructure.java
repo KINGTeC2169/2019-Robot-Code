@@ -29,7 +29,6 @@ public class Superstructure {
 
     public void handleSubsystems(SuperstructureCommand command) {
         arm.handle(command);
-        //TODO Actual Command Structure
         intake.handle(command);
         led.handle(command);
         wrist.handle(command);

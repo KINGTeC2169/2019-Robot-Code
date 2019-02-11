@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -12,10 +13,8 @@ public class Wrist extends Subsystem {
     private TalonSRX wristMotor;
 
     public enum WristState{
-        SNAP_TO_ARM, STOW_HIGH, STOW_LOW, PARALLEL_TO_GROUND
+        INTAKE_FRONT, INTAKE_BACK, HIGH_FRONT, HIGH_BACK, PARALLEL_TO_GROUND
     }
-
-    private WristState wristState = WristState.SNAP_TO_ARM;
 
     Wrist() {
 
@@ -33,8 +32,10 @@ public class Wrist extends Subsystem {
         wristMotor.setInverted(false);
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
-        wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.wristTimeoutMs);
-        wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.wristTimeoutMs);
+        wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,
+                10, Constants.wristTimeoutMs);
+        wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic,
+                10, Constants.wristTimeoutMs);
 
         /* Set the peak and nominal outputs */
         wristMotor.configNominalOutputForward(0, Constants.wristTimeoutMs);
@@ -54,31 +55,52 @@ public class Wrist extends Subsystem {
         wristMotor.configMotionAcceleration(Constants.wristMaxAccel, Constants.wristTimeoutMs);
 
         /* Zero the sensor */
-        wristMotor.setSelectedSensorPosition(0, Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
+        wristMotor.setSelectedSensorPosition(Constants.degreesToTicks(Constants.wristZeroPos),
+                Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
 
     }
 
     void handle(SuperstructureCommand sCommand) {
 
+        double wristAngle = Constants.wristZeroPos;
+
         switch(sCommand.getWristState()){
 
-            case SNAP_TO_ARM:
+            case INTAKE_FRONT:
+                wristAngle = Constants.WristPositions.frontIntake;
                 break;
-            case STOW_HIGH:
+            case INTAKE_BACK:
+                wristAngle = Constants.WristPositions.backIntake;
                 break;
-            case STOW_LOW:
+            case HIGH_FRONT:
+                wristAngle = Constants.WristPositions.frontTopCargo;
+                break;
+            case HIGH_BACK:
+                wristAngle = Constants.WristPositions.backTopCargo;
                 break;
             case PARALLEL_TO_GROUND:
+                double armAngle = sCommand.getScoreState().getArmAngle();
+                if(armAngle < 180){
+                    wristAngle = 90-armAngle;
+                }
+                else{
+                    wristAngle = 270-armAngle;
+                }
                 break;
+
         }
 
-        wristState = sCommand.getWristState();
+        wristMotor.set(ControlMode.MotionMagic, Constants.degreesToTicks(wristAngle));
 
+    }
+
+    boolean isInPosition(){
+        return wristMotor.getClosedLoopError() < Constants.wristAllowedError;
     }
 
     @Override
     public void zeroSensors() {
-        wristMotor.setSelectedSensorPosition(Constants.wristZeroPos, Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
+        wristMotor.setSelectedSensorPosition(Constants.degreesToTicks(Constants.wristZeroPos), Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
     }
 
     @Override
