@@ -14,19 +14,19 @@ public class ScoreState {
         FRONT, BACK
     }
 
-    private RobotSide robotSide;
+    private final RobotSide robotSide;
 
     public enum GameElement {
         HATCH, CARGO
     }
 
-    private GameElement gameElement;
+    private final GameElement gameElement;
 
     public enum Position {
         HIGH, MIDDLE, LOW, INTAKE, STOW
     }
 
-    private Position position;
+    private final Position position;
 
     public int getArmAngle() {
         if (robotSide == RobotSide.FRONT) {

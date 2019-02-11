@@ -10,7 +10,7 @@ import frc.robot.util.Constants;
 
 public class Wrist extends Subsystem {
 
-    private TalonSRX wristMotor;
+    private final TalonSRX wristMotor;
 
     public enum WristState{
         INTAKE_FRONT, INTAKE_BACK, HIGH_FRONT, HIGH_BACK, PARALLEL_TO_GROUND
@@ -62,35 +62,41 @@ public class Wrist extends Subsystem {
 
     void handle(SuperstructureCommand sCommand) {
 
-        double wristAngle = Constants.wristZeroPos;
-
-        switch(sCommand.getWristState()){
-
-            case INTAKE_FRONT:
-                wristAngle = Constants.WristPositions.frontIntake;
-                break;
-            case INTAKE_BACK:
-                wristAngle = Constants.WristPositions.backIntake;
-                break;
-            case HIGH_FRONT:
-                wristAngle = Constants.WristPositions.frontTopCargo;
-                break;
-            case HIGH_BACK:
-                wristAngle = Constants.WristPositions.backTopCargo;
-                break;
-            case PARALLEL_TO_GROUND:
-                double armAngle = sCommand.getScoreState().getArmAngle();
-                if(armAngle < 180){
-                    wristAngle = 90-armAngle;
-                }
-                else{
-                    wristAngle = 270-armAngle;
-                }
-                break;
-
+        if(sCommand.getOperatorOverride().getOverrideActive()){
+            wristMotor.set(ControlMode.PercentOutput, sCommand.getOperatorOverride().getRightVal());
         }
 
-        wristMotor.set(ControlMode.MotionMagic, Constants.degreesToTicks(wristAngle));
+        else {
+
+            double wristAngle = Constants.wristZeroPos;
+
+            switch (sCommand.getWristState()) {
+
+                case INTAKE_FRONT:
+                    wristAngle = Constants.WristPositions.frontIntake;
+                    break;
+                case INTAKE_BACK:
+                    wristAngle = Constants.WristPositions.backIntake;
+                    break;
+                case HIGH_FRONT:
+                    wristAngle = Constants.WristPositions.frontTopCargo;
+                    break;
+                case HIGH_BACK:
+                    wristAngle = Constants.WristPositions.backTopCargo;
+                    break;
+                case PARALLEL_TO_GROUND:
+                    double armAngle = sCommand.getScoreState().getArmAngle();
+                    if (armAngle < 180) {
+                        wristAngle = 90 - armAngle;
+                    } else {
+                        wristAngle = 270 - armAngle;
+                    }
+                    break;
+
+            }
+
+            wristMotor.set(ControlMode.MotionMagic, Constants.degreesToTicks(wristAngle));
+        }
 
     }
 

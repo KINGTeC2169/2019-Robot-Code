@@ -12,7 +12,7 @@ import frc.robot.networking.VisionServer;
 
 import java.io.IOException;
 
-public final class Main {
+final class Main {
 
     private Main() {
     }

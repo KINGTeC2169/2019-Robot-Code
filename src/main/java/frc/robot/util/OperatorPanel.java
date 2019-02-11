@@ -4,11 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.operationCommands.ScoreState;
 
 //This class packs up the operator panel's communications into an easily accessible unit
-public class OperatorPanel {
+class OperatorPanel {
 
-    private Joystick panel = new Joystick(4);
-    private int isFrontButton = 8;
-    private int isHatchButton = 9;
+    private final Joystick panel = new Joystick(4);
+    private final int isFrontButton = 8;
+    private final int isHatchButton = 9;
+    private final int operatorOverrideButton = 10;
 
     private ScoreState.Position joystickAnalogToPosition(){
         if(Math.abs(-.75 - panel.getRawAxis(0)) < .24){
@@ -26,7 +27,12 @@ public class OperatorPanel {
         return ScoreState.Position.INTAKE;
     }
 
-    public ScoreState getOperatorDesiredState(){
+    boolean getOperatorOverrideButton(){
+        return panel.getRawButton(operatorOverrideButton);
+    }
+
+    ScoreState getOperatorDesiredState(){
+
         switch(joystickAnalogToPosition()){
             case INTAKE:
                 if(panel.getRawButton(isFrontButton)){

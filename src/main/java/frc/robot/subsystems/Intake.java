@@ -12,11 +12,11 @@ import frc.robot.util.Constants;
 
 public class Intake extends Subsystem {
 
-    private VictorSPX left;
-    private VictorSPX right;
+    private final VictorSPX left;
+    private final VictorSPX right;
 
-    private DoubleSolenoid jaws;
-    private DoubleSolenoid punch;
+    private final DoubleSolenoid jaws;
+    private final DoubleSolenoid punch;
 
     private boolean jawsOpen = true;
 
@@ -25,7 +25,7 @@ public class Intake extends Subsystem {
 
     private boolean hasBall = false;
 
-    Ultrasonic proxSensor;
+    private final Ultrasonic proxSensor;
 
     Intake() {
 

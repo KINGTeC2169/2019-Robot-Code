@@ -1,18 +1,17 @@
 package frc.robot.operationCommands;
 
-import frc.robot.subsystems.LEDMachine;
 import frc.robot.subsystems.Wrist;
 
 public class SuperstructureCommand {
 
-    private IntakeCommand intakeCommand;
-    private ScoreState scoreState;
-    private LEDMachine.LEDState ledState;
+    private final OverrideState overrideState;
+    private final IntakeCommand intakeCommand;
+    private final ScoreState scoreState;
 
-
-    SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState){
+    SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState, OverrideState overrideState){
         this.intakeCommand = intakeCommand;
         this.scoreState = scoreState;
+        this.overrideState = overrideState;
     }
 
     public Wrist.WristState getWristState() {
@@ -37,12 +36,12 @@ public class SuperstructureCommand {
         return Wrist.WristState.PARALLEL_TO_GROUND;
     }
 
-    public ScoreState getScoreState() {
-        return scoreState;
+    public OverrideState getOperatorOverride(){
+        return overrideState;
     }
 
-    public LEDMachine.LEDState getLedState(){
-        return ledState;
+    public ScoreState getScoreState() {
+        return scoreState;
     }
 
     public IntakeCommand getIntakeCommand(){

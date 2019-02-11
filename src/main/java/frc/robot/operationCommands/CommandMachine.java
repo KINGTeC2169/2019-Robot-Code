@@ -4,7 +4,7 @@ import frc.robot.util.Controls;
 
 public class CommandMachine {
 
-    private Controls controls;
+    private final Controls controls;
 
     public CommandMachine(){
         controls = new Controls();
@@ -12,12 +12,12 @@ public class CommandMachine {
 
     public SuperstructureCommand generateSuperstructureCommand(){
 
-        return new SuperstructureCommand(generateIntakeCommand(), generateScoreState());
+        return new SuperstructureCommand(generateIntakeCommand(), generateScoreState(), generateOverrideCommand());
 
     }
 
     public DriveCommand generateDriveCommand(){
-        return new DriveCommand(controls.getLeftjoyAxis(), controls.getRightjoyAxis(), controls.getLowGearButton(),
+        return new DriveCommand(controls.getLeftJoyAxis(), controls.getRightJoyAxis(), controls.getLowGearButton(),
                 controls.getHighGearButton(), controls.getRightTrigger());
     }
 
@@ -27,6 +27,11 @@ public class CommandMachine {
 
     private ScoreState generateScoreState(){
         return controls.getOperatorPanelState();
+    }
+
+    private OverrideState generateOverrideCommand(){
+        return new OverrideState(controls.getOperatorOverride(), controls.getEmergencyLeftStick(),
+                controls.getEmergencyRightStick());
     }
 
 

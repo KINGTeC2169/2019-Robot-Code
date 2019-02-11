@@ -10,7 +10,28 @@ public class LEDMachine extends Subsystem {
         SOLID_BLUE,BLINKING_BLUE,SOLID_GREEN,BLINKING_GREEN,SOLID_PINK,BLINKING_PINK,NORMAL
     }
 
-    private AnalogOutput ledOut;
+    private final LEDState state = LEDState.NORMAL;
+
+    private final AnalogOutput ledOut;
+
+    public enum IntakeNotifier{
+        DISABLED, INTAKING, HAS_BALL
+    }
+
+    public IntakeNotifier intakeNotifier = IntakeNotifier.DISABLED;
+
+    public enum ArmNotifier{
+        DISABLED, IN_PLACE, MOVING
+    }
+
+    public ArmNotifier armNotifier = ArmNotifier.DISABLED;
+
+    public enum VisionNotifier{
+        DISABLED, ALIGNING, ALIGNED
+    }
+
+    VisionNotifier visionNotifier = VisionNotifier.DISABLED;
+
 
     LEDMachine(){
 
@@ -20,7 +41,7 @@ public class LEDMachine extends Subsystem {
 
     void handle(SuperstructureCommand sCommand) {
 
-        switch(sCommand.getLedState()){
+        switch(state){
 
             case SOLID_BLUE:
                 break;

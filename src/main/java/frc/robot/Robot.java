@@ -12,7 +12,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Superstructure;
 
 
-public class Robot extends TimedRobot {
+class Robot extends TimedRobot {
 
     private Superstructure superstructure;
     private DriveTrain driveTrain;

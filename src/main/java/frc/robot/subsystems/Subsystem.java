@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-public abstract class Subsystem {
+abstract class Subsystem {
 
     // These methods are part of every subsystem
     public abstract void zeroSensors();

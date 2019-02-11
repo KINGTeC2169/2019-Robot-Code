@@ -9,24 +9,27 @@ public class Controls {
     private final int leftJoyPort = 0;
     private final int rightJoyPort = 1;
     private final int operatorJoyPort = 2;
+    private final int emergencyGamePadPort = 2;
 
-    private Joystick leftJoy;
-    private Joystick rightJoy;
-    private Joystick operatorStick;
-    private OperatorPanel operatorPanel;
+    private final Joystick leftJoy;
+    private final Joystick rightJoy;
+    private final Joystick operatorStick;
+    private final Joystick emergencyGamepad;
+    private final OperatorPanel operatorPanel;
 
     public Controls() {
         leftJoy = new Joystick(leftJoyPort);
         rightJoy = new Joystick(rightJoyPort);
         operatorStick = new Joystick(operatorJoyPort);
         operatorPanel = new OperatorPanel();
+        emergencyGamepad = new Joystick(emergencyGamePadPort);
     }
 
-    public double getLeftjoyAxis(){
+    public double getLeftJoyAxis(){
         return leftJoy.getRawAxis(0);
     }
 
-    public double getRightjoyAxis(){
+    public double getRightJoyAxis(){
         return rightJoy.getRawAxis(1);
     }
 
@@ -46,8 +49,20 @@ public class Controls {
         return operatorStick.getTrigger();
     }
 
+    public double getEmergencyLeftStick(){
+        return emergencyGamepad.getRawAxis(3);
+    }
+
+    public double getEmergencyRightStick(){
+        return emergencyGamepad.getRawAxis(5);
+    }
+
     public ScoreState getOperatorPanelState(){
         return operatorPanel.getOperatorDesiredState();
+    }
+
+    public boolean getOperatorOverride(){
+        return operatorPanel.getOperatorOverrideButton();
     }
 
     public boolean getRightTrigger() {

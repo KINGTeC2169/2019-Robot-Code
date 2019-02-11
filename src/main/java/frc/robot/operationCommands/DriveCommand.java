@@ -2,13 +2,13 @@ package frc.robot.operationCommands;
 
 public class DriveCommand {
 
-    private double visionYaw = -5;
-    private double leftDrive;
-    private double rightDrive;
-    private boolean shiftUp;
-    private boolean shiftDown;
+    private final double visionYaw = -5;
+    private final double leftDrive;
+    private final double rightDrive;
+    private final boolean shiftUp;
+    private final boolean shiftDown;
     private boolean visionDriving;
-    private boolean rightTrigger;
+    private final boolean rightTrigger;
 
     DriveCommand(double leftDrive, double rightDrive, boolean shiftUp, boolean shiftDown, boolean rightTrigger){
         this.leftDrive = leftDrive;

@@ -11,7 +11,7 @@ import frc.robot.util.Constants;
 
 public class Arm extends Subsystem{
 
-    private TalonSRX arm;
+    private final TalonSRX arm;
 
     Arm() {
 
@@ -57,7 +57,12 @@ public class Arm extends Subsystem{
     }
 
     void handle(SuperstructureCommand sCommand) {
-        arm.set(ControlMode.MotionMagic, Constants.degreesToTicks(sCommand.getScoreState().getArmAngle()));
+        if(sCommand.getOperatorOverride().getOverrideActive()){
+            arm.set(ControlMode.PercentOutput, sCommand.getOperatorOverride().getLeftVal());
+        }
+        else{
+            arm.set(ControlMode.MotionMagic, Constants.degreesToTicks(sCommand.getScoreState().getArmAngle()));
+        }
     }
 
     boolean isInPosition(){

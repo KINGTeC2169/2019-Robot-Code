@@ -11,9 +11,9 @@ import frc.robot.util.Constants;
 
 public class DriveTrain {
 
-    private DoubleSolenoid dogShift;
-    private TalonSRX left;
-    private TalonSRX right;
+    private final DoubleSolenoid dogShift;
+    private final TalonSRX left;
+    private final TalonSRX right;
 
     public DriveTrain(){
 

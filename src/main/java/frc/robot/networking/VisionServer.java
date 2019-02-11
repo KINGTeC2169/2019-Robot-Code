@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class VisionServer extends Thread {
 
-    boolean connected = true;
+    private boolean connected = true;
     private ServerSocket server;
 
     //Constructor that creates the ServerSocket
