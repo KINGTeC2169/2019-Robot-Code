@@ -4,12 +4,13 @@ public class Constants {
 
     public static final boolean debugMode = true;
 
-    // Constants for intake
+    // Constants for intake control
     public static final double exhaustThreshold = -0.5;
     public static final double intakeDeadband = 0.05;
 
-    public static final double intakeProxLowerBound = 0;
-    public static final double intakeProxUpperBound = 1;
+    // Constants for intake sensor
+    public static double intakeProxLowerBound = 0;
+    public static double intakeProxUpperBound = 1;
 
 
     // Drivetrain Constants
@@ -42,10 +43,12 @@ public class Constants {
     public static final int wristAllowedError = 3;
 
 
+    //Method for converting degrees to Grayhill Encoder ticks (1024 ticks per rotation)
     public static int degreesToTicks(double deg){
         return (int) (deg * 1024.0/360.0);
     }
 
+    //Arm Position Setpoints
     public static class ArmPositions {
         public static final double frontCargoStowed = 90;
         public static final double frontHatchStowed = 90;

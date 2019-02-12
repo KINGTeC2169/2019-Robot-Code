@@ -17,14 +17,17 @@ public class DriveTrain {
 
     public DriveTrain(){
 
+        //Initialize DogShift solenoid
         dogShift = new DoubleSolenoid(ActuatorMap.pcmPort, ActuatorMap.driveShiftForward, ActuatorMap.driveShiftReverse);
 
+        //Initialize left side of the driveline
         left = new TalonSRX(ActuatorMap.driveTrainLeft);
         VictorSPX leftTop = new VictorSPX(ActuatorMap.driveTrainLeftTop);
         VictorSPX leftBottom = new VictorSPX(ActuatorMap.driveTrainLeftBottom);
         leftTop.set(ControlMode.Follower, ActuatorMap.driveTrainLeft);
         leftBottom.set(ControlMode.Follower, ActuatorMap.driveTrainLeft);
 
+        //Initialize right side of the driveline
         right = new TalonSRX(ActuatorMap.driveTrainRight);
         VictorSPX rightTop = new VictorSPX(ActuatorMap.driveTrainRightTop);
         VictorSPX rightBottom = new VictorSPX(ActuatorMap.driveTrainRightBottom);
@@ -33,15 +36,19 @@ public class DriveTrain {
     }
 
     public void handle(DriveCommand dCommand) {
+        //Check if vision is driving, and if it is, allow it to move the drivetrain
         if(dCommand.isVisionDriving()){
             visionDriving(dCommand);
         }
+        //If vision isn't driving, hand control over to driver
         else{
             drive(dCommand);
         }
 
+        //Regardless of situation, shift to appropriate state
         shift(dCommand);
 
+        //Print the state if needed
         if(Constants.debugMode){
             printData();
         }

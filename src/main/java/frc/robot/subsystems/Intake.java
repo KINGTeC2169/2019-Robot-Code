@@ -23,7 +23,7 @@ public class Intake extends Subsystem {
     private boolean triggerLatch = false;
     private boolean thresholdLatch = false;
 
-    private boolean hasBall = false;
+    private Ultrasonic proxSensor;
 
     private final Ultrasonic proxSensor;
 
@@ -47,6 +47,7 @@ public class Intake extends Subsystem {
 
     }
 
+    //Primary handle method for the intake
     void handle(SuperstructureCommand sCommand) {
 
         //Grab intake specific command from Superstructure
@@ -108,11 +109,15 @@ public class Intake extends Subsystem {
         }
     }
 
+    //Method for accessing the ultrasonic to determine presence of a ball in the intake
     private boolean getHasBall(){
+        //If the sensor is working correctly
         if(proxSensor.isRangeValid()){
+            //Since the sensor is working, return true if the ball is in the "hot zone"
             return proxSensor.getRangeInches() < Constants.intakeProxUpperBound &&
                     proxSensor.getRangeInches() > Constants.intakeProxLowerBound;
         }
+        //Sensor wasn't working correctly, so return false by default.
         return false;
     }
 

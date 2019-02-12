@@ -3,6 +3,7 @@ package frc.robot.networking;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class VisionServer extends Thread {
 
@@ -23,27 +24,24 @@ public class VisionServer extends Thread {
     }
 
     //Listener function that grabs new clients and hands them information.
+    @Override
     public void run() {
 
         // running infinite loop for getting
         // clientBase request
         while (System.currentTimeMillis() > 0) {
-            Socket s = null;
 
             try {
                 // socket object to receive incoming clientBase requests
-                s = server.accept();
+                Socket s = server.accept();
                 connected = true;
                 System.out.println("[INFO] A new client is connected : " + s);
 
                 // obtaining input and out streams
 
-                BufferedReader in;
-                PrintWriter out;
                 try {
-                    in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                    out = new PrintWriter(s.getOutputStream(), true);
-                    String data;
+                    BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8));
+                    PrintWriter out = new PrintWriter(s.getOutputStream(), true, StandardCharsets.UTF_8);
 
                     while (connected) {
                         long lastRecieved = System.currentTimeMillis();
@@ -82,7 +80,9 @@ public class VisionServer extends Thread {
             e.printStackTrace();
         }
         while (true) {
-            server.run();
+            if (server != null) {
+                server.run();
+            }
         }
     }
 
