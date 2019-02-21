@@ -4,14 +4,15 @@ import frc.robot.subsystems.Wrist;
 
 public class SuperstructureCommand {
 
-    private final OverrideState overrideState;
+    private final EmergencyCommand emergencyCommand;
     private final IntakeCommand intakeCommand;
     private final ScoreState scoreState;
 
-    SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState, OverrideState overrideState){
+    SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState, EmergencyCommand emergencyCommand){
+        System.out.println("Line 12: " + emergencyCommand.getEmergencyActive());
         this.intakeCommand = intakeCommand;
         this.scoreState = scoreState;
-        this.overrideState = overrideState;
+        this.emergencyCommand = emergencyCommand;
     }
 
     public Wrist.WristState getWristState() {
@@ -36,8 +37,8 @@ public class SuperstructureCommand {
         return Wrist.WristState.PARALLEL_TO_GROUND;
     }
 
-    public OverrideState getOperatorOverride(){
-        return overrideState;
+    public EmergencyCommand getEmergencyCommand(){
+        return emergencyCommand;
     }
 
     public ScoreState getScoreState() {

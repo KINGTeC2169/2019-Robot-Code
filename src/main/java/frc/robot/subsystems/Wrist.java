@@ -63,9 +63,9 @@ public class Wrist extends Subsystem {
 
     void handle(SuperstructureCommand sCommand) {
 
-        if(sCommand.getOperatorOverride().getOverrideActive()){
-            wristMotor.set(ControlMode.PercentOutput, sCommand.getOperatorOverride().getRightVal());
-            SmartDashboard.putNumber("Wrist Angle", -1);
+        if(sCommand.getEmergencyCommand().getEmergencyActive()){
+            wristMotor.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getWristVal());
+            SmartDashboard.putNumber("Wrist Angle", -1000);
         }
 
         else {

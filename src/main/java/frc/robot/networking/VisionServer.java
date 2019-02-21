@@ -58,7 +58,7 @@ public class VisionServer extends Thread {
                                 }
                             }
                         }
-                        System.out.println("Client Says: " + System.currentTimeMillis()/1000.0f + "  " + Double.parseDouble(in.readLine()));
+                        //System.out.println("Client Says: " + System.currentTimeMillis()/1000.0f + "  " + Double.parseDouble(in.readLine()));
                     }
 
                 } catch (IOException e) {

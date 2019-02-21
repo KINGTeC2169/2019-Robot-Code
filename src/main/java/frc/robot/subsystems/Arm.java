@@ -24,12 +24,13 @@ public class Arm extends Subsystem{
         arm.configFactoryDefault();
 
         /* Configure Sensor Source for Pirmary PID */
-        arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+        arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
                 Constants.armPIDLoopIdx,
                 Constants.armTimeoutMs);
 
-        arm.setSensorPhase(true);
-        arm.setInverted(false);
+        arm.setSensorPhase(false);
+        arm.setInverted(true);
+        armSlave.setInverted(true);
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
         arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.armTimeoutMs);
@@ -58,13 +59,14 @@ public class Arm extends Subsystem{
     }
 
     void handle(SuperstructureCommand sCommand) {
-        if(sCommand.getOperatorOverride().getOverrideActive()){
-            arm.set(ControlMode.PercentOutput, sCommand.getOperatorOverride().getLeftVal());
-            SmartDashboard.putNumber("Arm Position", -1);
+        if(sCommand.getEmergencyCommand().getEmergencyActive()){
+            System.out.println("Emergency Mode Active!");
+            arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
+            SmartDashboard.putNumber("Arm Position", -10000);
         }
         else{
-            arm.set(ControlMode.MotionMagic, Constants.degreesToTicks(sCommand.getScoreState().getArmAngle()));
-            SmartDashboard.putNumber("Arm Position", sCommand.getScoreState().getArmAngle());
+            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmAngle());
+            SmartDashboard.putNumber("Arm Position", Constants.ticksToDegrees(sCommand.getScoreState().getArmAngle()));
         }
     }
 

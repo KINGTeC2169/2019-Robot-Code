@@ -21,8 +21,8 @@ public class Superstructure {
     }
 
     public void robotInit() {
-        Compressor comp = new Compressor(ActuatorMap.pcmPort);
-        comp.start();
+        //Compressor comp = new Compressor(ActuatorMap.pcmPort);
+        //comp.start();
     }
 
     public void handleSubsystems(SuperstructureCommand command) {

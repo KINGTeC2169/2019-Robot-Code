@@ -11,9 +11,7 @@ public class CommandMachine {
     }
 
     public SuperstructureCommand generateSuperstructureCommand(){
-
-        return new SuperstructureCommand(generateIntakeCommand(), generateScoreState(), generateOverrideCommand());
-
+        return new SuperstructureCommand(generateIntakeCommand(), generateScoreState(), generateEmergencyCommand());
     }
 
     public DriveCommand generateDriveCommand(){
@@ -29,9 +27,9 @@ public class CommandMachine {
         return controls.getOperatorPanelState();
     }
 
-    private OverrideState generateOverrideCommand(){
-        return new OverrideState(controls.getOperatorOverride(), controls.getEmergencyLeftStick(),
-                controls.getEmergencyRightStick());
+    private EmergencyCommand generateEmergencyCommand(){
+        return new EmergencyCommand(controls.getEmergencyMode(), controls.getEmergencyArmStick(),
+                controls.getEmergencyWristStick());
     }
 
 

@@ -10,29 +10,38 @@ public class ScoreState {
         this.position = position;
     }
 
-    public enum RobotSide {
-        FRONT, BACK
+    public ScoreState(){
+        this.robotSide = RobotSide.MANUAL;
+        this.gameElement = GameElement.HATCH;
+        this.position = Position.STOW;
     }
 
-    private final RobotSide robotSide;
+    public enum RobotSide {
+        FRONT, BACK, MANUAL
+    }
+
+    public final RobotSide robotSide;
 
     public enum GameElement {
         HATCH, CARGO
     }
 
-    private final GameElement gameElement;
+    public final GameElement gameElement;
 
     public enum Position {
         HIGH, MIDDLE, LOW, INTAKE, STOW
     }
 
-    private final Position position;
+    public final Position position;
 
     public int getArmAngle() {
+        if(robotSide == RobotSide.MANUAL){
+            return -1000;
+        }
         if (robotSide == RobotSide.FRONT) {
             if (gameElement == GameElement.CARGO) {
                 if (position == Position.LOW) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontCargoLow);
+                    return Constants.ArmPositions.frontCargoLow;
                 }
                 if (position == Position.MIDDLE) {
                     return Constants.degreesToTicks(Constants.ArmPositions.frontCargoMid);
@@ -102,15 +111,15 @@ public class ScoreState {
     }
 
 
-    public RobotSide getRobotSide() {
+    RobotSide getRobotSide() {
         return robotSide;
     }
 
-    public GameElement getGameElement() {
+    GameElement getGameElement() {
         return gameElement;
     }
 
-    public Position getPosition() {
+    Position getPosition() {
         return position;
     }
 
