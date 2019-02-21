@@ -25,8 +25,6 @@ public class Intake extends Subsystem {
 
     private Ultrasonic proxSensor;
 
-    private final Ultrasonic proxSensor;
-
     Intake() {
 
         proxSensor = new Ultrasonic(ActuatorMap.intakeProxPing, ActuatorMap.intakeProxEcho);

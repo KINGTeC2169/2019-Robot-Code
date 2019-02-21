@@ -1,26 +1,26 @@
 package frc.robot.operationCommands;
 
-public class OverrideState {
+public class EmergencyCommand {
 
     private final boolean overrideActive;
     private final double leftVal;
     private final double rightVal;
 
-    public OverrideState(boolean active, double left, double right){
+    EmergencyCommand(boolean active, double left, double right){
         overrideActive = active;
         leftVal = left;
         rightVal = right;
     }
 
-    public boolean getOverrideActive(){
+    public boolean getEmergencyActive(){
         return overrideActive;
     }
 
-    public double getLeftVal(){
+    public double getArmVal(){
         return leftVal;
     }
 
-    public double getRightVal(){
+    public double getWristVal(){
         return rightVal;
     }
 
