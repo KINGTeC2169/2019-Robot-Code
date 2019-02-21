@@ -15,8 +15,8 @@ public class Intake extends Subsystem {
     private final VictorSPX left;
     private final VictorSPX right;
 
-    private final DoubleSolenoid jaws;
-    private final DoubleSolenoid punch;
+//    private final DoubleSolenoid jaws;
+//    private final DoubleSolenoid punch;
 
     private boolean jawsOpen = true;
 
@@ -30,8 +30,8 @@ public class Intake extends Subsystem {
         proxSensor = new Ultrasonic(ActuatorMap.intakeProxPing, ActuatorMap.intakeProxEcho);
         proxSensor.setDistanceUnits(Ultrasonic.Unit.kInches);
 
-        jaws = new DoubleSolenoid(0,1,0);
-        punch = new DoubleSolenoid(0,2,3);
+//        jaws = new DoubleSolenoid(0,1,0);
+//        punch = new DoubleSolenoid(0,2,3);
 
         left = new VictorSPX(ActuatorMap.intakeLeft);
         right = new VictorSPX(ActuatorMap.intakeRight);
@@ -86,24 +86,24 @@ public class Intake extends Subsystem {
             if(Constants.debugMode){
                 System.out.println("Intake Jaws Opened");
             }
-            jaws.set(Value.kForward);
+//            jaws.set(Value.kForward);
         } else {
             if(Constants.debugMode){
                 System.out.println("Intake Jaws Closed");
             }
-            jaws.set(Value.kReverse);
+//            jaws.set(Value.kReverse);
         }
 
         if (punchOut) {
             if(Constants.debugMode){
                 System.out.println("Intake Punch Extended");
             }
-            punch.set(Value.kForward);
+//            punch.set(Value.kForward);
         } else {
             if(Constants.debugMode){
                 System.out.println("Intake Punch Retracted");
             }
-            punch.set(Value.kReverse);
+//            punch.set(Value.kReverse);
         }
     }
 

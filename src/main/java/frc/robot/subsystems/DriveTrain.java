@@ -11,28 +11,34 @@ import frc.robot.util.Constants;
 
 public class DriveTrain {
 
-    private final DoubleSolenoid dogShift;
+    //private final DoubleSolenoid dogShift;
     private final TalonSRX left;
     private final TalonSRX right;
 
     public DriveTrain(){
 
         //Initialize DogShift solenoid
-        dogShift = new DoubleSolenoid(ActuatorMap.pcmPort, ActuatorMap.driveShiftForward, ActuatorMap.driveShiftReverse);
+        //dogShift = new DoubleSolenoid(ActuatorMap.pcmPort, ActuatorMap.driveShiftForward, ActuatorMap.driveShiftReverse);
 
         //Initialize left side of the driveline
         left = new TalonSRX(ActuatorMap.driveTrainLeft);
         VictorSPX leftTop = new VictorSPX(ActuatorMap.driveTrainLeftTop);
         VictorSPX leftBottom = new VictorSPX(ActuatorMap.driveTrainLeftBottom);
-        leftTop.set(ControlMode.Follower, ActuatorMap.driveTrainLeft);
-        leftBottom.set(ControlMode.Follower, ActuatorMap.driveTrainLeft);
+        leftTop.follow(left);
+        leftBottom.follow(left);
+
+        leftTop.setInverted(true);
+
 
         //Initialize right side of the driveline
         right = new TalonSRX(ActuatorMap.driveTrainRight);
         VictorSPX rightTop = new VictorSPX(ActuatorMap.driveTrainRightTop);
         VictorSPX rightBottom = new VictorSPX(ActuatorMap.driveTrainRightBottom);
-        rightTop.set(ControlMode.Follower, ActuatorMap.driveTrainRight);
-        rightBottom.set(ControlMode.Follower, ActuatorMap.driveTrainRight);
+        rightTop.follow(right);
+        rightBottom.follow(right);
+
+        rightTop.setInverted(false);
+        rightBottom.setInverted(true);
     }
 
     public void handle(DriveCommand dCommand) {
@@ -67,6 +73,7 @@ public class DriveTrain {
     }
 
     private void shift(DriveCommand dCommand){
+        /*
         dogShift.set(Value.kForward);
         if (dCommand.isShiftUp()){
             dogShift.set(Value.kReverse);
@@ -74,6 +81,7 @@ public class DriveTrain {
         if(dCommand.isShiftDown()){
             dogShift.set(Value.kForward);
         }
+        */
     }
 
     private void drive(DriveCommand dCommand){
