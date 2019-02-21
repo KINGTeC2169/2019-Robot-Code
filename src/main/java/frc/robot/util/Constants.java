@@ -2,7 +2,7 @@ package frc.robot.util;
 
 public class Constants {
 
-    public static final boolean debugMode = true;
+    public static final boolean debugMode = false;
 
     // Constants for intake control
     public static final double exhaustThreshold = -0.5;
@@ -20,19 +20,19 @@ public class Constants {
     public static final int armSlotIdx = 0;
     public static final int armPIDLoopIdx = 0;
     public static final int armTimeoutMs = 10;
-    public static final double armP = 0;
-    public static final double armI = 0;
-    public static final double armD = 0;
-    public static final double armF = 0;
-    public static final int armMaxVel = 0;
-    public static final int armMaxAccel = 0;
+    public static final double armP = 20;
+    public static final double armI = .07;
+    public static final double armD = .001;
+    public static final double armF = .6;
+    public static final int armMaxVel = 150;
+    public static final int armMaxAccel = 10;
     public static final int armZeroPos = 0;
-    public static final int armAllowedError = 3;
+    public static final int armAllowedError = 0;
 
     //Wrist Constants
     public static final int wristSlotIdx = 0;
     public static final int wristPIDLoopIdx = 0;
-    public static final int wristTimeoutMs = 10;
+    public static final int wristTimeoutMs = 0;
     public static final double wristP = 0;
     public static final double wristI = 0;
     public static final double wristD = 0;
@@ -44,30 +44,38 @@ public class Constants {
 
 
     //Method for converting degrees to Grayhill Encoder ticks (1024 ticks per rotation)
+    public static int degreesToTicks(int deg){
+//        return (int) (deg * 1024.0/360.0);
+        return deg;
+    }
     public static int degreesToTicks(double deg){
-        return (int) (deg * 1024.0/360.0);
+//        return (int) (deg * 1024.0/360.0);
+        return (int) deg;
+    }
+    public static int ticksToDegrees(double ticks){
+        return (int) (ticks * 360.0/1024.0);
     }
 
     //Arm Position Setpoints
     public static class ArmPositions {
-        public static final double frontCargoStowed = 90;
-        public static final double frontHatchStowed = 90;
-        public static final double frontCargoIntake = 0;
-        public static final double frontHatchIntake = -120;
-        public static final double backCargoIntake = 0;
-        public static final double backHatchIntake = -120;
-        public static final double frontCargoLow = -147;
-        public static final double frontCargoMid = 160;
-        public static final double frontCargoHi = 120;
-        public static final double backCargoLow = -147;
-        public static final double backCargoMid = 160;
-        public static final double backCargoHi = 120;
-        public static final double frontHatchLow = -120;
-        public static final double frontHatchMid = 175;
-        public static final double frontHatchHi = 100;
-        public static final double backHatchLow = -120;
-        public static final double backHatchMid = 175;
-        public static final double backHatchHi = 100;
+        public static final int frontCargoStowed = 50;
+        public static final int frontHatchStowed = 65;
+        public static final int frontCargoIntake = 25;
+        public static final int frontHatchIntake = 30;
+        public static final int frontCargoLow = 50;
+        public static final int frontCargoMid = 125;
+        public static final int frontCargoHi = 170;
+        public static final int frontHatchLow = 30;
+        public static final int frontHatchMid = 100;
+        public static final int frontHatchHi = 135;
+        public static final int backCargoIntake = 425;
+        public static final int backHatchIntake = 425;
+        public static final int backCargoLow = 400;
+        public static final int backCargoMid = 340;
+        public static final int backCargoHi = 300;
+        public static final int backHatchLow = 400;
+        public static final int backHatchMid = 350;
+        public static final int backHatchHi = 300;
     }
 
     public static class WristPositions {

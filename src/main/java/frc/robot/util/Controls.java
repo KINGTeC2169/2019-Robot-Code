@@ -1,6 +1,7 @@
 package frc.robot.util;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.operationCommands.ScoreState;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -9,12 +10,10 @@ public class Controls {
     private final int leftJoyPort = 0;
     private final int rightJoyPort = 1;
     private final int operatorJoyPort = 2;
-    private final int emergencyGamePadPort = 2;
 
     private final Joystick leftJoy;
     private final Joystick rightJoy;
     private final Joystick operatorStick;
-    private final Joystick emergencyGamepad;
     private final OperatorPanel operatorPanel;
 
     public Controls() {
@@ -22,7 +21,6 @@ public class Controls {
         rightJoy = new Joystick(rightJoyPort);
         operatorStick = new Joystick(operatorJoyPort);
         operatorPanel = new OperatorPanel();
-        emergencyGamepad = new Joystick(emergencyGamePadPort);
     }
 
     public double getLeftJoyAxis(){
@@ -49,20 +47,27 @@ public class Controls {
         return operatorStick.getTrigger();
     }
 
-    public double getEmergencyLeftStick(){
-        return emergencyGamepad.getRawAxis(3);
+    public double getEmergencyArmStick(){
+        if(operatorStick.getRawButton(1)){
+            return operatorStick.getRawAxis(1);
+        }
+        return 0;
     }
 
-    public double getEmergencyRightStick(){
-        return emergencyGamepad.getRawAxis(5);
+    public double getEmergencyWristStick(){
+        return operatorStick.getRawAxis(2);
     }
 
     public ScoreState getOperatorPanelState(){
-        return operatorPanel.getOperatorDesiredState();
+        ScoreState desiredState = operatorPanel.getOperatorDesiredState();
+        SmartDashboard.putString("Desired Position", desiredState.position.name());
+        SmartDashboard.putString("Desired Side", desiredState.robotSide.name());
+        SmartDashboard.putString("Desired Element", desiredState.gameElement.name());
+        return desiredState;
     }
 
-    public boolean getOperatorOverride(){
-        return operatorPanel.getOperatorOverrideButton();
+    public boolean getEmergencyMode(){
+        return operatorStick.getRawAxis(2) < -.4;
     }
 
     public boolean getRightTrigger() {

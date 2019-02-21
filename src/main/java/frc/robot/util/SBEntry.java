@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.util;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -10,7 +10,7 @@ public class SBEntry {
 
     NetworkTableEntry entry;
 
-    SBEntry(ShuffleboardTab tab, String name){
+    public SBEntry(ShuffleboardTab tab, String name){
         SimpleWidget widget = tab.add(name, 0);
         entry = widget.getEntry();
     }
