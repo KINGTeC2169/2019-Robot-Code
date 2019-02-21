@@ -10,12 +10,6 @@ public class ScoreState {
         this.position = position;
     }
 
-    public ScoreState(){
-        this.robotSide = RobotSide.MANUAL;
-        this.gameElement = GameElement.HATCH;
-        this.position = Position.STOW;
-    }
-
     public enum RobotSide {
         FRONT, BACK, MANUAL
     }
@@ -34,7 +28,7 @@ public class ScoreState {
 
     public final Position position;
 
-    public int getArmAngle() {
+    public int getArmDesiredPos() {
         if(robotSide == RobotSide.MANUAL){
             return -1000;
         }
@@ -44,62 +38,62 @@ public class ScoreState {
                     return Constants.ArmPositions.frontCargoLow;
                 }
                 if (position == Position.MIDDLE) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontCargoMid);
+                    return (Constants.ArmPositions.frontCargoMid);
                 }
                 if (position == Position.HIGH) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontCargoHi);
+                    return (Constants.ArmPositions.frontCargoHi);
                 }
                 if (position == Position.INTAKE) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontCargoIntake);
+                    return (Constants.ArmPositions.frontCargoIntake);
                 }
                 if (position == Position.STOW){
-                    return  Constants.degreesToTicks(Constants.ArmPositions.frontCargoStowed);
+                    return  (Constants.ArmPositions.frontCargoStowed);
                 }
 
             } else if (gameElement == GameElement.HATCH) {
                 if (position == Position.LOW) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontHatchLow);
+                    return (Constants.ArmPositions.frontHatchLow);
                 }
                 if (position == Position.MIDDLE) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontHatchMid);
+                    return (Constants.ArmPositions.frontHatchMid);
                 }
                 if (position == Position.HIGH) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontHatchHi);
+                    return (Constants.ArmPositions.frontHatchHi);
                 }
                 if (position == Position.INTAKE) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontHatchIntake);
+                    return (Constants.ArmPositions.frontHatchIntake);
                 }
                 if (position == Position.STOW){
-                    return Constants.degreesToTicks(Constants.ArmPositions.frontHatchStowed);
+                    return (Constants.ArmPositions.frontHatchStowed);
                 }
             }
 
         } else if (robotSide == RobotSide.BACK) {
             if (gameElement == GameElement.CARGO) {
                 if (position == Position.LOW) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.backCargoLow);
+                    return (Constants.ArmPositions.backCargoLow);
                 }
                 if (position == Position.MIDDLE) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.backCargoMid);
+                    return (Constants.ArmPositions.backCargoMid);
                 }
                 if (position == Position.HIGH) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.backCargoHi);
+                    return (Constants.ArmPositions.backCargoHi);
                 }
                 if (position == Position.INTAKE) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.backCargoIntake);
+                    return (Constants.ArmPositions.backCargoIntake);
                 }
             } else if (gameElement == GameElement.HATCH) {
                 if (position == Position.LOW) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.backHatchLow);
+                    return (Constants.ArmPositions.backHatchLow);
                 }
                 if (position == Position.MIDDLE) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.backHatchMid);
+                    return (Constants.ArmPositions.backHatchMid);
                 }
                 if (position == Position.HIGH) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.backHatchHi);
+                    return (Constants.ArmPositions.backHatchHi);
                 }
                 if (position == Position.INTAKE) {
-                    return Constants.degreesToTicks(Constants.ArmPositions.backHatchIntake);
+                    return (Constants.ArmPositions.backHatchIntake);
                 }
 
             }

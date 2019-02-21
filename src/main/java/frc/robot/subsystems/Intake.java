@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.operationCommands.IntakeCommand;
 import frc.robot.operationCommands.SuperstructureCommand;
@@ -20,10 +19,10 @@ public class Intake extends Subsystem {
 
     private boolean jawsOpen = true;
 
-    private boolean triggerLatch = false;
-    private boolean thresholdLatch = false;
+    private boolean triggerLatch;
+    private boolean thresholdLatch;
 
-    private Ultrasonic proxSensor;
+    private final Ultrasonic proxSensor;
 
     Intake() {
 
@@ -59,16 +58,13 @@ public class Intake extends Subsystem {
         }
 
         //Handles the punch piston and the threshold latch for the jaws
-        boolean punchOut;
         if (command.getStickY() <= Constants.exhaustThreshold) {
             if (!thresholdLatch) {
                 jawsOpen = true;
             }
-            punchOut = true;
             thresholdLatch = true;
         } else {
             thresholdLatch = false;
-            punchOut = false;
         }
 
         //Handles the trigger latch for the jaws
@@ -86,25 +82,14 @@ public class Intake extends Subsystem {
             if(Constants.debugMode){
                 System.out.println("Intake Jaws Opened");
             }
-//            jaws.set(Value.kForward);
+            jaws.set(DoubleSolenoid.Value.kForward);
         } else {
             if(Constants.debugMode){
                 System.out.println("Intake Jaws Closed");
             }
-//            jaws.set(Value.kReverse);
+            jaws.set(DoubleSolenoid.Value.kReverse);
         }
 
-        if (punchOut) {
-            if(Constants.debugMode){
-                System.out.println("Intake Punch Extended");
-            }
-//            punch.set(Value.kForward);
-        } else {
-            if(Constants.debugMode){
-                System.out.println("Intake Punch Retracted");
-            }
-//            punch.set(Value.kReverse);
-        }
     }
 
     //Method for accessing the ultrasonic to determine presence of a ball in the intake

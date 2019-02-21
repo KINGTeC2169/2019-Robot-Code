@@ -1,6 +1,6 @@
 package frc.robot.util;
 
-public class Constants {
+public final class Constants {
 
     public static final boolean debugMode = false;
 
@@ -9,8 +9,8 @@ public class Constants {
     public static final double intakeDeadband = 0.05;
 
     // Constants for intake sensor
-    public static double intakeProxLowerBound = 0;
-    public static double intakeProxUpperBound = 1;
+    public static final double intakeProxLowerBound = 0;
+    public static final double intakeProxUpperBound = 1;
 
 
     // Drivetrain Constants
@@ -42,22 +42,12 @@ public class Constants {
     public static final int wristZeroPos = 0;
     public static final int wristAllowedError = 3;
 
-
-    //Method for converting degrees to Grayhill Encoder ticks (1024 ticks per rotation)
-    public static int degreesToTicks(int deg){
-//        return (int) (deg * 1024.0/360.0);
-        return deg;
-    }
-    public static int degreesToTicks(double deg){
-//        return (int) (deg * 1024.0/360.0);
-        return (int) deg;
-    }
     public static int ticksToDegrees(double ticks){
         return (int) (ticks * 360.0/1024.0);
     }
 
     //Arm Position Setpoints
-    public static class ArmPositions {
+    public static final class ArmPositions {
         public static final int frontCargoStowed = 50;
         public static final int frontHatchStowed = 65;
         public static final int frontCargoIntake = 25;
@@ -78,14 +68,14 @@ public class Constants {
         public static final int backHatchHi = 300;
     }
 
-    public static class WristPositions {
+    public static final class WristPositions {
         public static final double frontTopCargo = 0;
         public static final double backTopCargo = 0;
         public static final double frontIntake = 0;
         public static final double backIntake = 0;
-        public static double snap = 0;
-        public static double backToFront = 0;
-        public static double frontToBack = 0;
+        public static final double snap = 0;
+        public static final double backToFront = 0;
+        public static final double frontToBack = 0;
 
     }
 

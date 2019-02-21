@@ -2,7 +2,7 @@ package frc.robot.operationCommands;
 
 public class DriveCommand {
 
-    private final double visionYaw = -5;
+    private static final double visionYaw = -5;
     private final double leftDrive;
     private final double rightDrive;
     private final boolean shiftUp;

@@ -3,19 +3,19 @@ package frc.robot.util;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
-public class ShuffleboardManager {
+class ShuffleboardManager {
 
-    SBEntry p;
-    SBEntry i;
-    SBEntry d;
-    SBEntry f;
-    SBEntry maxVel;
-    SBEntry maxAccel;
-    SBEntry setpoint;
-    private SBEntry error;
-    SBEntry velocity;
-    SBEntry position;
-    private ShuffleboardTab armConfig;
+    private final SBEntry p;
+    private final SBEntry i;
+    private final SBEntry d;
+    private final SBEntry f;
+    private final SBEntry maxVel;
+    private final SBEntry maxAccel;
+    private final SBEntry setpoint;
+    private final SBEntry error;
+    private final SBEntry velocity;
+    private final SBEntry position;
+    private final ShuffleboardTab armConfig;
 
     ShuffleboardManager() {
         armConfig = Shuffleboard.getTab("ArmConfig");

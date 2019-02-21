@@ -56,7 +56,7 @@ public class Wrist extends Subsystem {
         wristMotor.configMotionAcceleration(Constants.wristMaxAccel, Constants.wristTimeoutMs);
 
         /* Zero the sensor */
-        wristMotor.setSelectedSensorPosition(Constants.degreesToTicks(Constants.wristZeroPos),
+        wristMotor.setSelectedSensorPosition(Constants.wristZeroPos,
                 Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
 
     }
@@ -87,30 +87,27 @@ public class Wrist extends Subsystem {
                     wristAngle = Constants.WristPositions.backTopCargo;
                     break;
                 case PARALLEL_TO_GROUND:
-                    double armAngle = sCommand.getScoreState().getArmAngle();
-                    if (armAngle < 180) {
-                        wristAngle = 90 - armAngle;
-                    } else {
-                        wristAngle = 270 - armAngle;
-                    }
+                    double armAngle = sCommand.getScoreState().getArmDesiredPos();
+                    wristAngle = armAngle < 180 ? 90 - armAngle : 270 - armAngle;
                     break;
 
             }
 
             SmartDashboard.putNumber("Wrist Angle", wristAngle);
 
-            wristMotor.set(ControlMode.MotionMagic, Constants.degreesToTicks(wristAngle));
+            wristMotor.set(ControlMode.MotionMagic, wristAngle);
         }
 
     }
 
+    @SuppressWarnings("unused")
     boolean isInPosition(){
         return wristMotor.getClosedLoopError() < Constants.wristAllowedError;
     }
 
     @Override
     public void zeroSensors() {
-        wristMotor.setSelectedSensorPosition(Constants.degreesToTicks(Constants.wristZeroPos), Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
+        wristMotor.setSelectedSensorPosition(Constants.wristZeroPos, Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
     }
 
     @Override

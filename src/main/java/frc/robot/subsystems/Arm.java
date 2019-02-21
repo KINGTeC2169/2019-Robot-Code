@@ -65,8 +65,8 @@ public class Arm extends Subsystem{
             SmartDashboard.putNumber("Arm Position", -10000);
         }
         else{
-            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmAngle());
-            SmartDashboard.putNumber("Arm Position", Constants.ticksToDegrees(sCommand.getScoreState().getArmAngle()));
+            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos());
+            SmartDashboard.putNumber("Arm Position", Constants.ticksToDegrees(sCommand.getScoreState().getArmDesiredPos()));
         }
     }
 

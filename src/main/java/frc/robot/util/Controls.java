@@ -7,9 +7,9 @@ import frc.robot.operationCommands.ScoreState;
 @SuppressWarnings("FieldCanBeLocal")
 public class Controls {
 
-    private final int leftJoyPort = 0;
-    private final int rightJoyPort = 1;
-    private final int operatorJoyPort = 2;
+    private static final int leftJoyPort = 0;
+    private static final int rightJoyPort = 1;
+    private static final int operatorJoyPort = 2;
 
     private final Joystick leftJoy;
     private final Joystick rightJoy;

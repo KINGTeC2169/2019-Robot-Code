@@ -1,6 +1,6 @@
 package frc.robot.util;
 
-public class ActuatorMap {
+public final class ActuatorMap {
 
     //Airports
     public static final int pcmPort = 12;
