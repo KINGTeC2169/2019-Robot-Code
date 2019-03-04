@@ -1,5 +1,7 @@
 package frc.robot.util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public final class Constants {
 
     public static final boolean debugMode = false;
@@ -20,12 +22,13 @@ public final class Constants {
     public static final int armSlotIdx = 0;
     public static final int armPIDLoopIdx = 0;
     public static final int armTimeoutMs = 10;
-    public static final double armP = 20;
-    public static final double armI = .07;
-    public static final double armD = .001;
-    public static final double armF = .6;
-    public static final int armMaxVel = 150;
-    public static final int armMaxAccel = 10;
+    public static final double armP = 10;
+    public static final double armI = .01;
+    public static final double armD = 0.00001;
+    public static final int armMaxVel = 40;
+    public static final int armMaxAccel = 20;
+    public static int armP90 = -370;
+    public static int armP270 = -870;
     public static final int armZeroPos = 0;
     public static final int armAllowedError = 0;
 
@@ -33,49 +36,56 @@ public final class Constants {
     public static final int wristSlotIdx = 0;
     public static final int wristPIDLoopIdx = 0;
     public static final int wristTimeoutMs = 0;
-    public static final double wristP = 0;
+    public static final double wristP = 20;
     public static final double wristI = 0;
     public static final double wristD = 0;
-    public static final double wristF = 0;
-    public static final int wristMaxVel = 0;
-    public static final int wristMaxAccel = 0;
+    public static final double wristF = 6;
+    public static final int wristMaxVel = 100;
+    public static final int wristMaxAccel = 20;
     public static final int wristZeroPos = 0;
     public static final int wristAllowedError = 3;
 
-    public static int ticksToDegrees(double ticks){
-        return (int) (ticks * 360.0/1024.0);
-    }
-
     //Arm Position Setpoints
     public static final class ArmPositions {
-        public static final int frontCargoStowed = 50;
-        public static final int frontHatchStowed = 65;
-        public static final int frontCargoIntake = 25;
-        public static final int frontHatchIntake = 30;
-        public static final int frontCargoLow = 50;
-        public static final int frontCargoMid = 125;
-        public static final int frontCargoHi = 170;
-        public static final int frontHatchLow = 30;
-        public static final int frontHatchMid = 100;
-        public static final int frontHatchHi = 135;
-        public static final int backCargoIntake = 425;
-        public static final int backHatchIntake = 425;
-        public static final int backCargoLow = 400;
-        public static final int backCargoMid = 340;
-        public static final int backCargoHi = 300;
-        public static final int backHatchLow = 400;
-        public static final int backHatchMid = 350;
-        public static final int backHatchHi = 300;
+        public static final int frontCargoStowed = -233;
+        public static final int frontHatchStowed = -267;
+        public static final int frontCargoIntake = -233;
+        public static final int frontHatchIntake = -267;
+        public static final int frontCargoLow = -245;
+        public static final int frontCargoMid = -480;
+        public static final int frontCargoHi = -650;
+        public static final int frontHatchLow = -267;
+        public static final int frontHatchMid = -433;
+        public static final int frontHatchHi = -630;
+        public static final int backCargoIntake = -1096;
+        public static final int backHatchIntake = -1076;
+        public static final int backCargoLow = -1023;
+        public static final int backCargoMid = -865;
+        public static final int backCargoHi = -685;
+        public static final int backHatchLow = -1076;
+        public static final int backHatchMid = -920;
+        public static final int backHatchHi = -706;
     }
 
     public static final class WristPositions {
-        public static final double frontTopCargo = 0;
-        public static final double backTopCargo = 0;
-        public static final double frontIntake = 0;
-        public static final double backIntake = 0;
-        public static final double snap = 0;
-        public static final double backToFront = 0;
-        public static final double frontToBack = 0;
+        public static final int frontCargoStowed = 850;
+        public static final int frontHatchStowed = 765;
+        public static final int frontCargoIntake = 850;
+        public static final int frontHatchIntake = 765;
+        public static final int frontCargoLow = 890;
+        public static final int frontCargoMid = 980;
+        public static final int frontCargoHi = 1044;
+        public static final int frontHatchLow = 765;
+        public static final int frontHatchMid = 934;
+        public static final int frontHatchHi = 1125;
+        public static final int backCargoIntake = 1012;
+        public static final int backHatchIntake = 1062;
+        public static final int backCargoLow = 1033;
+        public static final int backCargoMid = 872;
+        public static final int backCargoHi = 775;
+        public static final int backHatchLow = 1062;
+        public static final int backHatchMid = 920;
+        public static final int backHatchHi = 726;
 
     }
 

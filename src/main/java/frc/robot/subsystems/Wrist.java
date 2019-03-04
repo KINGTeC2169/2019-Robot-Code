@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,12 +25,14 @@ public class Wrist extends Subsystem {
         /* Factory default hardware to prevent unexpected behavior */
         wristMotor.configFactoryDefault();
 
+        wristMotor.setNeutralMode(NeutralMode.Brake);
+
         /* Configure Sensor Source for Pirmary PID */
-        wristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+        wristMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog,
                 Constants.wristPIDLoopIdx,
                 Constants.wristTimeoutMs);
 
-        wristMotor.setSensorPhase(true);
+        wristMotor.setSensorPhase(false);
         wristMotor.setInverted(false);
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
@@ -41,8 +44,8 @@ public class Wrist extends Subsystem {
         /* Set the peak and nominal outputs */
         wristMotor.configNominalOutputForward(0, Constants.wristTimeoutMs);
         wristMotor.configNominalOutputReverse(0, Constants.wristTimeoutMs);
-        wristMotor.configPeakOutputForward(1, Constants.wristTimeoutMs);
-        wristMotor.configPeakOutputReverse(-1, Constants.wristTimeoutMs);
+        wristMotor.configPeakOutputForward(.4, Constants.wristTimeoutMs);
+        wristMotor.configPeakOutputReverse(-.4, Constants.wristTimeoutMs);
 
         /* Set Motion Magic gains in slot0 - see documentation */
         wristMotor.selectProfileSlot(Constants.wristSlotIdx, Constants.wristPIDLoopIdx);
@@ -55,48 +58,22 @@ public class Wrist extends Subsystem {
         wristMotor.configMotionCruiseVelocity(Constants.wristMaxVel, Constants.wristTimeoutMs);
         wristMotor.configMotionAcceleration(Constants.wristMaxAccel, Constants.wristTimeoutMs);
 
-        /* Zero the sensor */
-        wristMotor.setSelectedSensorPosition(Constants.wristZeroPos,
-                Constants.wristPIDLoopIdx, Constants.wristTimeoutMs);
-
     }
 
     void handle(SuperstructureCommand sCommand) {
 
         if(sCommand.getEmergencyCommand().getEmergencyActive()){
             wristMotor.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getWristVal());
-            SmartDashboard.putNumber("Wrist Angle", -1000);
+            SmartDashboard.putNumber("Wrist Desired Position", -1000);
         }
 
         else {
+            wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos());
+            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos());
 
-            double wristAngle = Constants.wristZeroPos;
-
-            switch (sCommand.getWristState()) {
-
-                case INTAKE_FRONT:
-                    wristAngle = Constants.WristPositions.frontIntake;
-                    break;
-                case INTAKE_BACK:
-                    wristAngle = Constants.WristPositions.backIntake;
-                    break;
-                case HIGH_FRONT:
-                    wristAngle = Constants.WristPositions.frontTopCargo;
-                    break;
-                case HIGH_BACK:
-                    wristAngle = Constants.WristPositions.backTopCargo;
-                    break;
-                case PARALLEL_TO_GROUND:
-                    double armAngle = sCommand.getScoreState().getArmDesiredPos();
-                    wristAngle = armAngle < 180 ? 90 - armAngle : 270 - armAngle;
-                    break;
-
-            }
-
-            SmartDashboard.putNumber("Wrist Angle", wristAngle);
-
-            wristMotor.set(ControlMode.MotionMagic, wristAngle);
         }
+
+        SmartDashboard.putNumber("Wrist Actual Position Angle", wristMotor.getSelectedSensorPosition());
 
     }
 

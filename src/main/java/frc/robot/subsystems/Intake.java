@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.operationCommands.IntakeCommand;
 import frc.robot.operationCommands.SuperstructureCommand;
@@ -11,16 +13,10 @@ import frc.robot.util.Constants;
 
 public class Intake extends Subsystem {
 
-    private final VictorSPX left;
-    private final VictorSPX right;
+    private final TalonSRX left;
+    private final TalonSRX right;
 
-//    private final DoubleSolenoid jaws;
-//    private final DoubleSolenoid punch;
-
-    private boolean jawsOpen = true;
-
-    private boolean triggerLatch;
-    private boolean thresholdLatch;
+    private final Solenoid jaws;
 
     private final Ultrasonic proxSensor;
 
@@ -29,18 +25,17 @@ public class Intake extends Subsystem {
         proxSensor = new Ultrasonic(ActuatorMap.intakeProxPing, ActuatorMap.intakeProxEcho);
         proxSensor.setDistanceUnits(Ultrasonic.Unit.kInches);
 
-//        jaws = new DoubleSolenoid(0,1,0);
-//        punch = new DoubleSolenoid(0,2,3);
+        jaws = new Solenoid(ActuatorMap.pcmPort, ActuatorMap.jawShifter);
 
-        left = new VictorSPX(ActuatorMap.intakeLeft);
-        right = new VictorSPX(ActuatorMap.intakeRight);
+        left = new TalonSRX(ActuatorMap.intakeLeft);
+        right = new TalonSRX(ActuatorMap.intakeRight);
 
     }
 
     private void runIntake(double motorPower) {
 
         left.set(ControlMode.PercentOutput, motorPower);
-        right.set(ControlMode.PercentOutput, -motorPower);
+        right.set(ControlMode.PercentOutput, motorPower);
 
     }
 
@@ -57,37 +52,17 @@ public class Intake extends Subsystem {
             runIntake(0);
         }
 
-        //Handles the punch piston and the threshold latch for the jaws
-        if (command.getStickY() <= Constants.exhaustThreshold) {
-            if (!thresholdLatch) {
-                jawsOpen = true;
-            }
-            thresholdLatch = true;
-        } else {
-            thresholdLatch = false;
-        }
-
-        //Handles the trigger latch for the jaws
-        if (command.getTrigger()) {
-            if (!triggerLatch) {
-                jawsOpen = !jawsOpen;
-            }
-            triggerLatch = true;
-        } else {
-            triggerLatch = false;
-        }
-
         //Turns the jawsOpen boolean into actual commands for the piston
-        if (jawsOpen) {
+        if (command.getOpen()) {
             if(Constants.debugMode){
                 System.out.println("Intake Jaws Opened");
             }
-            jaws.set(DoubleSolenoid.Value.kForward);
-        } else {
+            jaws.set(true);
+        } else if(command.getClose()){
             if(Constants.debugMode){
                 System.out.println("Intake Jaws Closed");
             }
-            jaws.set(DoubleSolenoid.Value.kReverse);
+            jaws.set(false);
         }
 
     }

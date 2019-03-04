@@ -3,22 +3,22 @@ package frc.robot.util;
 public final class ActuatorMap {
 
     //Airports
-    public static final int pcmPort = 12;
-    public static final int driveShiftForward = 0;
-    public static final int driveShiftReverse = 1;
+    public static final int pcmPort = 14;
+    public static final int driveShifter = 0;
+    public static final int jawShifter = 2;
 
     //Motor Controller CAN IDs
-    public static final int driveTrainLeft = 5;
-    public static final int driveTrainLeftTop = 10;
-    public static final int driveTrainLeftBottom = 11;
-    public static final int driveTrainRight = 2;
-    public static final int driveTrainRightTop = 8;
-    public static final int driveTrainRightBottom = 9;
-    public static final int wristPort = 6;
-    public static final int armMaster = 1;
-    public static final int armSlave = 7;
-    public static final int intakeLeft = 3;
-    public static final int intakeRight = 4;
+    public static final int driveTrainLeft = 4;
+    public static final int driveTrainLeftTop = 11;
+    public static final int driveTrainLeftBottom = 10;
+    public static final int driveTrainRight = 3;
+    public static final int driveTrainRightTop = 9;
+    public static final int driveTrainRightBottom = 7;
+    public static final int wristPort = 2;
+    public static final int armMaster = 5;
+    public static final int armSlave = 8;
+    public static final int intakeLeft = 0;
+    public static final int intakeRight = 1;
 
     //PWM Ports
     public static final int ledAnalogOutChannel = 0;

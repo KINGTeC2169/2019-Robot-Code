@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.operationCommands.DriveCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
@@ -12,31 +13,36 @@ public class DriveTrain {
     //private final DoubleSolenoid dogShift;
     private final TalonSRX left;
     private final TalonSRX right;
+    private Solenoid dog;
 
     public DriveTrain(){
 
-        //Initialize DogShift solenoid
-        //dogShift = new DoubleSolenoid(ActuatorMap.pcmPort, ActuatorMap.driveShiftForward, ActuatorMap.driveShiftReverse);
+        dog = new Solenoid(14, ActuatorMap.driveShifter);
 
         //Initialize left side of the driveline
         left = new TalonSRX(ActuatorMap.driveTrainLeft);
         VictorSPX leftTop = new VictorSPX(ActuatorMap.driveTrainLeftTop);
         VictorSPX leftBottom = new VictorSPX(ActuatorMap.driveTrainLeftBottom);
+
+        left.setInverted(true);
+        leftTop.setInverted(false);
+        leftBottom.setInverted(true);
+
         leftTop.follow(left);
         leftBottom.follow(left);
-
-        leftTop.setInverted(true);
-
 
         //Initialize right side of the driveline
         right = new TalonSRX(ActuatorMap.driveTrainRight);
         VictorSPX rightTop = new VictorSPX(ActuatorMap.driveTrainRightTop);
         VictorSPX rightBottom = new VictorSPX(ActuatorMap.driveTrainRightBottom);
+
+        right.setInverted(true);
+        rightBottom.setInverted(false);
+        rightTop.setInverted(false);
+
         rightTop.follow(right);
         rightBottom.follow(right);
 
-        rightTop.setInverted(false);
-        rightBottom.setInverted(true);
     }
 
     public void handle(DriveCommand dCommand) {
@@ -71,23 +77,26 @@ public class DriveTrain {
     }
 
     private void shift(DriveCommand dCommand){
-        /*
-        dogShift.set(Value.kForward);
         if (dCommand.isShiftUp()){
-            dogShift.set(Value.kReverse);
+            dog.set(true);
         }
         if(dCommand.isShiftDown()){
-            dogShift.set(Value.kForward);
+            dog.set(false);
         }
-        */
     }
 
     private void drive(DriveCommand dCommand){
         if(Math.abs(dCommand.getLeftDrive()) >= Constants.driveTrainDeadband) {
             left.set(ControlMode.PercentOutput, dCommand.getLeftDrive());
         }
+        else{
+            left.set(ControlMode.PercentOutput, 0);
+        }
         if(Math.abs(dCommand.getRightDrive()) >= Constants.driveTrainDeadband) {
             right.set(ControlMode.PercentOutput, dCommand.getRightDrive());
+        }
+        else{
+            right.set(ControlMode.PercentOutput, 0);
         }
     }
 

@@ -24,13 +24,13 @@ public class Arm extends Subsystem{
         arm.configFactoryDefault();
 
         /* Configure Sensor Source for Pirmary PID */
-        arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
+        arm.configSelectedFeedbackSensor(FeedbackDevice.Analog,
                 Constants.armPIDLoopIdx,
                 Constants.armTimeoutMs);
 
-        arm.setSensorPhase(false);
-        arm.setInverted(true);
-        armSlave.setInverted(true);
+        arm.setSensorPhase(true);
+        arm.setInverted(false);
+        armSlave.setInverted(false);
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
         arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.armTimeoutMs);
@@ -44,7 +44,6 @@ public class Arm extends Subsystem{
 
         /* Set Motion Magic gains in slot0 - see documentation */
         arm.selectProfileSlot(Constants.armSlotIdx, Constants.armPIDLoopIdx);
-        arm.config_kF(Constants.armSlotIdx, Constants.armF, Constants.armTimeoutMs);
         arm.config_kP(Constants.armSlotIdx, Constants.armP, Constants.armTimeoutMs);
         arm.config_kI(Constants.armSlotIdx, Constants.armI, Constants.armTimeoutMs);
         arm.config_kD(Constants.armSlotIdx, Constants.armD, Constants.armTimeoutMs);
@@ -53,22 +52,24 @@ public class Arm extends Subsystem{
         arm.configMotionCruiseVelocity(Constants.armMaxVel, Constants.armTimeoutMs);
         arm.configMotionAcceleration(Constants.armMaxAccel, Constants.armTimeoutMs);
 
-        /* Zero the sensor */
-        arm.setSelectedSensorPosition(0, Constants.armPIDLoopIdx, Constants.armTimeoutMs);
-
     }
 
     void handle(SuperstructureCommand sCommand) {
+        arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle()))), 10);
         if(sCommand.getEmergencyCommand().getEmergencyActive()){
             System.out.println("Emergency Mode Active!");
             arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
-            SmartDashboard.putNumber("Arm Position", -10000);
+            SmartDashboard.putNumber("Arm Desired Position", -10000);
         }
         else{
             arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos());
-            SmartDashboard.putNumber("Arm Position", Constants.ticksToDegrees(sCommand.getScoreState().getArmDesiredPos()));
+            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
         }
+
+        SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
+
     }
+
 
     boolean isInPosition(){
         return arm.getClosedLoopError() < Constants.armAllowedError;
@@ -76,11 +77,21 @@ public class Arm extends Subsystem{
 
     @Override
     public void zeroSensors() {
-        arm.setSelectedSensorPosition(Constants.degreesToTicks(Constants.armZeroPos),Constants.armPIDLoopIdx,Constants.armTimeoutMs);
     }
 
     @Override
     public void stop() {
         arm.set(ControlMode.PercentOutput, 0);
     }
+
+    double getArmAngle(){
+        double x1 = Constants.armP90;
+        double y1 = 90;
+        double x2 = Constants.armP270;
+        double y2 = 270;
+        double m = (y2-y1)/(x2-x1);
+        double b = y1 - m*x1;
+        return (m*arm.getSelectedSensorPosition() + b);
+    }
+
 }
