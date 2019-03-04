@@ -24,7 +24,7 @@ public class Controls {
     }
 
     public double getLeftJoyAxis(){
-        return leftJoy.getRawAxis(0);
+        return leftJoy.getRawAxis(1);
     }
 
     public double getRightJoyAxis(){
@@ -43,8 +43,12 @@ public class Controls {
         return operatorStick.getRawAxis(1);
     }
 
-    public boolean getOperatorTrigger() {
-        return operatorStick.getTrigger();
+    public boolean getOperatorOpen() {
+        return operatorStick.getRawButton(4);
+    }
+
+    public boolean getOperatorClose() {
+        return operatorStick.getRawButton(5);
     }
 
     public double getEmergencyArmStick(){
@@ -55,14 +59,14 @@ public class Controls {
     }
 
     public double getEmergencyWristStick(){
-        return operatorStick.getRawAxis(2);
+        return operatorStick.getRawAxis(0);
     }
 
     public ScoreState getOperatorPanelState(){
         ScoreState desiredState = operatorPanel.getOperatorDesiredState();
-        SmartDashboard.putString("Desired Position", desiredState.position.name());
-        SmartDashboard.putString("Desired Side", desiredState.robotSide.name());
-        SmartDashboard.putString("Desired Element", desiredState.gameElement.name());
+        SmartDashboard.putString("Operator Desired Position", desiredState.position.name());
+        SmartDashboard.putString("Operator Desired Side", desiredState.robotSide.name());
+        SmartDashboard.putString("Operator Desired Element", desiredState.gameElement.name());
         return desiredState;
     }
 

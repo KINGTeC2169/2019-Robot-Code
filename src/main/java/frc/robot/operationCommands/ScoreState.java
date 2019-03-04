@@ -104,6 +104,82 @@ public class ScoreState {
 
     }
 
+    public int getWristDesiredPos() {
+        if(robotSide == RobotSide.MANUAL){
+            return -1000;
+        }
+        if (robotSide == RobotSide.FRONT) {
+            if (gameElement == GameElement.CARGO) {
+                if (position == Position.LOW) {
+                    return Constants.WristPositions.frontCargoLow;
+                }
+                if (position == Position.MIDDLE) {
+                    return (Constants.WristPositions.frontCargoMid);
+                }
+                if (position == Position.HIGH) {
+                    return (Constants.WristPositions.frontCargoHi);
+                }
+                if (position == Position.INTAKE) {
+                    return (Constants.WristPositions.frontCargoIntake);
+                }
+                if (position == Position.STOW){
+                    return  (Constants.WristPositions.frontCargoStowed);
+                }
+
+            } else if (gameElement == GameElement.HATCH) {
+                if (position == Position.LOW) {
+                    return (Constants.WristPositions.frontHatchLow);
+                }
+                if (position == Position.MIDDLE) {
+                    return (Constants.WristPositions.frontHatchMid);
+                }
+                if (position == Position.HIGH) {
+                    return (Constants.WristPositions.frontHatchHi);
+                }
+                if (position == Position.INTAKE) {
+                    return (Constants.WristPositions.frontHatchIntake);
+                }
+                if (position == Position.STOW){
+                    return (Constants.WristPositions.frontHatchStowed);
+                }
+            }
+
+        } else if (robotSide == RobotSide.BACK) {
+            if (gameElement == GameElement.CARGO) {
+                if (position == Position.LOW) {
+                    return (Constants.WristPositions.backCargoLow);
+                }
+                if (position == Position.MIDDLE) {
+                    return (Constants.WristPositions.backCargoMid);
+                }
+                if (position == Position.HIGH) {
+                    return (Constants.WristPositions.backCargoHi);
+                }
+                if (position == Position.INTAKE) {
+                    return (Constants.WristPositions.backCargoIntake);
+                }
+            } else if (gameElement == GameElement.HATCH) {
+                if (position == Position.LOW) {
+                    return (Constants.WristPositions.backHatchLow);
+                }
+                if (position == Position.MIDDLE) {
+                    return (Constants.WristPositions.backHatchMid);
+                }
+                if (position == Position.HIGH) {
+                    return (Constants.WristPositions.backHatchHi);
+                }
+                if (position == Position.INTAKE) {
+                    return (Constants.WristPositions.backHatchIntake);
+                }
+
+            }
+
+
+        }
+        return 0;
+
+    }
+
 
     RobotSide getRobotSide() {
         return robotSide;

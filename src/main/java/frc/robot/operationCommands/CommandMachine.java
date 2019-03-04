@@ -20,7 +20,7 @@ public class CommandMachine {
     }
 
     private IntakeCommand generateIntakeCommand(){
-        return new IntakeCommand(controls.getOperatorStickY(), controls.getOperatorTrigger());
+        return new IntakeCommand(controls.getOperatorStickY(), controls.getOperatorOpen(), controls.getOperatorClose());
     }
 
     private ScoreState generateScoreState(){

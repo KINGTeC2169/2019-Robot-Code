@@ -3,20 +3,25 @@ package frc.robot.operationCommands;
 public class IntakeCommand {
 
     private final double stickY;
-    private final boolean trigger;
+    private final boolean open;
+    private final boolean close;
 
-    IntakeCommand(double stickY, boolean trigger){
+    IntakeCommand(double stickY, boolean open, boolean close){
         this.stickY = stickY;
-        this.trigger = trigger;
+        this.open = open;
+        this.close = close;
     }
-
 
     public double getStickY() {
         return stickY;
     }
 
-    public boolean getTrigger() {
-        return trigger;
+    public boolean getOpen() {
+        return open;
+    }
+
+    public boolean getClose() {
+        return close;
     }
 
 }
