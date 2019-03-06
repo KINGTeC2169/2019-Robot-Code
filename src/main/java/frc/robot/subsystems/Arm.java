@@ -71,7 +71,7 @@ public class Arm extends Subsystem{
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
 
     }
-    
+
     boolean isInPosition(){
         return arm.getClosedLoopError() < Constants.armAllowedError;
     }

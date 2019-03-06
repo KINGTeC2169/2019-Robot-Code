@@ -47,12 +47,12 @@ public class DriveTrain {
         rightTop.follow(right);
         rightBottom.follow(right);
 
-        pid = new PID(0, 0, 0);
+        pid = new PID(0.25, 0, 0);
 
-        SmartDashboard.putNumber("dP", 0);
+        SmartDashboard.putNumber("dP", 0.25);
         SmartDashboard.putNumber("dI", 0);
         SmartDashboard.putNumber("dD", 0);
-        SmartDashboard.putNumber("Throttle Multiplier", 0);
+        SmartDashboard.putNumber("Throttle Multiplier", .25);
     }
 
     public void handle(DriveCommand dCommand) {
@@ -89,10 +89,10 @@ public class DriveTrain {
 
 
     private void visionArcadeDrive(double throttle, double turn){
-        double thottleMult = SmartDashboard.getNumber("Throttle Multiplier", 0);
+        double throttleMult = SmartDashboard.getNumber("Throttle Multiplier", 0);
         turn = -turn;
-        left.set(ControlMode.PercentOutput, throttle -pid.getOutput(turn));
-        right.set(ControlMode.PercentOutput, throttle + pid.getOutput(turn));
+        left.set(ControlMode.PercentOutput, throttleMult * throttle -pid.getOutput(turn));
+        right.set(ControlMode.PercentOutput, throttleMult * throttle + pid.getOutput(turn));
     }
 
     private void shift(DriveCommand dCommand){
