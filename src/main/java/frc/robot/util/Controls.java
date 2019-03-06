@@ -75,6 +75,6 @@ public class Controls {
     }
 
     public boolean getRightTrigger() {
-        return rightJoy.getRawButton(0);
+        return rightJoy.getRawButton(1);
     }
 }

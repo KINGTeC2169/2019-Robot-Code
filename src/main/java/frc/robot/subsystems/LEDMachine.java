@@ -1,10 +1,14 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogOutput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 
 public class LEDMachine extends Subsystem {
+
+    DigitalOutput frontOutput;
+    DigitalOutput backOutput;
 
     public enum LEDState {
         SOLID_BLUE,BLINKING_BLUE,SOLID_GREEN,BLINKING_GREEN,SOLID_PINK,BLINKING_PINK,NORMAL
@@ -35,11 +39,26 @@ public class LEDMachine extends Subsystem {
 
     LEDMachine(){
 
+        frontOutput = new DigitalOutput(0);
+        backOutput = new DigitalOutput(1);
+
         ledOut = new AnalogOutput(ActuatorMap.ledAnalogOutChannel);
 
     }
 
     void handle(SuperstructureCommand sCommand) {
+
+        switch(sCommand.getScoreState().getVisionside()){
+            case BACK:
+                frontOutput.set(false);
+                backOutput.set(true);
+            case FRONT:
+                frontOutput.set(true);
+                backOutput.set(false);
+            case AND_UP_THE_SIDES:
+                frontOutput.set(false);
+                backOutput.set(false);
+        }
 
         switch(state){
 

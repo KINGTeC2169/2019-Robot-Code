@@ -12,14 +12,15 @@ import frc.robot.networking.VisionServer;
 
 import java.io.IOException;
 
-final class Main {
+public final class Main {
+
+    public static double visionData = 0;
 
     private Main() {
     }
 
-    public static void main(String... args) throws IOException {
-        VisionServer server = new VisionServer();
-        Thread vThread= new Thread(server::spawnVisionThread);
+    public static void main(String... args){
+        Thread vThread= new Thread(VisionServer::spawnVisionThread);
         vThread.start();
         RobotBase.startRobot(Robot::new);
     }

@@ -68,8 +68,8 @@ public class Wrist extends Subsystem {
         }
 
         else {
-            wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos());
-            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos());
+            wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos() + 270);
+            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos() + 270);
 
         }
 

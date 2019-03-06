@@ -32,6 +32,8 @@ public class Arm extends Subsystem{
         arm.setInverted(false);
         armSlave.setInverted(false);
 
+
+
         /* Set relevant frame periods to be at least as fast as periodic rate */
         arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.armTimeoutMs);
         arm.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.armTimeoutMs);
@@ -69,8 +71,7 @@ public class Arm extends Subsystem{
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
 
     }
-
-
+    
     boolean isInPosition(){
         return arm.getClosedLoopError() < Constants.armAllowedError;
     }

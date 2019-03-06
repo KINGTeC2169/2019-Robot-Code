@@ -1,5 +1,7 @@
 package frc.robot.operationCommands;
 
+import frc.robot.Main;
+
 public class DriveCommand {
 
     private static final double visionYaw = -5;
@@ -27,7 +29,7 @@ public class DriveCommand {
     }
 
     public double getVisionYaw() {
-        return visionYaw;
+        return Main.visionData;
     }
 
     public double getLeftDrive() {

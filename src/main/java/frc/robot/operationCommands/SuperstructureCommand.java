@@ -9,7 +9,6 @@ public class SuperstructureCommand {
     private final ScoreState scoreState;
 
     SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState, EmergencyCommand emergencyCommand){
-        System.out.println("Line 12: " + emergencyCommand.getEmergencyActive());
         this.intakeCommand = intakeCommand;
         this.scoreState = scoreState;
         this.emergencyCommand = emergencyCommand;

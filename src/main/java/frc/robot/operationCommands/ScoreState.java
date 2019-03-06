@@ -4,17 +4,23 @@ import frc.robot.util.Constants;
 
 public class ScoreState {
 
-    public ScoreState(RobotSide robotSide, GameElement gameElement, Position position){
+    public ScoreState(RobotSide robotSide, GameElement gameElement, Position position, boolean rightTrigger){
         this.robotSide = robotSide;
         this.gameElement = gameElement;
         this.position = position;
+        this.rightTrigger = rightTrigger;
     }
 
     public enum RobotSide {
         FRONT, BACK, MANUAL
     }
-
     public final RobotSide robotSide;
+
+    public enum VisionSide{
+        FRONT, BACK, AND_UP_THE_SIDES
+    }
+
+    public VisionSide visionSide;
 
     public enum GameElement {
         HATCH, CARGO
@@ -179,7 +185,21 @@ public class ScoreState {
         return 0;
 
     }
-
+    public VisionSide getVisionside(){
+        if(rightTrigger){
+            if(this.getRobotSide() == RobotSide.BACK){
+                return VisionSide.BACK;
+            }
+            else if(this.getRobotSide() == RobotSide.FRONT){
+                return VisionSide.FRONT;
+            } else{
+                return VisionSide.AND_UP_THE_SIDES;
+            }
+        }
+        else{
+            return VisionSide.AND_UP_THE_SIDES;
+        }
+    }
 
     RobotSide getRobotSide() {
         return robotSide;
@@ -192,6 +212,7 @@ public class ScoreState {
     Position getPosition() {
         return position;
     }
+    boolean rightTrigger;
 
 
 }

@@ -1,5 +1,8 @@
 package frc.robot.networking;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Main;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -58,21 +61,24 @@ public class VisionServer extends Thread {
                                 }
                             }
                         }
-                        //System.out.println("Client Says: " + System.currentTimeMillis()/1000.0f + "  " + Double.parseDouble(in.readLine()));
+                        Main.visionData = Double.parseDouble(in.readLine());
+                        SmartDashboard.putNumber("Yee-Haw", Main.visionData);
                     }
 
                 } catch (IOException e) {
+                    System.out.println("Inner Network Loop");
                     e.printStackTrace();
                 }
 
             } catch (IOException e) {
+                System.out.println("Outer Network Loop");
                 e.printStackTrace();
             }
 
         }
     }
 
-    public void spawnVisionThread(){
+    public static void spawnVisionThread(){
         VisionServer server = null;
         try {
             server = new VisionServer();
@@ -82,6 +88,7 @@ public class VisionServer extends Thread {
         while (true) {
             if (server != null) {
                 server.run();
+                System.out.println("Died! Trying Again!");
             }
         }
     }
