@@ -9,6 +9,7 @@ public final class Constants {
     // Constants for intake control
     public static final double exhaustThreshold = -0.5;
     public static final double intakeDeadband = 0.05;
+    public static float intakeHoldVoltage = 3;
 
     // Constants for intake sensor
     public static final double intakeProxLowerBound = 0;

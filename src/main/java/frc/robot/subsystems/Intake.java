@@ -2,10 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.operationCommands.IntakeCommand;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
@@ -19,6 +18,12 @@ public class Intake extends Subsystem {
     private final Solenoid jaws;
 
     private final Ultrasonic proxSensor;
+
+    private enum BallState{
+        INTAKING, EXHAUSTING, HOLDING, IDLE
+    }
+
+    private BallState ballState = BallState.IDLE;
 
     Intake() {
 
@@ -46,22 +51,45 @@ public class Intake extends Subsystem {
         IntakeCommand command = sCommand.getIntakeCommand();
 
         //Handles deadband and control for intake
+
+        //Check if operator is looking to manually control intake
         if (Math.abs(command.getStickY()) >= Constants.intakeDeadband) {
+
+            //Operator is controlling.  Do what they ask and set the ball state accordingly.
+            if (command.getStickY() > Constants.intakeDeadband) {
+                ballState = BallState.INTAKING;
+            }
+            else{
+                ballState = BallState.EXHAUSTING;
+            }
             runIntake(command.getStickY());
-        } else {
-            runIntake(0);
+
         }
+
+        //The stick is stable.  Determine if the operator's last action was intake
+
+        else {
+
+            //It was.  Run the wheels at hold voltage and set the state.
+            if(ballState == BallState.INTAKING || ballState == BallState.HOLDING){
+                runIntake(Constants.intakeHoldVoltage /12f);
+                ballState = BallState.HOLDING;
+            }
+
+            //It was not.  Stop the wheels.
+            else{
+                runIntake(0);
+                ballState = BallState.IDLE;
+            }
+
+        }
+
+        SmartDashboard.putString("Intake Roller State", ballState.name());
 
         //Turns the jawsOpen boolean into actual commands for the piston
         if (command.getOpen()) {
-            if(Constants.debugMode){
-                System.out.println("Intake Jaws Opened");
-            }
             jaws.set(true);
         } else if(command.getClose()){
-            if(Constants.debugMode){
-                System.out.println("Intake Jaws Closed");
-            }
             jaws.set(false);
         }
 
