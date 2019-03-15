@@ -52,45 +52,62 @@ public class Intake extends Subsystem {
 
         //Handles deadband and control for intake
 
-        //Check if operator is looking to manually control intake
-        if (Math.abs(command.getStickY()) >= Constants.intakeDeadband) {
-
-            //Operator is controlling.  Do what they ask and set the ball state accordingly.
-            if (command.getStickY() > Constants.intakeDeadband) {
-                ballState = BallState.INTAKING;
+        if(sCommand.getEmergencyCommand().getEmergencyActive()){
+            if(sCommand.getEmergencyCommand().getIn()){
+                runIntake(-1);
             }
-            else{
-                ballState = BallState.EXHAUSTING;
+            else if(sCommand.getEmergencyCommand().getOut()){
+                runIntake(1);
             }
-            runIntake(command.getStickY());
-
-        }
-
-        //The stick is stable.  Determine if the operator's last action was intake
-
-        else {
-
-            //It was.  Run the wheels at hold voltage and set the state.
-            if(ballState == BallState.INTAKING || ballState == BallState.HOLDING){
-                runIntake(Constants.intakeHoldVoltage /12f);
-                ballState = BallState.HOLDING;
-            }
-
-            //It was not.  Stop the wheels.
             else{
                 runIntake(0);
-                ballState = BallState.IDLE;
             }
-
         }
 
-        SmartDashboard.putString("Intake Roller State", ballState.name());
+        else{
+            //Check if operator is looking to manually control intake
+            if (Math.abs(command.getStickY()) >= Constants.intakeDeadband) {
+
+                //Operator is controlling.  Do what they ask and set the ball state accordingly.
+                if (command.getStickY() > Constants.intakeDeadband) {
+                    ballState = BallState.INTAKING;
+                }
+                else{
+                    ballState = BallState.EXHAUSTING;
+                }
+                runIntake(command.getStickY());
+
+
+            }
+
+            //The stick is stable.  Determine if the operator's last action was intake
+
+            else {
+
+                //It was.  Run the wheels at hold voltage and set the state.
+                if(ballState == BallState.INTAKING || ballState == BallState.HOLDING){
+                    runIntake(Constants.intakeHoldVoltage /12f);
+                    ballState = BallState.HOLDING;
+                }
+
+                //It was not.  Stop the wheels.
+                else{
+                    runIntake(0);
+                    ballState = BallState.IDLE;
+                }
+
+            }
+
+            SmartDashboard.putString("Intake Roller State", ballState.name());
+
+        }
 
         //Turns the jawsOpen boolean into actual commands for the piston
         if (command.getOpen()) {
             jaws.set(true);
         } else if(command.getClose()){
             jaws.set(false);
+            ballState = BallState.IDLE;
         }
 
     }

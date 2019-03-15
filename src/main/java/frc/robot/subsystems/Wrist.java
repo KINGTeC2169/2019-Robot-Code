@@ -32,7 +32,7 @@ public class Wrist extends Subsystem {
                 Constants.wristPIDLoopIdx,
                 Constants.wristTimeoutMs);
 
-        wristMotor.setSensorPhase(false);
+        wristMotor.setSensorPhase(true);
         wristMotor.setInverted(false);
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
@@ -64,12 +64,11 @@ public class Wrist extends Subsystem {
 
         if(sCommand.getEmergencyCommand().getEmergencyActive()){
             wristMotor.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getWristVal());
-            SmartDashboard.putNumber("Wrist Desired Position", -1000);
         }
 
         else {
-            wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos() + 270);
-            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos() + 270);
+            wristMotor.set(ControlMode.MotionMagic, -(sCommand.getScoreState().getWristDesiredPos() - 556 + (725-470)));
+            SmartDashboard.putNumber("Wrist Desired Position", -(sCommand.getScoreState().getWristDesiredPos() - 556+(725-470)));
 
         }
 

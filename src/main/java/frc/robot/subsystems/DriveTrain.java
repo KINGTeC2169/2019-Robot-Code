@@ -21,15 +21,15 @@ public class DriveTrain {
 
     public DriveTrain(){
 
-        dog = new Solenoid(14, ActuatorMap.driveShifter);
+        dog = new Solenoid(ActuatorMap.pcmPort, ActuatorMap.driveShifter);
 
         //Initialize left side of the driveline
         left = new TalonSRX(ActuatorMap.driveTrainLeft);
         VictorSPX leftTop = new VictorSPX(ActuatorMap.driveTrainLeftTop);
         VictorSPX leftBottom = new VictorSPX(ActuatorMap.driveTrainLeftBottom);
 
-        left.setInverted(true);
-        leftTop.setInverted(false);
+        left.setInverted(false);
+        leftTop.setInverted(true);
         leftBottom.setInverted(true);
 
         leftTop.follow(left);
@@ -60,7 +60,7 @@ public class DriveTrain {
         double i = SmartDashboard.getNumber("dI", 0);
         double d = SmartDashboard.getNumber("dD", 0);
         pid.setPID(p, i, d);
-        pid.setSetpoint(.17);
+        pid.setSetpoint(0);
         pid.setMaxIOutput(.4);
         //Check if vision is driving, and if it is, allow it to move the drivetrain
         if(dCommand.isVisionDriving()){

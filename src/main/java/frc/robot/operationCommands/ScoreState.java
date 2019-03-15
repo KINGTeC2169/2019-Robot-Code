@@ -11,6 +11,13 @@ public class ScoreState {
         this.rightTrigger = rightTrigger;
     }
 
+    public ScoreState(RobotSide robotSide, GameElement gameElement, Position position){
+        this.robotSide = robotSide;
+        this.gameElement = gameElement;
+        this.position = position;
+        this.rightTrigger = false;
+    }
+
     public enum RobotSide {
         FRONT, BACK, MANUAL
     }

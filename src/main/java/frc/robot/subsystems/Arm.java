@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -20,6 +21,9 @@ public class Arm extends Subsystem{
         VictorSPX armSlave = new VictorSPX(ActuatorMap.armSlave);
         armSlave.set(ControlMode.Follower, ActuatorMap.armMaster);
 
+        arm.setNeutralMode(NeutralMode.Brake);
+        armSlave.setNeutralMode(NeutralMode.Brake);
+
         /* Factory default hardware to prevent unexpected behavior */
         arm.configFactoryDefault();
 
@@ -28,7 +32,7 @@ public class Arm extends Subsystem{
                 Constants.armPIDLoopIdx,
                 Constants.armTimeoutMs);
 
-        arm.setSensorPhase(true);
+        arm.setSensorPhase(false);
         arm.setInverted(false);
         armSlave.setInverted(false);
 
@@ -54,18 +58,17 @@ public class Arm extends Subsystem{
         arm.configMotionCruiseVelocity(Constants.armMaxVel, Constants.armTimeoutMs);
         arm.configMotionAcceleration(Constants.armMaxAccel, Constants.armTimeoutMs);
 
+
     }
 
     void handle(SuperstructureCommand sCommand) {
         arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle()))), 10);
         if(sCommand.getEmergencyCommand().getEmergencyActive()){
-            System.out.println("Emergency Mode Active!");
             arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
-            SmartDashboard.putNumber("Arm Desired Position", -10000);
         }
         else{
-            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos());
-            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
+            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() +400);
+            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos() + 400);
         }
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());

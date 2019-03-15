@@ -1,5 +1,6 @@
 package frc.robot.networking;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Main;
 
@@ -7,6 +8,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.sql.Driver;
 
 public class VisionServer extends Thread {
 
@@ -38,7 +40,7 @@ public class VisionServer extends Thread {
                 // socket object to receive incoming clientBase requests
                 Socket s = server.accept();
                 connected = true;
-                System.out.println("[INFO] A new client is connected : " + s);
+                DriverStation.reportWarning("[INFO] A new client is connected : " + s, false);
 
                 // obtaining input and out streams
 
@@ -55,7 +57,7 @@ public class VisionServer extends Thread {
                             long elapsedTime = System.currentTimeMillis() - lastRecieved;
                             if (elapsedTime > 3000) {
                                 if (getConnected()) {
-                                    System.out.println("Lost Client!");
+                                    DriverStation.reportError("Lost Client!", false);
                                     disconnect();
                                     break;
                                 }

@@ -77,4 +77,13 @@ public class Controls {
     public boolean getRightTrigger() {
         return rightJoy.getRawButton(1);
     }
+
+    public boolean getIntakeButton(){
+        return operatorStick.getRawButton(2);
+    }
+
+    public boolean getExhaustButton(){
+        return operatorStick.getRawButton(3);
+    }
+
 }

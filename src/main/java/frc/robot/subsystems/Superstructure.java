@@ -28,7 +28,7 @@ public class Superstructure {
     public void handleSubsystems(SuperstructureCommand command) {
         arm.handle(command);
         intake.handle(command);
-        led.handle(command);
+        led.handle();
         wrist.handle(command);
     }
 

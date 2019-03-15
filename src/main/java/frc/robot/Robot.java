@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.operationCommands.CommandMachine;
 import frc.robot.subsystems.DriveTrain;
@@ -20,6 +22,8 @@ class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        UsbCamera cam = CameraServer.getInstance().startAutomaticCapture(0);
+        UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
         driveTrain = new DriveTrain();
         superstructure = new Superstructure();
         superstructure.robotInit();
@@ -33,6 +37,7 @@ class Robot extends TimedRobot {
 
     @Override
     public void autonomousPeriodic() {
+        teleopPeriodic();
     }
 
     @Override
