@@ -29,7 +29,7 @@ public class CommandMachine {
 
     private EmergencyCommand generateEmergencyCommand(){
         return new EmergencyCommand(controls.getEmergencyMode(), controls.getEmergencyArmStick(),
-                controls.getEmergencyWristStick(), controls.getIntakeButton(), controls.getExhaustButton());
+                controls.getEmergencyWristStick(), controls.getIntakeButton(), controls.getExhaustButton(), controls.getOperatorTrigger());
     }
 
 

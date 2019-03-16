@@ -86,4 +86,9 @@ public class Controls {
         return operatorStick.getRawButton(3);
     }
 
+    public boolean getOperatorTrigger() {
+
+        return operatorStick.getRawButton(1);
+
+    }
 }

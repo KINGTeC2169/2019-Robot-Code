@@ -18,6 +18,9 @@ public class Wrist extends Subsystem {
         INTAKE_FRONT, INTAKE_BACK, HIGH_FRONT, HIGH_BACK, PARALLEL_TO_GROUND
     }
 
+
+    int lastPos;
+
     Wrist() {
 
         wristMotor = new TalonSRX(ActuatorMap.wristPort);
@@ -58,18 +61,19 @@ public class Wrist extends Subsystem {
         wristMotor.configMotionCruiseVelocity(Constants.wristMaxVel, Constants.wristTimeoutMs);
         wristMotor.configMotionAcceleration(Constants.wristMaxAccel, Constants.wristTimeoutMs);
 
+        lastPos = wristMotor.getSelectedSensorPosition();
+
     }
+
 
     void handle(SuperstructureCommand sCommand) {
 
-        if(sCommand.getEmergencyCommand().getEmergencyActive()){
+        if(sCommand.getEmergencyCommand().getTrigger()){
             wristMotor.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getWristVal());
+            lastPos = wristMotor.getSelectedSensorPosition();
         }
-
-        else {
-            wristMotor.set(ControlMode.MotionMagic, -(sCommand.getScoreState().getWristDesiredPos() - 556 + (725-470)));
-            SmartDashboard.putNumber("Wrist Desired Position", -(sCommand.getScoreState().getWristDesiredPos() - 556+(725-470)));
-
+        else{
+            wristMotor.set(ControlMode.MotionMagic, lastPos);
         }
 
         SmartDashboard.putNumber("Wrist Actual Position Angle", wristMotor.getSelectedSensorPosition());

@@ -50,7 +50,7 @@ public final class Constants {
     public static final class ArmPositions {
 
 
-        public static final int frontHatchStowed = -267;
+        public static final int frontHatchStowed = -254;
         public static final int frontHatchIntake = -254;
         public static final int frontHatchLow = -254;
         public static final int frontHatchMid = -430;
@@ -76,7 +76,7 @@ public final class Constants {
     public static final class WristPositions {
 
         public static final int frontHatchStowed = -267;
-        public static final int frontHatchIntake = 1002;
+        public static final int frontHatchIntake = 1026;
         public static final int frontHatchLow = 1026;
         public static final int frontHatchMid = 1185;
         public static final int frontHatchHi = 1411;

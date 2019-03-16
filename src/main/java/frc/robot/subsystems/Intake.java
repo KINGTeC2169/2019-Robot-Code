@@ -52,7 +52,7 @@ public class Intake extends Subsystem {
 
         //Handles deadband and control for intake
 
-        if(sCommand.getEmergencyCommand().getEmergencyActive()){
+        if(sCommand.getEmergencyCommand().getEmergencyActive() || sCommand.getEmergencyCommand().getTrigger()){
             if(sCommand.getEmergencyCommand().getIn()){
                 runIntake(-1);
             }
