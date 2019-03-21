@@ -28,8 +28,8 @@ public class DriveTrain {
         VictorSPX leftTop = new VictorSPX(ActuatorMap.driveTrainLeftTop);
         VictorSPX leftBottom = new VictorSPX(ActuatorMap.driveTrainLeftBottom);
 
-        left.setInverted(false);
-        leftTop.setInverted(true);
+        left.setInverted(true);
+        leftTop.setInverted(false);
         leftBottom.setInverted(true);
 
         leftTop.follow(left);

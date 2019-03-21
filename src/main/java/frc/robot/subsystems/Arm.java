@@ -33,8 +33,8 @@ public class Arm extends Subsystem{
                 Constants.armTimeoutMs);
 
         arm.setSensorPhase(false);
-        arm.setInverted(false);
-        armSlave.setInverted(false);
+        arm.setInverted(true);
+        armSlave.setInverted(true);
 
 
 
@@ -67,8 +67,8 @@ public class Arm extends Subsystem{
             arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
         }
         else{
-            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() +400);
-            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos() + 400);
+            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos());
+            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
         }
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
