@@ -39,8 +39,8 @@ public class Intake extends Subsystem {
 
     private void runIntake(double motorPower) {
 
-        left.set(ControlMode.PercentOutput, motorPower);
-        right.set(ControlMode.PercentOutput, motorPower);
+        left.set(ControlMode.PercentOutput, -motorPower);
+        right.set(ControlMode.PercentOutput, -motorPower);
 
     }
 

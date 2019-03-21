@@ -67,8 +67,10 @@ public class Arm extends Subsystem{
             arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
         }
         else{
-            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos());
-            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
+            if(SmartDashboard.getBoolean("Enable Arm", true)) {
+                arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos());
+                SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
+            }
         }
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());

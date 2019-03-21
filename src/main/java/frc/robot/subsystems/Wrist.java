@@ -73,8 +73,10 @@ public class Wrist extends Subsystem {
             lastPos = wristMotor.getSelectedSensorPosition();
         }
         else{
-            //wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos());
-            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos());
+            if(SmartDashboard.getBoolean("Enable Wrist", true)){
+                wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos());
+                SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos());
+            }
         }
 
         SmartDashboard.putNumber("Wrist Actual Position Angle", wristMotor.getSelectedSensorPosition());
