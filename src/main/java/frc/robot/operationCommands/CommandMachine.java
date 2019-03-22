@@ -32,5 +32,10 @@ public class CommandMachine {
                 controls.getEmergencyWristStick(), controls.getIntakeButton(), controls.getExhaustButton(), controls.getOperatorTrigger());
     }
 
+    // Handles manual control of arm and wrist encoder offset
+    public OffsetCommand generateOffsetCommand(){
+        return new OffsetCommand(controls.getArmOffsetDecrease(), controls.getArmOffsetIncrease(), controls.getWristOffsetDecrease(), controls.getWristOffsetIncrease());
+    }
+
 
 }

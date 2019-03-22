@@ -46,7 +46,7 @@ class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        superstructure.handleSubsystems(commandMachine.generateSuperstructureCommand());
+        superstructure.handleSubsystems(commandMachine.generateSuperstructureCommand(), commandMachine.generateOffsetCommand());
         driveTrain.handle(commandMachine.generateDriveCommand());
     }
 

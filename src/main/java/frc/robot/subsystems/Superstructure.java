@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
+import frc.robot.operationCommands.OffsetCommand;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 
@@ -25,11 +26,11 @@ public class Superstructure {
         comp.start();
     }
 
-    public void handleSubsystems(SuperstructureCommand command) {
-        arm.handle(command);
-        intake.handle(command);
+    public void handleSubsystems(SuperstructureCommand sCommand, OffsetCommand oCommand) {
+        arm.handle(sCommand, oCommand);
+        intake.handle(sCommand);
         led.handle();
-        wrist.handle(command);
+        wrist.handle(sCommand, oCommand);
     }
 
     public void zeroAllSensors() {

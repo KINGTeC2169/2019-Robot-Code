@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.operationCommands.OffsetCommand;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
@@ -61,20 +62,18 @@ public class Arm extends Subsystem{
 
     }
 
-    void handle(SuperstructureCommand sCommand) {
+    void handle(SuperstructureCommand sCommand, OffsetCommand oCommand) {
         arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle()))), 10);
         if(sCommand.getEmergencyCommand().getEmergencyActive()){
             arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
         }
         else{
-            if(SmartDashboard.getBoolean("Enable Arm", true)) {
-                arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos());
-                SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
-            }
+            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() + oCommand.getArmOffset());
+            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
         }
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
-
+        SmartDashboard.putNumber("Arm Offset", oCommand.getArmOffset());
     }
 
     boolean isInPosition(){
