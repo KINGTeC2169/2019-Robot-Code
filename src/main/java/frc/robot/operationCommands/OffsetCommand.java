@@ -1,8 +1,9 @@
 package frc.robot.operationCommands;
 
 public class OffsetCommand {
-    private int armOffset = 0;
-    private int wristOffset = 0;
+    //
+    private static int armOffset = 0;
+    private static int wristOffset = 0;
 
     public OffsetCommand(boolean armDecrease, boolean armIncrease, boolean wristDecrease, boolean wristIncrease) {
         // Periodically update the offsets based on the buttons

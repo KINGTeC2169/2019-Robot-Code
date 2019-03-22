@@ -62,18 +62,18 @@ public class Arm extends Subsystem{
 
     }
 
-    void handle(SuperstructureCommand sCommand, OffsetCommand oCommand) {
+    void handle(SuperstructureCommand sCommand) {
         arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle()))), 10);
         if(sCommand.getEmergencyCommand().getEmergencyActive()){
             arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
         }
         else{
-            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() + oCommand.getArmOffset());
+            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() + sCommand.getArmOffset());
             SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
         }
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Arm Offset", oCommand.getArmOffset());
+        SmartDashboard.putNumber("Arm Offset", sCommand.getArmOffset());
     }
 
     boolean isInPosition(){

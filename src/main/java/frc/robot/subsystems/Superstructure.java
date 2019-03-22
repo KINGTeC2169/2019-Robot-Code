@@ -26,11 +26,11 @@ public class Superstructure {
         comp.start();
     }
 
-    public void handleSubsystems(SuperstructureCommand sCommand, OffsetCommand oCommand) {
-        arm.handle(sCommand, oCommand);
+    public void handleSubsystems(SuperstructureCommand sCommand) {
+        arm.handle(sCommand);
         intake.handle(sCommand);
         led.handle();
-        wrist.handle(sCommand, oCommand);
+        wrist.handle(sCommand);
     }
 
     public void zeroAllSensors() {

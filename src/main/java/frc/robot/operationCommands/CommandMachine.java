@@ -11,7 +11,7 @@ public class CommandMachine {
     }
 
     public SuperstructureCommand generateSuperstructureCommand(){
-        return new SuperstructureCommand(generateIntakeCommand(), generateScoreState(), generateEmergencyCommand());
+        return new SuperstructureCommand(generateIntakeCommand(), generateScoreState(), generateEmergencyCommand(), generateOffsetCommand());
     }
 
     public DriveCommand generateDriveCommand(){

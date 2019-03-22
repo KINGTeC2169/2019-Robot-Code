@@ -69,7 +69,7 @@ public class Wrist extends Subsystem {
     }
 
 
-    void handle(SuperstructureCommand sCommand, OffsetCommand oCommand) {
+    void handle(SuperstructureCommand sCommand) {
 
         if(sCommand.getEmergencyCommand().getTrigger()){
             wristMotor.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getWristVal());
@@ -78,8 +78,8 @@ public class Wrist extends Subsystem {
             isManual = true;
         }
         else if(sCommand.getScoreState().isNewState()){
-            wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos() + oCommand.getWristOffset());
-            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos() + oCommand.getWristOffset());
+            wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos() + sCommand.getWristOffset());
+            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos() + sCommand.getWristOffset());
             SmartDashboard.putNumber("State", 2);
             isManual = false;
         }
@@ -89,14 +89,14 @@ public class Wrist extends Subsystem {
             SmartDashboard.putNumber("State", 3);
         }
         else{
-            wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos() + oCommand.getWristOffset());
-            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos() + oCommand.getWristOffset());
+            wristMotor.set(ControlMode.MotionMagic, sCommand.getScoreState().getWristDesiredPos() + sCommand.getWristOffset());
+            SmartDashboard.putNumber("Wrist Desired Position", sCommand.getScoreState().getWristDesiredPos() + sCommand.getWristOffset());
             SmartDashboard.putNumber("State", 4);
             isManual = false;
         }
 
         SmartDashboard.putNumber("Wrist Actual Position Angle", wristMotor.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Wrist Offset", oCommand.getWristOffset());
+        SmartDashboard.putNumber("Wrist Offset", sCommand.getWristOffset());
 
     }
 

@@ -7,11 +7,13 @@ public class SuperstructureCommand {
     private final EmergencyCommand emergencyCommand;
     private final IntakeCommand intakeCommand;
     private final ScoreState scoreState;
+    private final OffsetCommand offsetCommand;
 
-    SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState, EmergencyCommand emergencyCommand){
+    SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState, EmergencyCommand emergencyCommand, OffsetCommand offsetCommand){
         this.intakeCommand = intakeCommand;
         this.scoreState = scoreState;
         this.emergencyCommand = emergencyCommand;
+        this.offsetCommand = offsetCommand;
     }
 
     public Wrist.WristState getWristState() {
@@ -36,6 +38,12 @@ public class SuperstructureCommand {
 
     public IntakeCommand getIntakeCommand(){
         return intakeCommand;
+    }
+
+    public int getArmOffset() { return offsetCommand.getArmOffset(); }
+
+    public int getWristOffset() {
+        return offsetCommand.getWristOffset();
     }
 
 }
