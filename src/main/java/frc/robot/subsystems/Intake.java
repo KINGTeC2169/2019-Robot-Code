@@ -86,7 +86,7 @@ public class Intake extends Subsystem {
 
                 //It was.  Run the wheels at hold voltage and set the state.
                 if(ballState == BallState.INTAKING || ballState == BallState.HOLDING){
-                    runIntake(Constants.intakeHoldVoltage /12f);
+                    runIntake(0);
                     ballState = BallState.HOLDING;
                 }
 

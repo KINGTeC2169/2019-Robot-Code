@@ -8,7 +8,7 @@ public final class Constants {
 
     // Constants for intake control
     public static final double exhaustThreshold = -0.5;
-    public static final double intakeDeadband = 0.05;
+    public static final double intakeDeadband = 0.1;
     public static float intakeHoldVoltage = 3;
 
     // Constants for intake sensor
@@ -45,6 +45,7 @@ public final class Constants {
     public static final int wristMaxAccel = 30;
     public static final int wristZeroPos = 0;
     public static final int wristAllowedError = 3;
+    public static String lastScoreState = "";
 
     //Arm Position Setpoints
     public static final class ArmPositions {

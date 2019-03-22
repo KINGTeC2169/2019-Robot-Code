@@ -1,14 +1,24 @@
 package frc.robot.operationCommands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.util.Constants;
 
 public class ScoreState {
+
+    public boolean isNewState = false;
 
     public ScoreState(RobotSide robotSide, GameElement gameElement, Position position, boolean rightTrigger){
         this.robotSide = robotSide;
         this.gameElement = gameElement;
         this.position = position;
         this.rightTrigger = rightTrigger;
+
+
+
+    }
+
+    public boolean isNewState(){
+        return isNewState;
     }
 
     public ScoreState(RobotSide robotSide, GameElement gameElement, Position position){
@@ -16,6 +26,13 @@ public class ScoreState {
         this.gameElement = gameElement;
         this.position = position;
         this.rightTrigger = false;
+
+        if(!Constants.lastScoreState.equals(this.toString())){
+            Constants.lastScoreState = this.toString();
+            isNewState = true;
+            DriverStation.reportWarning("New State", false);
+        }
+
     }
 
     public enum RobotSide {
@@ -220,6 +237,10 @@ public class ScoreState {
         return position;
     }
     boolean rightTrigger;
+
+    public String toString(){
+        return "" + getRobotSide() + getGameElement() + getPosition();
+    }
 
 
 }
