@@ -40,10 +40,6 @@ public class SuperstructureCommand {
         return intakeCommand;
     }
 
-    public int getArmOffset() { return offsetCommand.getArmOffset(); }
-
-    public int getWristOffset() {
-        return offsetCommand.getWristOffset();
-    }
+    public OffsetCommand getOffsetCommand() { return offsetCommand; }
 
 }

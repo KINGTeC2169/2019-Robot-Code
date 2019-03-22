@@ -68,12 +68,12 @@ public class Arm extends Subsystem{
             arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
         }
         else{
-            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() + sCommand.getArmOffset());
+            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() + sCommand.getOffsetCommand().getArmOffset());
             SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos());
         }
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Arm Offset", sCommand.getArmOffset());
+        SmartDashboard.putNumber("Arm Offset", sCommand.getOffsetCommand().getArmOffset());
     }
 
     boolean isInPosition(){
