@@ -3,7 +3,6 @@ package frc.robot.operationCommands;
 import frc.robot.util.Constants;
 
 public class OffsetCommand {
-    //
     private static int armOffset = Constants.startingArmOffset;
     private static int wristOffset = Constants.startingWristOffset;
 
