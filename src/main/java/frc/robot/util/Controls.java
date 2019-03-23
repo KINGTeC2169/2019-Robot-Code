@@ -51,6 +51,15 @@ public class Controls {
         return operatorStick.getRawButton(5);
     }
 
+    // Side buttons for manually changing the arm and wrist encoder offsets
+    public boolean getArmOffsetIncrease() { return operatorStick.getRawButton(6); }
+
+    public boolean getArmOffsetDecrease() { return operatorStick.getRawButton(7); }
+
+    public boolean getWristOffsetDecrease() { return operatorStick.getRawButton(10); }
+
+    public boolean getWristOffsetIncrease() { return operatorStick.getRawButton(11); }
+
     public double getEmergencyArmStick(){
         if(operatorStick.getRawButton(1)){
             return operatorStick.getRawAxis(1);

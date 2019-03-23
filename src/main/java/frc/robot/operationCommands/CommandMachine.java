@@ -11,7 +11,7 @@ public class CommandMachine {
     }
 
     public SuperstructureCommand generateSuperstructureCommand(){
-        return new SuperstructureCommand(generateIntakeCommand(), generateScoreState(), generateEmergencyCommand());
+        return new SuperstructureCommand(generateIntakeCommand(), generateScoreState(), generateEmergencyCommand(), generateOffsetCommand());
     }
 
     public DriveCommand generateDriveCommand(){
@@ -30,6 +30,11 @@ public class CommandMachine {
     private EmergencyCommand generateEmergencyCommand(){
         return new EmergencyCommand(controls.getEmergencyMode(), controls.getEmergencyArmStick(),
                 controls.getEmergencyWristStick(), controls.getIntakeButton(), controls.getExhaustButton(), controls.getOperatorTrigger());
+    }
+
+    // Handles manual control of arm and wrist encoder offset
+    public OffsetCommand generateOffsetCommand(){
+        return new OffsetCommand(controls.getArmOffsetDecrease(), controls.getArmOffsetIncrease(), controls.getWristOffsetDecrease(), controls.getWristOffsetIncrease());
     }
 
 
