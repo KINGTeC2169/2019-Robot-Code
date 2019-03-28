@@ -71,6 +71,7 @@ public class Wrist extends Subsystem {
 
     void handle(SuperstructureCommand sCommand) {
 
+
         if(sCommand.getEmergencyCommand().getTrigger()){
             wristMotor.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getWristVal());
             lastPos = wristMotor.getSelectedSensorPosition();

@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.operationCommands.DriveCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
@@ -28,8 +27,8 @@ public class DriveTrain {
         VictorSPX leftTop = new VictorSPX(ActuatorMap.driveTrainLeftTop);
         VictorSPX leftBottom = new VictorSPX(ActuatorMap.driveTrainLeftBottom);
 
-        left.setInverted(true);
-        leftTop.setInverted(false);
+        left.setInverted(false);
+        leftTop.setInverted(true);
         leftBottom.setInverted(true);
 
         leftTop.follow(left);
@@ -44,23 +43,15 @@ public class DriveTrain {
         rightBottom.setInverted(false);
         rightTop.setInverted(false);
 
-        rightTop.follow(right);
         rightBottom.follow(right);
+        rightTop.follow(right);
 
-        pid = new PID(0.25, 0, 0);
+        pid = new PID(0.3, 0, 0.1);
 
-        SmartDashboard.putNumber("dP", 0.25);
-        SmartDashboard.putNumber("dI", 0);
-        SmartDashboard.putNumber("dD", 0);
-        SmartDashboard.putNumber("Throttle Multiplier", .25);
     }
 
     public void handle(DriveCommand dCommand) {
-        double p = SmartDashboard.getNumber("dP", 0);
-        double i = SmartDashboard.getNumber("dI", 0);
-        double d = SmartDashboard.getNumber("dD", 0);
-        pid.setPID(p, i, d);
-        pid.setSetpoint(0);
+        pid.setSetpoint(.12);
         pid.setMaxIOutput(.4);
         //Check if vision is driving, and if it is, allow it to move the drivetrain
         if(dCommand.isVisionDriving()){
@@ -82,16 +73,15 @@ public class DriveTrain {
     }
 
     private void turnInPlace(double turn){
-        turn = -turn;
+//        turn = -turn;
         left.set(ControlMode.PercentOutput, -pid.getOutput(turn));
         right.set(ControlMode.PercentOutput, pid.getOutput(turn));
     }
 
 
     private void visionArcadeDrive(double throttle, double turn){
-        double throttleMult = SmartDashboard.getNumber("Throttle Multiplier", 0);
-        turn = -turn;
-        left.set(ControlMode.PercentOutput, throttleMult * throttle -pid.getOutput(turn));
+        double throttleMult = .5;
+        left.set(ControlMode.PercentOutput, throttleMult * throttle - pid.getOutput(turn));
         right.set(ControlMode.PercentOutput, throttleMult * throttle + pid.getOutput(turn));
     }
 

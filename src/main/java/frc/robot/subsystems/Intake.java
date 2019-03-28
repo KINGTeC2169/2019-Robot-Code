@@ -59,6 +59,9 @@ public class Intake extends Subsystem {
             else if(sCommand.getEmergencyCommand().getOut()){
                 runIntake(1);
             }
+            else if(sCommand.getEmergencyCommand().getWristVal() > .25){
+                runIntake(1);
+            }
             else{
                 runIntake(0);
             }

@@ -22,13 +22,13 @@ public final class Constants {
     public static final int armSlotIdx = 0;
     public static final int armPIDLoopIdx = 0;
     public static final int armTimeoutMs = 10;
-    public static final double armP = 10;
-    public static final double armI = 0.01;
-    public static final double armD = 0;
+    public static final double armP = 15;
+    public static final double armI = 0.001;
+    public static final double armD = 0.001;
     public static final int armMaxVel = 40;
     public static final int armMaxAccel = 20;
-    public static int armP90 = 0;
-    public static int armP270 = -512;
+    public static int armP90 = -600;
+    public static int armP270 = -1130;
     public static final int armZeroPos = 0;
     public static final int armAllowedError = 0;
     public static final int startingArmOffset = 0;
@@ -37,9 +37,9 @@ public final class Constants {
     public static final int wristSlotIdx = 0;
     public static final int wristPIDLoopIdx = 0;
     public static final int wristTimeoutMs = 0;
-    public static final double wristP = 20;
-    public static final double wristI = .01;
-    public static final double wristD = 0.0001;
+    public static final double wristP = 12;
+    public static final double wristI = 0;
+    public static final double wristD = 0;
     public static final double wristF = 6;
     public static final int wristMaxVel = 100;
     public static final int wristMaxAccel = 30;
@@ -50,47 +50,47 @@ public final class Constants {
 
     //Arm Position Setpoints
     public static final class ArmPositions {
-        public static final int frontHatchStowed = -407;
-        public static final int frontHatchIntake = -407;
-        public static final int frontHatchLow = -488;
-        public static final int frontHatchMid = -628;
-        public static final int frontHatchHi = -796;
+        public static final int frontHatchStowed = -351;
+        public static final int frontHatchIntake = -351;
+        public static final int frontHatchLow = -217;
+        public static final int frontHatchMid = -100;
+        public static final int frontHatchHi = -52;
 
-        public static final int frontCargoStowed = -438;
-        public static final int frontCargoIntake = -438;
-        public static final int frontCargoLow = -518;
-        public static final int frontCargoMid = -677;
-        public static final int frontCargoHi = -845;
+        public static final int frontCargoStowed = -303;
+        public static final int frontCargoIntake = -303;
+        public static final int frontCargoLow = -210;
+        public static final int frontCargoMid = -45;
+        public static final int frontCargoHi = 120;
 
-        public static final int backHatchIntake = -1257;
-        public static final int backHatchLow = -1229;
-        public static final int backHatchMid = -1070;
-        public static final int backHatchHi = -873;
+        public static final int backHatchIntake = 534;
+        public static final int backHatchLow = 511;
+        public static final int backHatchMid = 340;
+        public static final int backHatchHi = 181;
 
-        public static final int backCargoIntake = -1257;
-        public static final int backCargoLow = -1229;
-        public static final int backCargoMid = -1070;
-        public static final int backCargoHi = -873;
+        public static final int backCargoIntake = 534;
+        public static final int backCargoLow = 511;
+        public static final int backCargoMid = 340;
+        public static final int backCargoHi = 181;
     }
 
     public static final class WristPositions {
 
-        public static final int frontHatchStowed = -351;
-        public static final int frontHatchIntake = -351;
-        public static final int frontHatchLow = -650;
-        public static final int frontHatchMid = -714;
-        public static final int frontHatchHi = -863;
+        public static final int frontHatchStowed = 424;
+        public static final int frontHatchIntake = 424;
+        public static final int frontHatchLow = 124;
+        public static final int frontHatchMid = 103;
+        public static final int frontHatchHi = 6;
 
-        public static final int frontCargoStowed = -579;
-        public static final int frontCargoIntake = -579;
-        public static final int frontCargoLow = -531;
-        public static final int frontCargoMid = -680;
-        public static final int frontCargoHi = -770;
+        public static final int frontCargoStowed = 256;
+        public static final int frontCargoIntake = 256;
+        public static final int frontCargoLow = 300;
+        public static final int frontCargoMid = 131;
+        public static final int frontCargoHi = 44;
 
-        public static final int backHatchIntake = -565;
-        public static final int backHatchLow = -747;
-        public static final int backHatchMid = -603;
-        public static final int backHatchHi = -462;
+        public static final int backHatchIntake = 280;
+        public static final int backHatchLow = 60;
+        public static final int backHatchMid = 237;
+        public static final int backHatchHi = 312;
 
         public static final int backCargoIntake = -565;
         public static final int backCargoLow = -747;
