@@ -19,7 +19,14 @@ public class DriveCommand {
     }
 
     public double getVisionYaw() {
-        return Main.visionData;
+        double data = Main.visionData;
+        if(data > .5){
+            return .5;
+        }
+        else if(data < -.5){
+            return -.5;
+        }
+        return data;
     }
 
     public double getLeftDrive() {

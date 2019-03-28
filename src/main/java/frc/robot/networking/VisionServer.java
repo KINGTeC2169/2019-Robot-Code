@@ -17,15 +17,18 @@ public class VisionServer extends Thread {
 
     //Constructor that creates the ServerSocket
     public VisionServer() throws IOException {
-        server = new ServerSocket(2169);
+        server = new ServerSocket(5803);
     }
 
     private boolean getConnected() {
+        SmartDashboard.putBoolean("Connected", connected);
         return connected;
     }
 
     private void disconnect() {
+        SmartDashboard.putBoolean("Connected", false);
         connected = false;
+        System.out.println("Disconnect Method Complete");
     }
 
     //Listener function that grabs new clients and hands them information.
@@ -34,12 +37,18 @@ public class VisionServer extends Thread {
 
         // running infinite loop for getting
         // clientBase request
-        while (System.currentTimeMillis() > 0) {
+
+
+        SmartDashboard.putBoolean("Connected", false);
+
+        while (true) {
 
             try {
                 // socket object to receive incoming clientBase requests
                 Socket s = server.accept();
                 connected = true;
+
+                SmartDashboard.putBoolean("Connected", true);
                 DriverStation.reportWarning("[INFO] A new client is connected : " + s, false);
 
                 // obtaining input and out streams
@@ -63,6 +72,10 @@ public class VisionServer extends Thread {
                                 }
                             }
                         }
+                        if(!connected){
+                            System.out.println("Breaking!");
+                            break;
+                        }
                         Main.visionData = Double.parseDouble(in.readLine());
                         SmartDashboard.putNumber("Yee-Haw", Main.visionData);
                     }
@@ -71,6 +84,7 @@ public class VisionServer extends Thread {
                     System.out.println("Inner Network Loop");
                     e.printStackTrace();
                 }
+
 
             } catch (IOException e) {
                 System.out.println("Outer Network Loop");
@@ -83,6 +97,7 @@ public class VisionServer extends Thread {
     public static void spawnVisionThread(){
         VisionServer server = null;
         try {
+            System.out.println("Creating New Vision Server!");
             server = new VisionServer();
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,6 +106,10 @@ public class VisionServer extends Thread {
             if (server != null) {
                 server.run();
                 System.out.println("Died! Trying Again!");
+            }
+            else{
+                System.out.println("Restarting SpawnVisionThread Method!");
+                spawnVisionThread();
             }
         }
     }

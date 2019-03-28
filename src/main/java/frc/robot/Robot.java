@@ -19,11 +19,11 @@ class Robot extends TimedRobot {
     private Superstructure superstructure;
     private DriveTrain driveTrain;
     private CommandMachine commandMachine;
+    private UsbCamera cam;
 
     @Override
     public void robotInit() {
-        UsbCamera cam = CameraServer.getInstance().startAutomaticCapture(0);
-        UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture(1);
+        cam = CameraServer.getInstance().startAutomaticCapture();
         driveTrain = new DriveTrain();
         superstructure = new Superstructure();
         superstructure.robotInit();
