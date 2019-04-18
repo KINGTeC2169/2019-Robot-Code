@@ -10,8 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.networking.VisionServer;
 
-import java.io.IOException;
-
 public final class Main {
 
     public static double visionData = 0;

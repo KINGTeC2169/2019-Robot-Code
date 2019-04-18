@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.operationCommands.OffsetCommand;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
@@ -20,7 +19,7 @@ public class Wrist extends Subsystem {
     }
 
 
-    int lastPos;
+    private int lastPos;
     private boolean isManual = false;
 
     Wrist() {

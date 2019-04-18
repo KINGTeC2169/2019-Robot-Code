@@ -33,7 +33,7 @@ public class CommandMachine {
     }
 
     // Handles manual control of arm and wrist encoder offset
-    public OffsetCommand generateOffsetCommand(){
+    private OffsetCommand generateOffsetCommand(){
         return new OffsetCommand(controls.getArmOffsetDecrease(), controls.getArmOffsetIncrease(), controls.getWristOffsetDecrease(), controls.getWristOffsetIncrease());
     }
 

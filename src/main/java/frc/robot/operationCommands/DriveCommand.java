@@ -20,6 +20,7 @@ public class DriveCommand {
 
     public double getVisionYaw() {
         double data = Main.visionData;
+        // Cap the data at +-.5
         if(data > .5){
             return .5;
         }

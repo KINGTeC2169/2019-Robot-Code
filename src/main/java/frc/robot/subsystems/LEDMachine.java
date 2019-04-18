@@ -1,9 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogOutput;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 
 public class LEDMachine extends Subsystem {
@@ -13,10 +11,10 @@ public class LEDMachine extends Subsystem {
         SOLID_BLUE,BLINKING_BLUE,SOLID_GREEN,BLINKING_GREEN,SOLID_PINK,BLINKING_PINK,NORMAL
     }
 
-    public static LEDState state = LEDState.NORMAL;
+    private static final LEDState state = LEDState.NORMAL;
 
-    Timer intakeTimer;
-    Timer armTimer;
+    private final Timer intakeTimer;
+    private final Timer armTimer;
 
     private final AnalogOutput ledOut;
 
@@ -28,13 +26,13 @@ public class LEDMachine extends Subsystem {
         DISABLED, INTAKING, HAS_BALL
     }
 
-    public static IntakeNotifier intakeNotifier = IntakeNotifier.DISABLED;
+    private static final IntakeNotifier intakeNotifier = IntakeNotifier.DISABLED;
 
     public enum ArmNotifier{
         DISABLED, IN_PLACE, MOVING
     }
 
-    public static ArmNotifier armNotifier = ArmNotifier.DISABLED;
+    private static final ArmNotifier armNotifier = ArmNotifier.DISABLED;
 
 
     LEDMachine(){

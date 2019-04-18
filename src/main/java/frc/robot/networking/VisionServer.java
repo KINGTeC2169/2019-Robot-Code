@@ -4,11 +4,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Main;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.sql.Driver;
 
 public class VisionServer extends Thread {
 
@@ -16,15 +18,17 @@ public class VisionServer extends Thread {
     private ServerSocket server;
 
     //Constructor that creates the ServerSocket
-    public VisionServer() throws IOException {
+    private VisionServer() throws IOException {
         server = new ServerSocket(5803);
     }
 
+    // Return connection status
     private boolean getConnected() {
         SmartDashboard.putBoolean("Connected", connected);
         return connected;
     }
 
+    // Disconnect from the server
     private void disconnect() {
         SmartDashboard.putBoolean("Connected", false);
         connected = false;
@@ -35,35 +39,38 @@ public class VisionServer extends Thread {
     @Override
     public void run() {
 
-        // running infinite loop for getting
-        // clientBase request
-
-
         SmartDashboard.putBoolean("Connected", false);
 
-        while (true) {
+        while (System.currentTimeMillis() > 0) {
 
             try {
-                // socket object to receive incoming clientBase requests
+
+                // Accept requests and connect
                 Socket s = server.accept();
                 connected = true;
 
                 SmartDashboard.putBoolean("Connected", true);
                 DriverStation.reportWarning("[INFO] A new client is connected : " + s, false);
 
-                // obtaining input and out streams
 
                 try {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8));
+                    BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream(),
+                            StandardCharsets.UTF_8));
                     PrintWriter out = new PrintWriter(s.getOutputStream(), true, StandardCharsets.UTF_8);
 
                     while (connected) {
-                        long lastRecieved = System.currentTimeMillis();
-                        //Check if we've got new data from our clientBase.
+
+                        // Save the time for later comparison
+                        long lastReceived = System.currentTimeMillis();
+
+                        //Send back our current time
                         out.println(System.currentTimeMillis());
                         out.flush();
+
                         while (!in.ready()) {
-                            long elapsedTime = System.currentTimeMillis() - lastRecieved;
+                            // Calculate current time, if more than 3 seconds have passed, abandon connection and
+                            // search again
+                            long elapsedTime = System.currentTimeMillis() - lastReceived;
                             if (elapsedTime > 3000) {
                                 if (getConnected()) {
                                     DriverStation.reportError("Lost Client!", false);
@@ -95,6 +102,8 @@ public class VisionServer extends Thread {
     }
 
     public static void spawnVisionThread(){
+
+        // Set server as null
         VisionServer server = null;
         try {
             System.out.println("Creating New Vision Server!");
@@ -102,7 +111,7 @@ public class VisionServer extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        while (true) {
+        while (System.currentTimeMillis() > 0) {
             if (server != null) {
                 server.run();
                 System.out.println("Died! Trying Again!");

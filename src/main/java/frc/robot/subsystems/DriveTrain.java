@@ -14,12 +14,13 @@ public class DriveTrain {
     //private final DoubleSolenoid dogShift;
     private final TalonSRX left;
     private final TalonSRX right;
-    private Solenoid dog;
+    private final Solenoid dog;
 
-    private PID pid;
+    private final PID pid;
 
     public DriveTrain(){
 
+        //Configure DT shifting pneumatics
         dog = new Solenoid(ActuatorMap.pcmPort, ActuatorMap.driveShifter);
 
         //Initialize left side of the driveline
@@ -46,13 +47,15 @@ public class DriveTrain {
         rightBottom.follow(right);
         rightTop.follow(right);
 
+        //Configure the turning PID
         pid = new PID(0.3, 0, 0.1);
+        pid.setSetpoint(.12);
+        pid.setMaxIOutput(.4);
 
     }
 
     public void handle(DriveCommand dCommand) {
-        pid.setSetpoint(.12);
-        pid.setMaxIOutput(.4);
+
         //Check if vision is driving, and if it is, allow it to move the drivetrain
         if(dCommand.isVisionDriving()){
             visionDriving(dCommand);
@@ -73,7 +76,6 @@ public class DriveTrain {
     }
 
     private void turnInPlace(double turn){
-//        turn = -turn;
         left.set(ControlMode.PercentOutput, -pid.getOutput(turn));
         right.set(ControlMode.PercentOutput, pid.getOutput(turn));
     }

@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.operationCommands.OffsetCommand;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
@@ -28,7 +27,7 @@ public class Arm extends Subsystem{
         /* Factory default hardware to prevent unexpected behavior */
         arm.configFactoryDefault();
 
-        /* Configure Sensor Source for Pirmary PID */
+        /* Configure Sensor Source for Primary PID */
         arm.configSelectedFeedbackSensor(FeedbackDevice.Analog,
                 Constants.armPIDLoopIdx,
                 Constants.armTimeoutMs);
@@ -63,10 +62,15 @@ public class Arm extends Subsystem{
     }
 
     void handle(SuperstructureCommand sCommand) {
+
+        //Set the forward value to the sine of the arm angle, this counteracts gravity
         arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle()))), 10);
+
+        //If emergency mode is the name, the raw output of the stick is the game.
         if(sCommand.getEmergencyCommand().getEmergencyActive()){
             arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
         }
+        //All is good, use Motion Magic like normal
         else{
             arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() + sCommand.getOffsetCommand().getArmOffset());
             SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos() + sCommand.getOffsetCommand().getArmOffset());
@@ -74,10 +78,6 @@ public class Arm extends Subsystem{
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
         SmartDashboard.putNumber("Arm Offset", sCommand.getOffsetCommand().getArmOffset());
-    }
-
-    boolean isInPosition(){
-        return arm.getClosedLoopError() < Constants.armAllowedError;
     }
 
     @Override
@@ -89,7 +89,8 @@ public class Arm extends Subsystem{
         arm.set(ControlMode.PercentOutput, 0);
     }
 
-    double getArmAngle(){
+    // Grab the actual arm angle in degrees with 180 degrees being straight in the air
+    private double getArmAngle(){
         double x1 = Constants.armP90;
         double y1 = 90;
         double x2 = Constants.armP270;

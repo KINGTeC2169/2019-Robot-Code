@@ -4,8 +4,8 @@ public final class ActuatorMap {
 
     //Airports
     public static final int pcmPort = 12;
-    public static final int driveShifter = 0;
-    public static final int jawShifter = 2;
+    public static final int driveShifter = 2;
+    public static final int jawShifter = 0;
 
     //Motor Controller CAN IDs
     public static final int driveTrainLeft = 4;

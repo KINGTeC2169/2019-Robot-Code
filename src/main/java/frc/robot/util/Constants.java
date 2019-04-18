@@ -1,7 +1,5 @@
 package frc.robot.util;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public final class Constants {
 
     public static final boolean debugMode = false;
@@ -27,8 +25,8 @@ public final class Constants {
     public static final double armD = 0.001;
     public static final int armMaxVel = 40;
     public static final int armMaxAccel = 20;
-    public static int armP90 = -600;
-    public static int armP270 = -1130;
+    public static final int armP90 = -106;
+    public static final int armP270 = 395;
     public static final int armZeroPos = 0;
     public static final int armAllowedError = 0;
     public static final int startingArmOffset = 0;
@@ -46,7 +44,7 @@ public final class Constants {
     public static final int wristZeroPos = 0;
     public static final int wristAllowedError = 3;
     public static String lastScoreState = "";
-    public static final int startingWristOffset = 0;
+    public static final int startingWristOffset = -1595;
 
     //Arm Position Setpoints
     public static final class ArmPositions {
@@ -54,7 +52,7 @@ public final class Constants {
         public static final int frontHatchIntake = -351;
         public static final int frontHatchLow = -217;
         public static final int frontHatchMid = -100;
-        public static final int frontHatchHi = -52;
+        public static final int frontHatchHi = 52;
 
         public static final int frontCargoStowed = -303;
         public static final int frontCargoIntake = -303;
@@ -92,10 +90,10 @@ public final class Constants {
         public static final int backHatchMid = 237;
         public static final int backHatchHi = 312;
 
-        public static final int backCargoIntake = -565;
-        public static final int backCargoLow = -747;
-        public static final int backCargoMid = -603;
-        public static final int backCargoHi = -462;
+        public static final int backCargoIntake = 280;
+        public static final int backCargoLow = 60;
+        public static final int backCargoMid = 237;
+        public static final int backCargoHi = 312;
     }
 }
 

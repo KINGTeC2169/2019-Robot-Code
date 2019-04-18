@@ -5,7 +5,7 @@ import frc.robot.util.Constants;
 
 public class ScoreState {
 
-    public boolean isNewState = false;
+    private boolean isNewState = false;
 
     public ScoreState(RobotSide robotSide, GameElement gameElement, Position position, boolean rightTrigger){
         this.robotSide = robotSide;
@@ -236,7 +236,7 @@ public class ScoreState {
     Position getPosition() {
         return position;
     }
-    boolean rightTrigger;
+    private final boolean rightTrigger;
 
     public String toString(){
         return "" + getRobotSide() + getGameElement() + getPosition();
