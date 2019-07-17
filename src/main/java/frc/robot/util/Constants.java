@@ -48,11 +48,11 @@ public final class Constants {
 
     //Arm Position Setpoints
     public static final class ArmPositions {
-        public static final int frontHatchStowed = -351;
-        public static final int frontHatchIntake = -351;
-        public static final int frontHatchLow = -217;
+        public static final int frontHatchStowed = -303;
+        public static final int frontHatchIntake = -303;
+        public static final int frontHatchLow = -210;
         public static final int frontHatchMid = -100;
-        public static final int frontHatchHi = 52;
+        public static final int frontHatchHi = 120;
 
         public static final int frontCargoStowed = -303;
         public static final int frontCargoIntake = -303;
@@ -73,11 +73,11 @@ public final class Constants {
 
     public static final class WristPositions {
 
-        public static final int frontHatchStowed = 424;
-        public static final int frontHatchIntake = 424;
-        public static final int frontHatchLow = 124;
+        public static final int frontHatchStowed = 256;
+        public static final int frontHatchIntake = 256;
+        public static final int frontHatchLow = 300;
         public static final int frontHatchMid = 103;
-        public static final int frontHatchHi = 6;
+        public static final int frontHatchHi = 44;
 
         public static final int frontCargoStowed = 256;
         public static final int frontCargoIntake = 256;
