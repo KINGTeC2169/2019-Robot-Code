@@ -32,15 +32,21 @@ public class Controls {
     }
 
     public boolean getLowGearButton() {
-        return leftJoy.getRawButtonPressed(2) || rightJoy.getRawButtonPressed(2);
+        return leftJoy.getRawButtonPressed(2);
     }
 
     public boolean getHighGearButton() {
-        return leftJoy.getRawButtonPressed(3) || rightJoy.getRawButtonPressed(3);
+        return rightJoy.getRawButtonPressed(2);
     }
 
     public double getOperatorStickY(){
-        return operatorStick.getRawAxis(1);
+        if(leftJoy.getRawButton(3)) {
+            return 1;
+        } else if(rightJoy.getRawButton(3)) {
+            return -1;
+        } else {
+            return operatorStick.getRawAxis(1);
+        }
     }
 
     public boolean getOperatorOpen() {
@@ -88,11 +94,13 @@ public class Controls {
     }
 
     public boolean getIntakeButton(){
-        return operatorStick.getRawButton(2);
+
+        return false;
     }
 
     public boolean getExhaustButton(){
-        return operatorStick.getRawButton(3);
+
+        return false;
     }
 
     public boolean getOperatorTrigger() {

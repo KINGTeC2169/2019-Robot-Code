@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
@@ -35,8 +36,6 @@ public class Arm extends Subsystem{
         arm.setSensorPhase(false);
         arm.setInverted(true);
         armSlave.setInverted(true);
-
-
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
         arm.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.armTimeoutMs);
