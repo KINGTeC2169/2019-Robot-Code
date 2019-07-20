@@ -79,7 +79,7 @@ public class Intake extends Subsystem {
                 else{
                     ballState = BallState.EXHAUSTING;
                 }
-                runIntake(command.getStickY());
+                runIntake(-command.getStickY());
 
 
             }

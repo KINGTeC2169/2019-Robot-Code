@@ -6,7 +6,7 @@ public final class Constants {
 
     // Constants for intake control
     public static final double exhaustThreshold = -0.5;
-    public static final double intakeDeadband = 0.1;
+    public static final double intakeDeadband = 0.2;
     public static float intakeHoldVoltage = 3;
 
     // Constants for intake sensor
@@ -48,8 +48,8 @@ public final class Constants {
 
     //Arm Position Setpoints
     public static final class ArmPositions {
-        public static final int frontHatchStowed = -303;
-        public static final int frontHatchIntake = -303;
+        public static final int frontHatchStowed = -339;
+        public static final int frontHatchIntake = -339;
         public static final int frontHatchLow = -210;
         public static final int frontHatchMid = -100;
         public static final int frontHatchHi = 120;
@@ -73,8 +73,8 @@ public final class Constants {
 
     public static final class WristPositions {
 
-        public static final int frontHatchStowed = 256;
-        public static final int frontHatchIntake = 256;
+        public static final int frontHatchStowed = 456;
+        public static final int frontHatchIntake = 456;
         public static final int frontHatchLow = 300;
         public static final int frontHatchMid = 103;
         public static final int frontHatchHi = 44;

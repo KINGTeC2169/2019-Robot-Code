@@ -41,9 +41,9 @@ public class Controls {
 
     public double getOperatorStickY(){
         if(leftJoy.getRawButton(3)) {
-            return 1;
-        } else if(rightJoy.getRawButton(3)) {
             return -1;
+        } else if(rightJoy.getRawButton(3)) {
+            return 1;
         } else {
             return operatorStick.getRawAxis(1);
         }
