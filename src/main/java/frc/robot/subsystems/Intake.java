@@ -53,7 +53,8 @@ public class Intake extends Subsystem {
         //Handles deadband and control for intake
 
         if(sCommand.getEmergencyCommand().getEmergencyActive() || sCommand.getEmergencyCommand().getTrigger()){
-            if(sCommand.getEmergencyCommand().getIn()){
+            // Disabling the operator control of intake in manual
+            /*if(sCommand.getEmergencyCommand().getIn()){
                 runIntake(-1);
             }
             else if(sCommand.getEmergencyCommand().getOut()){
@@ -64,7 +65,7 @@ public class Intake extends Subsystem {
             }
             else{
                 runIntake(0);
-            }
+            }*/
         }
 
         else{

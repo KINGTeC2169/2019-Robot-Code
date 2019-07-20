@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
 import frc.robot.util.Constants;
+import frc.robot.util.Controls;
 
 public class Wrist extends Subsystem {
 
@@ -70,8 +71,6 @@ public class Wrist extends Subsystem {
 
 
     void handle(SuperstructureCommand sCommand) {
-
-
         if(sCommand.getEmergencyCommand().getTrigger()){
             wristMotor.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getWristVal());
             lastPos = wristMotor.getSelectedSensorPosition();

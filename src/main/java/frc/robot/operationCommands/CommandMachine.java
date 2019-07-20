@@ -16,7 +16,7 @@ public class CommandMachine {
 
     public DriveCommand generateDriveCommand(){
         return new DriveCommand(controls.getLeftJoyAxis(), controls.getRightJoyAxis(), controls.getLowGearButton(),
-                controls.getHighGearButton(), controls.getRightTrigger());
+                controls.getHighGearButton(), controls.getRightTrigger(), controls.getSlowMode());
     }
 
     private IntakeCommand generateIntakeCommand(){

@@ -104,8 +104,10 @@ public class Controls {
     }
 
     public boolean getOperatorTrigger() {
-
         return operatorStick.getRawButton(1);
+    }
 
+    public boolean getSlowMode() {
+        return leftJoy.getRawButton(4) || rightJoy.getRawButton(4);
     }
 }
