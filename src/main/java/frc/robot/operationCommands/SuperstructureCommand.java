@@ -1,6 +1,4 @@
 package frc.robot.operationCommands;
-
-import frc.robot.subsystems.Wrist;
 import frc.robot.util.Constants;
 import frc.robot.util.Controls;
 
@@ -28,18 +26,6 @@ public class SuperstructureCommand {
         if(controls.getWristOffsetIncrease()) {
             wristOffset++;
         }
-    }
-
-    public Wrist.WristState getWristState() {
-        if(scoreState.getGameElement() == ScoreState.GameElement.CARGO){
-            if(scoreState.getPosition() == ScoreState.Position.HIGH){
-                return scoreState.getRobotSide() == ScoreState.RobotSide.FRONT ? Wrist.WristState.HIGH_FRONT : Wrist.WristState.HIGH_BACK;
-            }
-            if(scoreState.getPosition() == ScoreState.Position.INTAKE){
-                return scoreState.getRobotSide() == ScoreState.RobotSide.FRONT ? Wrist.WristState.INTAKE_FRONT : Wrist.WristState.INTAKE_BACK;
-            }
-        }
-        return Wrist.WristState.PARALLEL_TO_GROUND;
     }
 
     public ScoreState getScoreState() {
