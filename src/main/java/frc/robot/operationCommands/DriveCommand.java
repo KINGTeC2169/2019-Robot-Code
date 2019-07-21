@@ -1,23 +1,14 @@
 package frc.robot.operationCommands;
 
 import frc.robot.Main;
+import frc.robot.util.Controls;
 
 public class DriveCommand {
 
-    private final double leftDrive;
-    private final double rightDrive;
-    private final boolean shiftUp;
-    private final boolean shiftDown;
-    private final boolean rightTrigger;
-    private final boolean slowMode;
+    private Controls controls;
 
-    DriveCommand(double leftDrive, double rightDrive, boolean shiftUp, boolean shiftDown, boolean rightTrigger, boolean slowMode){
-        this.leftDrive = leftDrive;
-        this.rightDrive = rightDrive;
-        this.shiftUp = shiftUp;
-        this.shiftDown = shiftDown;
-        this.rightTrigger = rightTrigger;
-        this.slowMode = slowMode;
+    DriveCommand(Controls controls){
+        this.controls = controls;
     }
 
     public double getVisionYaw() {
@@ -33,32 +24,22 @@ public class DriveCommand {
     }
 
     public double getLeftDrive() {
-        if(slowMode) {
-            return leftDrive / 2;
-        } else {
-            return leftDrive;
-        }
+        return controls.getLeftDrive();
     }
 
     public double getRightDrive() {
-        if(slowMode) {
-            return rightDrive / 2;
-        } else {
-            return rightDrive;
-        }
+        return controls.getRightDrive();
     }
 
     public boolean isShiftUp() {
-        return shiftUp;
+        return controls.shiftUpButton();
     }
 
     public boolean isShiftDown() {
-        return shiftDown;
+        return controls.shiftDownButton();
     }
 
     public boolean isVisionDriving() {
-        return rightTrigger;
+        return controls.visionDriving();
     }
-
-    public boolean slowMode() { return slowMode; }
 }

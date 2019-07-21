@@ -65,18 +65,21 @@ public class Arm extends Subsystem{
         //Set the forward value to the sine of the arm angle, this counteracts gravity
         arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle()))), 10);
 
-        //If emergency mode is the name, the raw output of the stick is the game.
-        if(sCommand.getEmergencyCommand().getEmergencyActive()){
-            arm.set(ControlMode.PercentOutput, sCommand.getEmergencyCommand().getArmVal());
+        if(sCommand.getEmergencyMode()) {
+            arm.set(ControlMode.PercentOutput, 0);
+        }
+        //If manual mode is the name, the raw output of the stick is the game.
+        else if(sCommand.isFullManual()){
+            arm.set(ControlMode.PercentOutput, sCommand.getManualArmStick());
         }
         //All is good, use Motion Magic like normal
         else{
-            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() + sCommand.getOffsetCommand().getArmOffset());
-            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos() + sCommand.getOffsetCommand().getArmOffset());
+            arm.set(ControlMode.MotionMagic, sCommand.getScoreState().getArmDesiredPos() + sCommand.getArmOffset());
+            SmartDashboard.putNumber("Arm Desired Position", sCommand.getScoreState().getArmDesiredPos() + sCommand.getArmOffset());
         }
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Arm Offset", sCommand.getOffsetCommand().getArmOffset());
+        SmartDashboard.putNumber("Arm Offset", sCommand.getArmOffset());
     }
 
     @Override

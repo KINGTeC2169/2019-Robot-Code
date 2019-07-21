@@ -12,9 +12,6 @@ public class ScoreState {
         this.gameElement = gameElement;
         this.position = position;
         this.rightTrigger = rightTrigger;
-
-
-
     }
 
     public boolean isNewState(){

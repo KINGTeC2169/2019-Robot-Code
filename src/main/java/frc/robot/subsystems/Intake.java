@@ -15,8 +15,6 @@ public class Intake extends Subsystem {
     private final TalonSRX left;
     private final TalonSRX right;
 
-    private final Solenoid jaws;
-
     private final Ultrasonic proxSensor;
 
     private enum BallState{
@@ -30,8 +28,6 @@ public class Intake extends Subsystem {
         proxSensor = new Ultrasonic(ActuatorMap.intakeProxPing, ActuatorMap.intakeProxEcho);
         proxSensor.setDistanceUnits(Ultrasonic.Unit.kInches);
 
-        jaws = new Solenoid(ActuatorMap.pcmPort, ActuatorMap.jawShifter);
-
         left = new TalonSRX(ActuatorMap.intakeLeft);
         right = new TalonSRX(ActuatorMap.intakeRight);
 
@@ -39,81 +35,46 @@ public class Intake extends Subsystem {
 
     private void runIntake(double motorPower) {
 
-        left.set(ControlMode.PercentOutput, -motorPower);
-        right.set(ControlMode.PercentOutput, -motorPower);
+        left.set(ControlMode.PercentOutput, motorPower);
+        right.set(ControlMode.PercentOutput, motorPower);
 
     }
 
     //Primary handle method for the intake
     void handle(SuperstructureCommand sCommand) {
 
-        //Grab intake specific command from Superstructure
-        IntakeCommand command = sCommand.getIntakeCommand();
+        //Check if operator is looking to manually control intake
+        if (Math.abs(sCommand.getIntakeOutput()) >= Constants.intakeDeadband) {
 
-        //Handles deadband and control for intake
-
-        if(sCommand.getEmergencyCommand().getEmergencyActive() || sCommand.getEmergencyCommand().getTrigger()){
-            // Disabling the operator control of intake in manual
-            /*if(sCommand.getEmergencyCommand().getIn()){
-                runIntake(-1);
-            }
-            else if(sCommand.getEmergencyCommand().getOut()){
-                runIntake(1);
-            }
-            else if(sCommand.getEmergencyCommand().getWristVal() > .25){
-                runIntake(1);
+            //Operator is controlling.  Do what they ask and set the ball state accordingly.
+            if (sCommand.getIntakeOutput() > Constants.intakeDeadband) {
+                ballState = BallState.INTAKING;
             }
             else{
+                ballState = BallState.EXHAUSTING;
+            }
+            runIntake(sCommand.getIntakeOutput());
+        }
+
+        //The stick is stable.  Determine if the operator's last action was intake
+
+        else {
+
+            //It was.  Run the wheels at hold voltage and set the state.
+            if(ballState == BallState.INTAKING || ballState == BallState.HOLDING){
                 runIntake(0);
-            }*/
-        }
-
-        else{
-            //Check if operator is looking to manually control intake
-            if (Math.abs(command.getStickY()) >= Constants.intakeDeadband) {
-
-                //Operator is controlling.  Do what they ask and set the ball state accordingly.
-                if (command.getStickY() > Constants.intakeDeadband) {
-                    ballState = BallState.INTAKING;
-                }
-                else{
-                    ballState = BallState.EXHAUSTING;
-                }
-                runIntake(-command.getStickY());
-
-
+                ballState = BallState.HOLDING;
             }
 
-            //The stick is stable.  Determine if the operator's last action was intake
-
-            else {
-
-                //It was.  Run the wheels at hold voltage and set the state.
-                if(ballState == BallState.INTAKING || ballState == BallState.HOLDING){
-                    runIntake(0);
-                    ballState = BallState.HOLDING;
-                }
-
-                //It was not.  Stop the wheels.
-                else{
-                    runIntake(0);
-                    ballState = BallState.IDLE;
-                }
-
+            //It was not.  Stop the wheels.
+            else{
+                runIntake(0);
+                ballState = BallState.IDLE;
             }
 
-            SmartDashboard.putString("Intake Roller State", ballState.name());
-
         }
 
-        //Turns the jawsOpen boolean into actual commands for the piston
-        if (command.getOpen()) {
-            jaws.set(true);
-        } else if(command.getClose()){
-            jaws.set(false);
-            ballState = BallState.IDLE;
-        }
-
+        SmartDashboard.putString("Intake Roller State", ballState.name());
     }
 
     //Method for accessing the ultrasonic to determine presence of a ball in the intake

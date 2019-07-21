@@ -16,6 +16,9 @@ public class Controls {
     private final Joystick operatorStick;
     private final OperatorPanel operatorPanel;
 
+    private boolean manualButton;
+    private boolean fullManual;
+
     public Controls() {
         leftJoy = new Joystick(leftJoyPort);
         rightJoy = new Joystick(rightJoyPort);
@@ -23,41 +26,73 @@ public class Controls {
         operatorPanel = new OperatorPanel();
     }
 
-    public double getLeftJoyAxis(){
-        return leftJoy.getRawAxis(1);
+    public void update() {
+        // Listen for button 3. This is how we do a toggle switch
+        boolean buttonPressed = !manualButton && operatorStick.getRawButton(3);
+        boolean buttonReleased = manualButton && !operatorStick.getRawButton(3);
+        if(buttonPressed || buttonReleased) {
+            fullManual = !fullManual;
+        }
+        manualButton = operatorStick.getRawButton(3);
     }
 
-    public double getRightJoyAxis(){
-        return rightJoy.getRawAxis(1);
+    /* Drive controls */
+    private boolean getSlowMode() {
+        return leftJoy.getRawButton(4) || rightJoy.getRawButton(4);
     }
 
-    public boolean getLowGearButton() {
-        return leftJoy.getRawButtonPressed(2);
-    }
-
-    public boolean getHighGearButton() {
-        return rightJoy.getRawButtonPressed(2);
-    }
-
-    public double getOperatorStickY(){
-        if(leftJoy.getRawButton(3)) {
-            return -1;
-        } else if(rightJoy.getRawButton(3)) {
-            return 1;
+    public double getLeftDrive(){
+        if(getSlowMode()) {
+            return leftJoy.getRawAxis(1) / 2;
         } else {
-            return operatorStick.getRawAxis(1);
+            return leftJoy.getRawAxis(1);
         }
     }
 
-    public boolean getOperatorOpen() {
-        return operatorStick.getRawButton(4);
+    public double getRightDrive(){
+        if(getSlowMode()) {
+            return rightJoy.getRawAxis(1) / 2;
+        } else {
+            return rightJoy.getRawAxis(1);
+        }
     }
 
-    public boolean getOperatorClose() {
-        return operatorStick.getRawButton(5);
+    public boolean shiftUpButton() {
+        // Shifts drive train into high gear
+        return leftJoy.getRawButtonPressed(2);
     }
 
-    // Side buttons for manually changing the arm and wrist encoder offsets
+    public boolean shiftDownButton() {
+        // Shift drive train into low gear
+        return rightJoy.getRawButtonPressed(2);
+    }
+
+    /* Intake Controls */
+    private boolean getIntakeButton() {
+        // Both driver and operator have an intake button
+        return rightJoy.getRawButton(3) || operatorStick.getRawButton(4);
+    }
+
+    private boolean getExhaustButton() {
+        // Both driver and operator have an exhaust button
+        return leftJoy.getRawButton(3) || operatorStick.getRawButton(5);
+    }
+
+    public double getIntakeOutput() {
+        if(getIntakeButton()) {
+            return -1;
+        }
+        else if(getExhaustButton()) {
+            return 1;
+        }
+        else if(!isWristManual()) {
+            return operatorStick.getRawAxis(1);
+        } else {
+            return 0;
+        }
+    }
+
+    /* Encoder offset controls */
     public boolean getArmOffsetIncrease() { return operatorStick.getRawButton(6); }
 
     public boolean getArmOffsetDecrease() { return operatorStick.getRawButton(7); }
@@ -66,14 +101,27 @@ public class Controls {
 
     public boolean getWristOffsetIncrease() { return operatorStick.getRawButton(11); }
 
-    public double getEmergencyArmStick(){
-        if(operatorStick.getRawButton(1)){
-            return operatorStick.getRawAxis(1);
-        }
-        return 0;
+    /* Emergency and manual controls */
+    public boolean getEmergencyMode(){
+        // Emergency mode disables arm and wrist entirely
+        return operatorStick.getRawAxis(2) < -.4;
     }
 
-    public double getEmergencyWristStick(){
+    public boolean isFullManual() {
+        // Full manual mode enables manual wrist and arm control
+        return fullManual;
+    }
+
+    public boolean isWristManual() {
+        // Trigger enables manual wrist control
+        return operatorStick.getRawButton(1) || fullManual;
+    }
+
+    public double getManualArmStick(){
+        return operatorStick.getRawAxis(1);
+    }
+
+    public double getManualWristStick(){
         return operatorStick.getRawAxis(0);
     }
 
@@ -85,29 +133,7 @@ public class Controls {
         return desiredState;
     }
 
-    public boolean getEmergencyMode(){
-        return operatorStick.getRawAxis(2) < -.4;
-    }
-
-    public boolean getRightTrigger() {
+    public boolean visionDriving() {
         return rightJoy.getRawButton(1);
-    }
-
-    public boolean getIntakeButton(){
-
-        return false;
-    }
-
-    public boolean getExhaustButton(){
-
-        return false;
-    }
-
-    public boolean getOperatorTrigger() {
-        return operatorStick.getRawButton(1);
-    }
-
-    public boolean getSlowMode() {
-        return leftJoy.getRawButton(4) || rightJoy.getRawButton(4);
     }
 }

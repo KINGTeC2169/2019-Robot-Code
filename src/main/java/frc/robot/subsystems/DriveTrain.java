@@ -56,7 +56,7 @@ public class DriveTrain {
 
     public void handle(DriveCommand dCommand) {
 
-        //Check if vision is driving, and if it is, allow it to move the drivetrain
+        //Check if vision is driving, and if it is, allow it to move the drive train
         if(dCommand.isVisionDriving()){
             visionDriving(dCommand);
         }

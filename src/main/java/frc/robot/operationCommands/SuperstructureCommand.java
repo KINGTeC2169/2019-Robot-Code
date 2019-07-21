@@ -1,19 +1,33 @@
 package frc.robot.operationCommands;
 
 import frc.robot.subsystems.Wrist;
+import frc.robot.util.Constants;
+import frc.robot.util.Controls;
 
 public class SuperstructureCommand {
 
-    private final EmergencyCommand emergencyCommand;
-    private final IntakeCommand intakeCommand;
-    private final ScoreState scoreState;
-    private final OffsetCommand offsetCommand;
+    private Controls controls;
+    private ScoreState scoreState;
+    private int armOffset = Constants.startingArmOffset;
+    private int wristOffset = Constants.startingWristOffset;
 
-    SuperstructureCommand(IntakeCommand intakeCommand, ScoreState scoreState, EmergencyCommand emergencyCommand, OffsetCommand offsetCommand){
-        this.intakeCommand = intakeCommand;
-        this.scoreState = scoreState;
-        this.emergencyCommand = emergencyCommand;
-        this.offsetCommand = offsetCommand;
+    SuperstructureCommand(Controls controls){
+        this.controls = controls;
+        scoreState = controls.getOperatorPanelState();
+
+        // Periodically update the offsets
+        if(controls.getArmOffsetDecrease()) {
+            armOffset--;
+        }
+        if(controls.getArmOffsetIncrease()) {
+            armOffset++;
+        }
+        if(controls.getWristOffsetDecrease()) {
+            wristOffset--;
+        }
+        if(controls.getWristOffsetIncrease()) {
+            wristOffset++;
+        }
     }
 
     public Wrist.WristState getWristState() {
@@ -28,18 +42,40 @@ public class SuperstructureCommand {
         return Wrist.WristState.PARALLEL_TO_GROUND;
     }
 
-    public EmergencyCommand getEmergencyCommand(){
-        return emergencyCommand;
-    }
-
     public ScoreState getScoreState() {
         return scoreState;
     }
 
-    public IntakeCommand getIntakeCommand(){
-        return intakeCommand;
+    public double getManualArmStick() {
+        return controls.getManualArmStick();
     }
 
-    public OffsetCommand getOffsetCommand() { return offsetCommand; }
+    public double getManualWristStick() {
+        return controls.getManualWristStick();
+    }
+
+    public int getArmOffset() {
+        return armOffset;
+    }
+
+    public int getWristOffset() {
+        return wristOffset;
+    }
+
+    public double getIntakeOutput() {
+        return controls.getIntakeOutput();
+    }
+
+    public boolean isWristManual() {
+        return controls.isWristManual();
+    }
+
+    public boolean isFullManual() {
+        return controls.isFullManual();
+    }
+
+    public boolean getEmergencyMode() {
+        return controls.getEmergencyMode();
+    }
 
 }
