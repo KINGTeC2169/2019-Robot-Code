@@ -44,7 +44,7 @@ public final class Constants {
     public static final int wristZeroPos = 0;
     public static final int wristAllowedError = 3;
     public static String lastScoreState = "";
-    public static final int startingWristOffset = -462;
+    public static final int startingWristOffset = -799;
 
     //Arm Position Setpoints
     public static final class ArmPositions {
