@@ -28,8 +28,10 @@ public class Arm extends Subsystem{
         /* Factory default hardware to prevent unexpected behavior */
         arm.configFactoryDefault();
 
+        initQuadrature();
+
         /* Configure Sensor Source for Primary PID */
-        arm.configSelectedFeedbackSensor(FeedbackDevice.Analog,
+        arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
                 Constants.armPIDLoopIdx,
                 Constants.armTimeoutMs);
 
@@ -89,6 +91,16 @@ public class Arm extends Subsystem{
     @Override
     public void stop() {
         arm.set(ControlMode.PercentOutput, 0);
+    }
+
+    private void initQuadrature() {
+        int pulseWidthPos = arm.getSensorCollection().getPulseWidthPosition();
+
+        if(Constants.armSensorDiscontinuity) {
+            pulseWidthPos -= ((Constants.armSensorEnd_0 + Constants.armSensorEnd_1) / 2) & 0xFFF;
+        }
+
+        arm.getSensorCollection().setQuadraturePosition(pulseWidthPos, Constants.armTimeoutMs);
     }
 
     // Grab the actual arm angle in degrees with 180 degrees being straight in the air

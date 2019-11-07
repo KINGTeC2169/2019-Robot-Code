@@ -30,6 +30,10 @@ public final class Constants {
     public static final int armZeroPos = 0;
     public static final int armAllowedError = 0;
     public static final int startingArmOffset = -230;
+    // TODO: Test for and set following values
+    public static final boolean armSensorDiscontinuity = true;
+    public static final int armSensorEnd_0 = 910;
+    public static final int armSensorEnd_1 = 1137;
 
     //Wrist Constants
     public static final int wristSlotIdx = 0;
@@ -45,6 +49,10 @@ public final class Constants {
     public static final int wristAllowedError = 3;
     public static String lastScoreState = "";
     public static final int startingWristOffset = -799;
+    // TODO: Test for and set following values
+    public static final boolean wristSensorDiscontinuity = true;
+    public static final int wristSensorEnd_0 = 910;
+    public static final int wristSensorEnd_1 = 1137;
 
     //Arm Position Setpoints
     public static final class ArmPositions {

@@ -32,8 +32,10 @@ public class Wrist extends Subsystem {
 
         wristMotor.setNeutralMode(NeutralMode.Brake);
 
-        /* Configure Sensor Source for Pirmary PID */
-        wristMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog,
+        initQuadrature();
+
+        /* Configure Sensor Source for Primary PID */
+        wristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
                 Constants.wristPIDLoopIdx,
                 Constants.wristTimeoutMs);
 
@@ -101,6 +103,16 @@ public class Wrist extends Subsystem {
         SmartDashboard.putNumber("Wrist Actual Position Angle", wristMotor.getSelectedSensorPosition());
         SmartDashboard.putNumber("Wrist Offset", sCommand.getWristOffset());
 
+    }
+
+    private void initQuadrature() {
+        int pulseWidthPos = wristMotor.getSensorCollection().getPulseWidthPosition();
+
+        if(Constants.wristSensorDiscontinuity) {
+            pulseWidthPos -= ((Constants.wristSensorEnd_0 + Constants.wristSensorEnd_1) / 2) & 0xFFF;
+        }
+
+        wristMotor.getSensorCollection().setQuadraturePosition(pulseWidthPos, Constants.wristTimeoutMs);
     }
 
     @SuppressWarnings("unused")
