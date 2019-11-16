@@ -28,8 +28,6 @@ public class Arm extends Subsystem{
         /* Factory default hardware to prevent unexpected behavior */
         arm.configFactoryDefault();
 
-        initQuadrature();
-
         /* Configure Sensor Source for Primary PID */
         arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
                 Constants.armPIDLoopIdx,
@@ -54,6 +52,7 @@ public class Arm extends Subsystem{
         arm.config_kP(Constants.armSlotIdx, Constants.armP, Constants.armTimeoutMs);
         arm.config_kI(Constants.armSlotIdx, Constants.armI, Constants.armTimeoutMs);
         arm.config_kD(Constants.armSlotIdx, Constants.armD, Constants.armTimeoutMs);
+//        arm.configClosedloopRamp(.25);
 
         /* Set acceleration and vcruise velocity - see documentation */
         arm.configMotionCruiseVelocity(Constants.armMaxVel, Constants.armTimeoutMs);
@@ -65,10 +64,11 @@ public class Arm extends Subsystem{
     void handle(SuperstructureCommand sCommand) {
 
         //Set the forward value to the sine of the arm angle, this counteracts gravity
-        arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle()))), 10);
+        arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle(sCommand.getArmOffset())))), 10);
+//        arm.config_kF(0, 0, 10);
 
         if(sCommand.getEmergencyMode()) {
-            arm.set(ControlMode.PercentOutput, 0);
+            arm.set(ControlMode.PercentOutput, sCommand.getManualArmStick());
         }
         //If manual mode is the name, the raw output of the stick is the game.
         else if(sCommand.isFullManual()){
@@ -81,7 +81,7 @@ public class Arm extends Subsystem{
         }
 
         SmartDashboard.putNumber("Arm Current Position", arm.getSelectedSensorPosition());
-        SmartDashboard.putNumber("Arm Offset", sCommand.getArmOffset());
+        SmartDashboard.putNumber("Arm Error", arm.getClosedLoopError());
     }
 
     @Override
@@ -104,14 +104,16 @@ public class Arm extends Subsystem{
     }
 
     // Grab the actual arm angle in degrees with 180 degrees being straight in the air
-    private double getArmAngle(){
-        double x1 = Constants.armP90;
+    private double getArmAngle(int armOffset){
+        double x1 = Constants.armP90 + armOffset;
         double y1 = 90;
-        double x2 = Constants.armP270;
+        double x2 = Constants.armP270 + armOffset;
         double y2 = 270;
         double m = (y2-y1)/(x2-x1);
         double b = y1 - m*x1;
+        SmartDashboard.putNumber("Arm Current Angle", m*arm.getSelectedSensorPosition() + b);
         return (m*arm.getSelectedSensorPosition() + b);
+
     }
 
 }

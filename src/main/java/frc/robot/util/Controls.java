@@ -85,9 +85,7 @@ public class Controls {
         else if(getExhaustButton()) {
             return 1;
         }
-        else if(!isWristManual()) {
-            return operatorStick.getRawAxis(1);
-        } else {
+        else {
             return 0;
         }
     }

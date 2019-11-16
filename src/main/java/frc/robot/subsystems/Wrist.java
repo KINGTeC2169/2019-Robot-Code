@@ -32,8 +32,6 @@ public class Wrist extends Subsystem {
 
         wristMotor.setNeutralMode(NeutralMode.Brake);
 
-        initQuadrature();
-
         /* Configure Sensor Source for Primary PID */
         wristMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
                 Constants.wristPIDLoopIdx,
@@ -51,8 +49,8 @@ public class Wrist extends Subsystem {
         /* Set the peak and nominal outputs */
         wristMotor.configNominalOutputForward(0, Constants.wristTimeoutMs);
         wristMotor.configNominalOutputReverse(0, Constants.wristTimeoutMs);
-        wristMotor.configPeakOutputForward(.4, Constants.wristTimeoutMs);
-        wristMotor.configPeakOutputReverse(-.4, Constants.wristTimeoutMs);
+        wristMotor.configPeakOutputForward(.6, Constants.wristTimeoutMs);
+        wristMotor.configPeakOutputReverse(-.6, Constants.wristTimeoutMs);
 
         /* Set Motion Magic gains in slot0 - see documentation */
         wristMotor.selectProfileSlot(Constants.wristSlotIdx, Constants.wristPIDLoopIdx);

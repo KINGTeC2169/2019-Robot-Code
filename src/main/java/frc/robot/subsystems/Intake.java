@@ -27,6 +27,9 @@ public class Intake extends Subsystem {
         if (Math.abs(sCommand.getIntakeOutput()) >= Constants.intakeDeadband) {
             runIntake(sCommand.getIntakeOutput());
         }
+        else{
+            runIntake(0);
+        }
     }
 
     @Override
