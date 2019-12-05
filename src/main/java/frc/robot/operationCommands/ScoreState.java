@@ -59,12 +59,16 @@ public class ScoreState {
                 else if (position == Position.STOW){
                     return  (Constants.ArmPositions.frontCargoStowed);
                 }
+                //This one is the special cargo ship position
+                else if(position == Position.CARGO){
+                    return (Constants.ArmPositions.frontCargoShip);
+                }
             } else if (gameElement == GameElement.HATCH) {
                 if (position == Position.LOW) {
                     return (Constants.ArmPositions.frontHatchLow);
                 }
                 else if (position == Position.MIDDLE) {
-                    return (Constants.ArmPositions.frontHatchMid);
+                    return (Constants.ArmPositions.frontCargoShip);
                 }
                 else if (position == Position.HIGH) {
                     return (Constants.ArmPositions.frontHatchHi);
@@ -74,6 +78,10 @@ public class ScoreState {
                 }
                 else if (position == Position.STOW){
                     return (Constants.ArmPositions.frontHatchStowed);
+                }
+                //Put it to low since that is the height of panels on the cargo ship
+                else if(position == Position.CARGO){
+                    return (Constants.ArmPositions.frontHatchLow);
                 }
             }
         } else if (robotSide == RobotSide.BACK) {
@@ -90,6 +98,9 @@ public class ScoreState {
                 else if (position == Position.INTAKE) {
                     return (Constants.ArmPositions.backCargoIntake);
                 }
+                else if(position == Position.CARGO){
+                    return (Constants.ArmPositions.backCargoMid);
+                }
             } else if (gameElement == GameElement.HATCH) {
                 if (position == Position.LOW) {
                     return (Constants.ArmPositions.backHatchLow);
@@ -102,6 +113,10 @@ public class ScoreState {
                 }
                 else if (position == Position.INTAKE) {
                     return (Constants.ArmPositions.backHatchIntake);
+                }
+                //Put it to low since that is the height of panels on the cargo ship
+                else if(position == Position.CARGO){
+                    return (Constants.ArmPositions.backHatchLow);
                 }
             }
         }
@@ -129,13 +144,16 @@ public class ScoreState {
                 else if (position == Position.STOW){
                     return  (Constants.WristPositions.frontCargoStowed);
                 }
+                else if(position == Position.CARGO){
+                    return (Constants.WristPositions.frontCargoShip);
+                }
 
             } else if (gameElement == GameElement.HATCH) {
                 if (position == Position.LOW) {
                     return (Constants.WristPositions.frontHatchLow);
                 }
                 else if (position == Position.MIDDLE) {
-                    return (Constants.WristPositions.frontHatchMid);
+                    return (Constants.WristPositions.frontCargoShip);
                 }
                 else if (position == Position.HIGH) {
                     return (Constants.WristPositions.frontHatchHi);
@@ -145,6 +163,10 @@ public class ScoreState {
                 }
                 else if (position == Position.STOW){
                     return (Constants.WristPositions.frontHatchStowed);
+                }
+                //Put it to low since that is the height of panels on the cargo ship
+                else if(position == Position.CARGO){
+                    return (Constants.WristPositions.frontHatchLow);
                 }
             }
 
@@ -162,6 +184,9 @@ public class ScoreState {
                 else if (position == Position.INTAKE) {
                     return (Constants.WristPositions.backCargoIntake);
                 }
+                else if (position == Position.CARGO){
+                    return (Constants.WristPositions.backCargoMid);
+                }
             } else if (gameElement == GameElement.HATCH) {
                 if (position == Position.LOW) {
                     return (Constants.WristPositions.backHatchLow);
@@ -174,6 +199,10 @@ public class ScoreState {
                 }
                 else if (position == Position.INTAKE) {
                     return (Constants.WristPositions.backHatchIntake);
+                }
+                //Put it to low since that is the height of panels on the cargo ship
+                else if(position == Position.CARGO){
+                    return (Constants.WristPositions.backHatchLow);
                 }
 
             }
@@ -198,15 +227,15 @@ public class ScoreState {
         }
     }
 
-    RobotSide getRobotSide() {
+    private RobotSide getRobotSide() {
         return robotSide;
     }
 
-    GameElement getGameElement() {
+    private GameElement getGameElement() {
         return gameElement;
     }
 
-    Position getPosition() {
+    private Position getPosition() {
         return position;
     }
     private final boolean rightTrigger;

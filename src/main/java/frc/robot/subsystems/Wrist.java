@@ -70,11 +70,7 @@ public class Wrist extends Subsystem {
 
 
     void handle(SuperstructureCommand sCommand) {
-        if(sCommand.getEmergencyMode()) {
-            wristMotor.set(ControlMode.PercentOutput, 0);
-            SmartDashboard.putNumber("State", 0);
-            isManual = false;
-        }else if(sCommand.isWristManual()){
+        if(sCommand.isWristManual()){
             wristMotor.set(ControlMode.PercentOutput, sCommand.getManualWristStick());
             lastPos = wristMotor.getSelectedSensorPosition();
             SmartDashboard.putNumber("State", 1);

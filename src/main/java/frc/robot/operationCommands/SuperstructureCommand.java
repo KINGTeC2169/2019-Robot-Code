@@ -6,26 +6,10 @@ public class SuperstructureCommand {
 
     private Controls controls;
     private ScoreState scoreState;
-    private int armOffset = Constants.startingArmOffset;
-    private int wristOffset = Constants.startingWristOffset;
 
     SuperstructureCommand(Controls controls){
         this.controls = controls;
         scoreState = controls.getOperatorPanelState();
-
-        // Periodically update the offsets
-        if(controls.getArmOffsetDecrease()) {
-            armOffset--;
-        }
-        if(controls.getArmOffsetIncrease()) {
-            armOffset++;
-        }
-        if(controls.getWristOffsetDecrease()) {
-            wristOffset--;
-        }
-        if(controls.getWristOffsetIncrease()) {
-            wristOffset++;
-        }
     }
 
     public ScoreState getScoreState() {
@@ -41,11 +25,11 @@ public class SuperstructureCommand {
     }
 
     public int getArmOffset() {
-        return armOffset;
+        return Constants.startingArmOffset;
     }
 
     public int getWristOffset() {
-        return wristOffset;
+        return Constants.startingWristOffset;
     }
 
     public double getIntakeOutput() {
@@ -56,12 +40,8 @@ public class SuperstructureCommand {
         return controls.isWristManual();
     }
 
-    public boolean isFullManual() {
-        return controls.isFullManual();
-    }
-
-    public boolean getEmergencyMode() {
-        return controls.getEmergencyMode();
+    public boolean isArmManual() {
+        return controls.isArmManual();
     }
 
 }

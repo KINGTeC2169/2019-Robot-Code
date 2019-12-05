@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.operationCommands.SuperstructureCommand;
 import frc.robot.util.ActuatorMap;
@@ -67,11 +66,7 @@ public class Arm extends Subsystem{
         arm.config_kF(0, Math.abs(Math.sin(Math.toRadians(getArmAngle(sCommand.getArmOffset())))), 10);
 //        arm.config_kF(0, 0, 10);
 
-        if(sCommand.getEmergencyMode()) {
-            arm.set(ControlMode.PercentOutput, sCommand.getManualArmStick());
-        }
-        //If manual mode is the name, the raw output of the stick is the game.
-        else if(sCommand.isFullManual()){
+        if(sCommand.isArmManual()) {
             arm.set(ControlMode.PercentOutput, sCommand.getManualArmStick());
         }
         //All is good, use Motion Magic like normal

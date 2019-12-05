@@ -9,31 +9,16 @@ public class Controls {
 
     private static final int leftJoyPort = 0;
     private static final int rightJoyPort = 1;
-    private static final int operatorJoyPort = 2;
+    static final int operatorJoyPort = 2;
 
     private final Joystick leftJoy;
     private final Joystick rightJoy;
-    private final Joystick operatorStick;
-    private final OperatorPanel operatorPanel;
-
-    private boolean manualButton;
-    private boolean fullManual;
+    private final OperatorGamepad operator;
 
     public Controls() {
         leftJoy = new Joystick(leftJoyPort);
         rightJoy = new Joystick(rightJoyPort);
-        operatorStick = new Joystick(operatorJoyPort);
-        operatorPanel = new OperatorPanel();
-    }
-
-    public void update() {
-        // Listen for button 3. This is how we do a toggle switch
-        boolean buttonPressed = !manualButton && operatorStick.getRawButton(3);
-        boolean buttonReleased = manualButton && !operatorStick.getRawButton(3);
-        if(buttonPressed || buttonReleased) {
-            fullManual = !fullManual;
-        }
-        manualButton = operatorStick.getRawButton(3);
+        operator = new OperatorGamepad(2);
     }
 
     /* Drive controls */
@@ -66,12 +51,12 @@ public class Controls {
     /* Intake Controls */
     private boolean getIntakeButton() {
         // Both driver and operator have an intake button
-        return rightJoy.getRawButton(3) || operatorStick.getRawButton(4) || rightJoy.getRawButton(11) || rightJoy.getRawButton(10);
+        return rightJoy.getRawButton(3) ||  rightJoy.getRawButton(11) || rightJoy.getRawButton(10);
     }
 
     private boolean getExhaustButton() {
         // Both driver and operator have an exhaust button
-        return leftJoy.getRawButton(3) || operatorStick.getRawButton(5) || leftJoy.getRawButton(6) || leftJoy.getRawButton(7);
+        return leftJoy.getRawButton(3) || leftJoy.getRawButton(6) || leftJoy.getRawButton(7);
     }
 
     public double getIntakeOutput() {
@@ -86,41 +71,26 @@ public class Controls {
         }
     }
 
-    /* Encoder offset controls */
-    public boolean getArmOffsetIncrease() { return operatorStick.getRawButton(6); }
-
-    public boolean getArmOffsetDecrease() { return operatorStick.getRawButton(7); }
-
-    public boolean getWristOffsetDecrease() { return operatorStick.getRawButton(10); }
-
-    public boolean getWristOffsetIncrease() { return operatorStick.getRawButton(11); }
-
-    /* Emergency and manual controls */
-    public boolean getEmergencyMode(){
-        // Emergency mode disables arm and wrist entirely
-        return operatorStick.getRawAxis(2) < -.4;
-    }
-
-    public boolean isFullManual() {
-        // Full manual mode enables manual wrist and arm control
-        return fullManual;
+    public boolean isArmManual() {
+        // Enables manual arm control
+        return Math.abs(getManualArmStick()) > 0;
     }
 
     public boolean isWristManual() {
-        // Trigger enables manual wrist control
-        return operatorStick.getRawButton(1) || fullManual;
+        // Enables manual wrist control
+        return Math.abs(getManualWristStick()) > 0;
     }
 
     public double getManualArmStick(){
-        return operatorStick.getRawAxis(1);
+        return operator.armJogThrottle();
     }
 
     public double getManualWristStick(){
-        return operatorStick.getRawAxis(0);
+        return operator.wristJogThrottle();
     }
 
     public ScoreState getOperatorPanelState(){
-        ScoreState desiredState = operatorPanel.getOperatorDesiredState();
+        ScoreState desiredState = operator.getScoreState();
         SmartDashboard.putString("Operator Desired Position", desiredState.position.name());
         SmartDashboard.putString("Operator Desired Side", desiredState.robotSide.name());
         SmartDashboard.putString("Operator Desired Element", desiredState.gameElement.name());

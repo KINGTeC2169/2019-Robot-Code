@@ -53,13 +53,14 @@ public final class Constants {
     public static final boolean wristSensorDiscontinuity = true;
     public static final int wristSensorEnd_0 = 910*4;
     public static final int wristSensorEnd_1 = 1137*4;
+    public static double joystickThreshold = 0.2;
 
     //Arm Position Setpoints
     public static final class ArmPositions {
         public static final int frontHatchStowed = -339*4;
         public static final int frontHatchIntake = -339*4;
         public static final int frontHatchLow = -210*4;
-        public static final int frontHatchMid = -100*4;
+        public static final int frontCargoShip = -100*4;
         public static final int frontHatchHi = 120*4;
 
         public static final int frontCargoStowed = -303*4;
@@ -84,7 +85,7 @@ public final class Constants {
         public static final int frontHatchStowed = 456*4;
         public static final int frontHatchIntake = 456*4;
         public static final int frontHatchLow = 300*4;
-        public static final int frontHatchMid = 103*4;
+        public static final int frontCargoShip = 103*4;
         public static final int frontHatchHi = 44*4;
 
         public static final int frontCargoStowed = 256*4;

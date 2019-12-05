@@ -43,8 +43,7 @@ class Robot extends TimedRobot {
     }
 
     @Override
-    public void teleopPeriodic() {
-        commandMachine.update();
+    public void teleopPeriodic(){
         superstructure.handleSubsystems(commandMachine.generateSuperstructureCommand());
         driveTrain.handle(commandMachine.generateDriveCommand());
     }

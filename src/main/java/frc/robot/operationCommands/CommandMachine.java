@@ -15,10 +15,6 @@ public class CommandMachine {
         return new SuperstructureCommand(controls);
     }
 
-    public void update() {
-        controls.update();
-    }
-
     public DriveCommand generateDriveCommand(){
         return new DriveCommand(controls);
     }
