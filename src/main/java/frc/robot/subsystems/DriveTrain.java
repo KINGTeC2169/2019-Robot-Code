@@ -1,13 +1,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.operationCommands.DriveCommand;
-import frc.robot.util.ActuatorMap;
-import frc.robot.util.Constants;
-import frc.robot.util.PID;
+import frc.robot.util.*;
+
+import javax.naming.ldap.Control;
 
 public class DriveTrain {
 
@@ -17,6 +18,7 @@ public class DriveTrain {
     private final Solenoid dog;
 
     private final PID pid;
+    private CheesyDriveManager cheese;
 
     public DriveTrain(){
 
@@ -52,6 +54,8 @@ public class DriveTrain {
         pid.setSetpoint(.12);
         pid.setMaxIOutput(.4);
 
+        cheese = new CheesyDriveManager();
+
     }
 
     public void handle(DriveCommand dCommand) {
@@ -61,8 +65,11 @@ public class DriveTrain {
             visionDriving(dCommand);
         }
         //If vision isn't driving, hand control over to driver
-        else{
+        else if(!dCommand.isCheesyDrive()){
             drive(dCommand);
+        }
+        else{
+            cheesyDrive(dCommand.getLeftDrive(), dCommand.getSteer(), dCommand.getQuickturn());
         }
 
         //Regardless of situation, shift to appropriate state
@@ -71,6 +78,21 @@ public class DriveTrain {
         //Print the state if needed
         if(Constants.debugMode){
             printData();
+        }
+
+    }
+
+    private void cheesyDrive(double throttle, double turn, boolean quickturn){
+        DriveSignal ds = cheese.cheesyDrive(throttle, turn, quickturn);
+        left.set(ControlMode.PercentOutput, ds.getLeft());
+        right.set(ControlMode.PercentOutput, ds.getRight());
+        if(ds.getBrakeMode()){
+            left.setNeutralMode(NeutralMode.Brake);
+            right.setNeutralMode(NeutralMode.Brake);
+        }
+        else{
+            left.setNeutralMode(NeutralMode.Coast);
+            right.setNeutralMode(NeutralMode.Coast);
         }
 
     }

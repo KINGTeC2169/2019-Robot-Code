@@ -23,12 +23,24 @@ public class DriveCommand {
         return data;
     }
 
+    public boolean isCheesyDrive(){
+        return controls.getCheesyMode();
+    }
+
+    public boolean getQuickturn(){
+        return controls.getSlowMode();
+    }
+
     public double getLeftDrive() {
         return controls.getLeftDrive();
     }
 
     public double getRightDrive() {
         return controls.getRightDrive();
+    }
+
+    public double getSteer() {
+        return controls.getSteer();
     }
 
     public boolean isShiftUp() {

@@ -23,8 +23,8 @@ public final class Constants {
     public static final double armP = 3;
     public static final double armI = 0.001;
     public static final double armD = 0.001;
-    public static final int armMaxVel = 60;
-    public static final int armMaxAccel = 60;
+    public static final int armMaxVel = 120;
+    public static final int armMaxAccel = 120;
     public static final int armP90 = -106*4;
     public static final int armP270 = 395*4;
     public static final int armZeroPos = 0;
@@ -43,8 +43,8 @@ public final class Constants {
     public static final double wristI = 0;
     public static final double wristD = 0;
     public static final double wristF = 6;
-    public static final int wristMaxVel = 100;
-    public static final int wristMaxAccel = 60;
+    public static final int wristMaxVel = 150;
+    public static final int wristMaxAccel = 150;
     public static final int wristZeroPos = 0;
     public static final int wristAllowedError = 3;
     public static String lastScoreState = "";
@@ -64,8 +64,8 @@ public final class Constants {
 
         public static final int frontCargoStowed = -303*4;
         public static final int frontCargoIntake = -303*4;
-        public static final int frontCargoLow = -210*4;
-        public static final int frontCargoMid = -45*4;
+        public static final int frontCargoLow = -197*4;
+        public static final int frontCargoMid = -37*4;
         public static final int frontCargoHi = 120*4;
 
         public static final int backHatchIntake = 534*4;

@@ -37,24 +37,20 @@ public class Controls {
     }
 
     /* Drive controls */
-    private boolean getSlowMode() {
-        return leftJoy.getRawButton(4) || rightJoy.getRawButton(4);
+    public boolean getSlowMode() {
+        return leftJoy.getRawButton(1) || rightJoy.getRawButton(1);
     }
 
     public double getLeftDrive(){
-        if(getSlowMode()) {
-            return leftJoy.getRawAxis(1) / 2;
-        } else {
-            return leftJoy.getRawAxis(1);
-        }
+        return leftJoy.getRawAxis(1);
     }
 
     public double getRightDrive(){
-        if(getSlowMode()) {
-            return rightJoy.getRawAxis(1) / 2;
-        } else {
-            return rightJoy.getRawAxis(1);
-        }
+        return rightJoy.getRawAxis(1);
+    }
+
+    public double getSteer(){
+        return -rightJoy.getRawAxis(0);
     }
 
     public boolean shiftUpButton() {
@@ -70,12 +66,12 @@ public class Controls {
     /* Intake Controls */
     private boolean getIntakeButton() {
         // Both driver and operator have an intake button
-        return rightJoy.getRawButton(3) || operatorStick.getRawButton(4);
+        return rightJoy.getRawButton(3) || operatorStick.getRawButton(4) || rightJoy.getRawButton(11) || rightJoy.getRawButton(10);
     }
 
     private boolean getExhaustButton() {
         // Both driver and operator have an exhaust button
-        return leftJoy.getRawButton(3) || operatorStick.getRawButton(5);
+        return leftJoy.getRawButton(3) || operatorStick.getRawButton(5) || leftJoy.getRawButton(6) || leftJoy.getRawButton(7);
     }
 
     public double getIntakeOutput() {
@@ -133,5 +129,9 @@ public class Controls {
 
     public boolean visionDriving() {
         return rightJoy.getRawButton(1);
+    }
+
+    public boolean getCheesyMode() {
+        return leftJoy.getRawAxis(2) > .2;
     }
 }
