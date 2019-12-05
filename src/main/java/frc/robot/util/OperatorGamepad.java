@@ -68,6 +68,6 @@ public class OperatorGamepad {
         else if(operator.getButton(XboxController.Button.X)){
             return new ScoreState(side, lastReceived, Position.LOW);
         }
-        return previousState;
+        return new ScoreState(side, previousState.gameElement, previousState.position);
     }
 }
